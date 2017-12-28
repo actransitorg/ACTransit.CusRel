@@ -298,8 +298,8 @@ function Invoke-Git
         [Parameter(Mandatory)]
         [string] $Command )
 
+    $exit = 0
     try {
-        $exit = 0
         $path = [System.IO.Path]::GetTempFileName()
         Invoke-Expression "git $Command 2> $path"
         $exit = $LASTEXITCODE
@@ -309,9 +309,8 @@ function Invoke-Git
         }
         else
         {
-            Get-Content $path | Select-Object -First 1
+            Write-Debug (Get-Content $path | Select-Object -First 1)
         }
-        $exit
     }
     catch
     {
@@ -323,6 +322,7 @@ function Invoke-Git
         {
             Remove-Item $path
         }
+        $exit
     }
 }
 
@@ -364,11 +364,11 @@ function Merge-GitHub
     robocopy $source $target /MIR /MT /XD .git
     cd $target
     git status
-    git remove -v
     git add -f *
     $commitMessage = Read-Host -Prompt 'Commit message'
     git commit -m $commitMessage
-    git push    
+    git remote add origin $gitRepositoryUrl
+    git push -u origin master    
 }
 
 Try
