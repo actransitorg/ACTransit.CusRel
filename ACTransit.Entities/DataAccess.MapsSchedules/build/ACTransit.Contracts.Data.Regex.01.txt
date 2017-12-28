@@ -1,0 +1,1 @@
+﻿<member.{0,4}name=".:ACTransit\.CusRel.*?>.*?<summary>.*?</summary>.*?</member>\s+

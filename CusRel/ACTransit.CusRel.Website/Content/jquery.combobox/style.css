@@ -1,0 +1,93 @@
+/*!
+ * Combobox Plugin for jQuery, version 0.5.0
+ *
+ * Copyright 2012, Dell Sala
+ * http://dellsala.com/
+ * https://github.com/dellsala/Combo-Box-jQuery-Plugin
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * Date: 2012-01-15
+ */
+.combobox {
+    margin-right: 0.1em;
+    width: 100%
+}
+
+.combobox_arrow {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMNJREFUeNpi/P//PwMlgImBQkCxAQwD7gUWdAF/f/85QMoAh/oLGzduTMHpAqB3JJWVldcDmcbYMEgOpAafF/719vZ+FhUV3YNuNUgMJAdSg9MARkbGl0DqT2Rk5FIg+w+SOFgMJAdVgzcQrzg5OT1RUVHZABMAsUFiIDmCsQC04ROQ+lpSUrKJi4vrEwiD2CAxqBz+WICC0+JA4O7uvh3EATJBfj+NTSEjKCEBTcaWwJSBlDaUexWo5u7gTIkUGwAQYACh9EfydR5rhAAAAABJRU5ErkJggg==');
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.combobox_button {
+    background: #fff;
+    position: absolute;
+    border-color: #CCC;
+    border-width: 1px;
+    border-style: solid solid solid none;
+    right: 0;
+    top: 0;
+    display: block;
+    height: 100%;
+    width: 18px;
+    border-left-width: 0;
+    border-radius: 0px 4px 4px 0px;
+}
+
+.combobox_glow:focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  outline: 0;
+  outline: thin dotted \9;
+  /* IE6-9 */
+}
+
+.combobox_button:hover {
+    text-decoration: none;
+}
+
+.combobox_button {
+    * top: 1px !important;
+}
+
+.combobox_selector {
+    position: absolute;
+    left: 0;
+    z-index:1; 
+    background-color: #FFF;
+    font-family: Helvetia, Arial, sans-serif;
+    font-size: 12px;
+    max-height: 200px;
+    overflow: auto;
+}
+
+    .combobox_selector ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        border: 1px solid #CCC;
+    }
+
+    .combobox_selector li {
+        background-color: rgba(255, 255, 255, 1.0) !important;
+        padding: 2px 5px;
+        cursor: default;
+        -ms-word-wrap: break-word;
+        word-wrap: break-word;
+    }
+
+        .combobox_selector li:hover {
+            color: #000;
+            background-color: #CCC !important;
+            cursor: pointer;            
+        }
+        .combobox_selector li.selected {
+            background-color: #0066CC;
+            color: #000;
+        }

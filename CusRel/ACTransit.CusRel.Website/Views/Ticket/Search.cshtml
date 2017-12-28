@@ -1,0 +1,677 @@
+﻿@using ACTransit.CusRel.Infrastructure
+@using ACTransit.CusRel.Models.Helpers
+@model ACTransit.CusRel.Models.TicketSearchModel
+
+@{
+    ViewBag.Title = "Search";
+    ViewBag.Breadcrumb = "Tickets > Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    @Styles.Render("~/Content/Tables")
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/jquery.datetimepicker-2.4.0.css")" rel="stylesheet" />
+}
+
+@section Actions{
+    <button type="button" id="clearAll" class="btn btn-primary btn-panel-title" onclick='clearAll()'>Clear All</button>
+    <button type="button" id="search" class="btn btn-primary btn-panel-title" onclick="$('#Searching_Modal').modal('show')">Search</button>
+}
+<div class="row row-first">
+    
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <h1 class="panel-title text-center">Search Fields</h1>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-3">
+                    <input type="text" id="DateFrom" size="9" maxlength="10" placeholder="Date From" class="form-control field-height center-block date-picker" />
+                    <input type="radio" id="DateTypeIncident" name="DateType" value="I">Incident Date<br />
+                    <input type="radio" id="DateTypeReceived" name="DateType" value="R" checked="checked">Received Date<br />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" id="DateTo" size="9" maxlength="10" placeholder="Date To" class="form-control field-height center-block date-picker">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="Ticket.Contact.Email" id="Ticket_Contact_Email" placeholder="Customer Email" size="19" maxlength="130" class="form-control field-height center-block" /><br />
+                    <input type="text" name="Ticket.Contact.Phone.Number" id="Ticket_Contact_Phone_Number" placeholder="Customer Phone" size="19" maxlength="10" class="form-control field-height center-block" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="Ticket.FullName" id="Ticket_FullName" placeholder="Customer Name" size="19" maxlength="130" class="form-control field-height center-block" /><br />
+                    <input type="text" name="Ticket.Operator.Badge" id="Ticket_Operator_Badge" placeholder="Operator Badge" size="19" maxlength="10" class="form-control field-height center-block" />
+                </div>
+            </div>
+        </div>
+    </div>
+      
+    <div class="col-md-2 @Model.CanSearchVisibility">
+        <div class="row">
+            <div class="panel panel-default" style="margin-bottom: 0">
+                <div class="panel-heading padding5">
+                    <h1 class="panel-title text-center">More Fields</h1>
+                </div>
+                <div class="panel-body" style="padding: 5px !important">
+                    <div class="row">
+                        <div class="col-md-10 col-sm-10">
+                            <select id="SearchFieldsList" name="SearchFieldsList" class="form-control field-height center-block"></select>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <button id="add_row" class="btn btn-info center-block" type="button">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" style="margin-bottom: 0">
+                <div class="panel-heading padding5">
+                    <h1 class="panel-title text-center">Search Sets</h1>
+                </div>
+                <div class="panel-body" style="padding: 5px !important">
+                    <div class="row">
+                        <div class="col-md-10 col-sm-10">
+                            <select id="SearchSetList" name="SearchSetList" class="form-control field-height center-block"></select>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <button id="search-set-del" class="btn btn-warning center-block" type="button" title="Delete Set">x</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 col-sm-9">
+                            <input id="SaveSearchSet" name="SaveSearchSet" class="form-control field-height center-block" placeholder="new set name" />
+                        </div>
+                        <div class="col-md-2 col-sm-2" style="">
+                            <button id="search-set-save" class="btn btn-info center-block" type="button">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 @Model.CanSearchVisibility">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <h1 class="panel-title text-center">Selected Fields</h1>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <div id="SearchFields"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="row row-second">
+    <div class="col-md-12 well normaltext">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <div class="row">
+                    <h1 class="panel-title text-center">
+                        <span style="padding-left: 4em">
+                            Tickets (<span id="TicketCount">0</span>)
+                            <a href="javascript:startPrint('TicketSearchResultTable','Tickets Search', '')" data-tool="Print" class="printAnchor glyphicon glyphicon-print pull-right" data-title="print" rel="tooltip" style=""></a>
+                            <a href="#" class="export pull-right glyphicon glyphicon-download-alt" data-title="download csv" rel="tooltip"></a>
+                        </span>
+                    </h1>
+                </div>
+            </div>
+            <div class="panel-body" style="margin-left:-5px !important; margin-right:-5px !important">
+                <div class="row form-group field-margin" style="margin: 0 !important" id="SearchContainer">
+                    <div id="SearchResults"></div>
+                    <table class="table sortable" id="TicketSearchResultTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="Searching_Modal" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false"
+     data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center">
+                <h3>Searching</h3>
+            </div>
+            <div class="modal-body">
+                <div style="height:100px">
+                    <span id="searching_spinner_center" style="position: absolute;display: block;top: 50%;left: 50%;">
+                        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align: center"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Tables")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/jquery.exportCSV.js")
+
+    <script type="text/javascript">
+        $("#SearchResults").hide();
+
+        function set(value) { return value; }
+
+        var model = set(@(Html.Raw(Model)));
+        var emptyTicket = { Ticket: jQuery.extend(true, {}, model.Ticket) }; // deep clone
+        var hasSearched = false;
+
+        var refCount = {};
+        var SearchFields = $("#SearchFields");
+        var SearchFieldsList = $("#SearchFieldsList");
+        var SearchFieldsListElem = SearchFieldsList[0];
+        var CurrentSearchSet = [];
+
+        function pageTop() {
+            return $(".navbar-fixed-top").height();
+        }
+
+        function EnableThead() {
+            $.bootstrapSortable(true);
+            return;
+            $("#TicketSearchResultTable").floatThead({
+                scrollingTop: pageTop,
+                useAbsolutePositioning: false
+            });
+        }
+
+        function startPrint(tableName, titleName, assignValue) {
+            //$("#TicketSearchResultTable").floatThead('destroy');
+            $("#TicketSearchResultTable td").css("white-space", "normal");
+            print(tableName, titleName, assignValue);
+            EnableThead();
+            $("#TicketSearchResultTable td").css("white-space", "normal");
+        }
+
+        GetPriorityName = function(value) {
+            var result = null;
+            Object.keys(model.TicketPriorities).forEach(function(val, idx, arr) {
+                if (model.TicketPriorities[val] == value) {
+                    result = val;
+                    return;
+                }
+            });
+            return result;
+        }
+
+        ClearCurrentSearchSet = function() {
+            $("#SearchFields").empty();
+            refCount = {};
+            CurrentSearchSet = [];
+            model.Ticket = jQuery.extend(true, {}, emptyTicket.Ticket);
+            //$("#TicketSearchResultTable").floatThead('destroy');
+        }
+
+        ResetSearchSets = function() {
+            $("#SaveSearchSet").val("");
+            LoadSearchSetList();
+        }
+
+        GetRefCount = function(key) {
+            if (typeof refCount[key] === "undefined")
+                refCount[key] = 0;
+            return refCount[key];
+        }
+
+        AddRefCount = function(key, searchSetItem) {
+            //if (hasSearched)
+            //    $("#TicketSearchResultTable").floatThead('reflow');
+            CurrentSearchSet.push(searchSetItem);
+            return ++refCount[key];
+        }
+
+        SubRefCount = function(key) {
+            //if (hasSearched)
+            //    $("#TicketSearchResultTable").floatThead('reflow');
+            CurrentSearchSet = CurrentSearchSet.filter(function(el) {
+                return el.ObjectGraphRef != key;
+            });
+            SetObjectValue(model, key, GetObjectValue(emptyTicket, key));
+            return --refCount[key];
+        }
+
+        SetSearchListOption = function(setName) {
+            if (setName != null) {
+                $("#SearchSetList option").filter(function() {
+                    return $(this).text() == setName;
+                }).prop('selected', true);
+            }
+        }
+
+        LoadSearchSetList = function() {
+            var sets = GetSearchSets();
+            var list = $("#SearchSetList");
+            list.empty();
+            list.val([]);
+            list.append(new Option("select..."));
+            $.each(sets, function(index, setName) {
+                list.append(new Option(setName));
+            });
+        }
+
+        GetSearchSets = function() {
+            var sets = JSON.parse(localStorage.getItem("SearchSets")) || [];
+            var result = [];
+            $.each(sets, function(index, item) {
+                result.push(item.setName);
+            });
+            return result;
+        }
+
+        SaveSearchSet = function(name, data) {
+            var sets = JSON.parse(localStorage.getItem("SearchSets")) || [];
+            var item = $.grep(sets, function(value) {
+                return value.setName == name;
+            });
+            if (item.length == 0) {
+                item = { setName: name, setData: data };
+                sets.push(item);
+            } else if (item.length == 1) {
+                item[0].setData = data;
+            } else return null;
+            localStorage.setItem("SearchSets", JSON.stringify(sets));
+            return sets;
+        }
+
+        LoadSearchSet = function(name) {
+            var sets = JSON.parse(localStorage.getItem("SearchSets")) || [];
+            var item = $.grep(sets, function(value) {
+                return value.setName == name;
+            });
+            return item.length == 1 ? item[0].setData : null;
+        }
+
+        DeleteSearchSet = function(name) {
+            var sets = JSON.parse(localStorage.getItem("SearchSets")) || [];
+            sets = sets.filter(function(el) {
+                return el.setName != name;
+            });
+            localStorage.setItem("SearchSets", JSON.stringify(sets));
+        };
+
+        CreateDefaultSearchSet = function() {
+            localStorage.setItem("SearchSets", "[]");
+        }
+
+        SetupSearchFields = function(arr) {
+            $.each(arr, function(index, item) {
+                AddFieldValue(item);
+            });
+        }
+
+        AddFieldValue = function(item) {
+            var option = SearchFieldsList.find('option[value="' + item.ObjectGraphRef + '"]');
+            return AddField(option.val(), item);
+        }
+
+        AddField = function(objectGraphRef, defaultItem) {
+            defaultItem = defaultItem || { PropName: null, Value: null };
+            objectGraphRef = objectGraphRef || defaultItem.ObjectGraphRef;
+            var field = GetFieldBinding(objectGraphRef);
+            var searchSetItem = { ObjectGraphRef: objectGraphRef, PropName: defaultItem.PropName, Value: defaultItem.Value };
+            if (field == null) return field;
+            if (GetRefCount(objectGraphRef) == 1) return field;
+            var fieldId = field.ObjectGraphRef.replace(/\./g, "_");
+            var content = "\
+                    <div class='column field-margin' id='SearchFields_" + fieldId + "' name='SearchFields." + field.ObjectGraphRef + "'> \
+                       <div class='col-md-1 col-sm-1 field-search field-search-value'> \
+                            <br /><button class='removeclass0 btn btn-warning btn-sm pull-right' type='button' title='Delete Field'>x</button> \
+                       </div> \
+                       <div class='col-md-5 col-sm-5 field-search field-search-label'> \
+                           <label class='smalltext pull-left' style='padding-right: 10px'>" + field.Name + "</label>\
+                            [[placeholder]]\
+                       </div> \
+                    </div>";
+            var defaultValue = defaultItem.Value != null ? defaultItem.Value : (field.DefaultValue != "0" ? field.DefaultValue : "");
+            switch (field.SelectItemsRef) {
+            case "TextBox":
+                searchSetItem.PropName = "value";
+                $(SearchFields).append(
+                    content.replace("[[placeholder]]",
+                        "<input type='text' id='" + fieldId + "' name='" + field.ObjectGraphRef + "' placeholder='' class='form-control field-height search-text' " + searchSetItem.PropName + "='" + defaultValue + "' />"
+                    )
+                );
+                break;
+            case "DateTimePicker":
+                searchSetItem.PropName = "value";
+                $(SearchFields).append(
+                    content.replace("[[placeholder]]",
+                        "<input type='text' id='" + fieldId + "' name='" + field.ObjectGraphRef + "' placeholder='' class='form-control field-height search-datetime' " + searchSetItem.PropName + "='" + defaultValue + "' />"
+                    )
+                );
+                setTimeout(function() {
+                    $("#" + fieldId).datetimepicker({
+                        format: 'm/d/Y',
+                        timepicker: false,
+                    });
+                }, 50);
+                break;
+            case "CheckBox":
+                searchSetItem.PropName = "checked";
+                $(SearchFields).append(
+                    content.replace("[[placeholder]]",
+                        "&nbsp;<input type='checkbox' id='" + fieldId + "' name='" + field.ObjectGraphRef + "' " + ((defaultValue) ? "checked='checked'" : "") + "' class='search-checkbox' />"
+                    )
+                );
+                break;
+            default:
+                searchSetItem.PropName = " option:selected";
+                var data = GetObjectValue(model, field.SelectItemsRef);
+                if (typeof data === "undefined") return field;
+                data = toArray(data);
+                data=sortObjectArray(data,'value',true);
+                $(SearchFields).append(
+                    content.replace("[[placeholder]]",
+                        "<select id='" + fieldId + "' name='" + field.ObjectGraphRef + "' class='form-control field-height search-select'></select>"
+                    )
+                );
+                var elem = $("#" + fieldId);
+                $.each(data, function(key, value) {
+                    key = value['key'];
+                    value=value['value'];
+                    if (typeof (key) === "string" && typeof (value) === "number")
+                        key = [value, value = key][0]; // key-value is reversed
+                    if (typeof (value) === "object") {
+                        var fieldName = fieldId.substring(fieldId.lastIndexOf('_') + 1);
+                        if (typeof value[fieldName] === "undefined")
+                            fieldName = "Value";
+                        if (typeof value[fieldName] === "string")
+                            elem.append($('<option>', { value: value[fieldName] }).text(value[fieldName]));
+                    } else
+                        elem.append($('<option>', { value: key }).text(value));
+                });
+                var option = elem.find('option[value="' + defaultValue + '"]');
+                if (option.length == 1)
+                    option.prop('selected', true);
+                break;
+            }
+            $(SearchFields).off("keydown").on("keydown", function(e) {
+                var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+                if (key != 13) return;
+                e.preventDefault();
+                $("#search").click();
+            });
+            $("#" + fieldId).focus();
+            $(".search-checkbox").css("margin-top", "34px");
+            $(".search-checkbox").prev().css("margin-top", "34px");
+            AddRefCount(objectGraphRef, searchSetItem);
+            return field;
+        }
+        LoadObjectValue = function(index, value) {
+            var objectGraphRef = GetRowObjectGraphRef(value);
+            var field = GetFieldBinding(objectGraphRef);
+            if (field == null) return;
+            switch (field.SelectItemsRef) {
+            case "TextBox":
+            case "DateTimePicker":
+                var val1 = $(value).find("input").val();
+                if (!isNaN(val1))
+                    val1 = parseInt(val1);
+                SetObjectValue(model, field.ObjectGraphRef, val1);
+                break;
+            case "CheckBox":
+                SetObjectValue(model, field.ObjectGraphRef, $(value).find("input:checked").length == 1);
+                break;
+            default:
+                var val2 = $(value).find(":selected").val();
+                var data = GetObjectValue(model, field.SelectItemsRef);
+                var dataVal = field.ValueAsKey ? data[val2] : val2;
+                if (!isNaN(dataVal))
+                    dataVal = parseInt(dataVal);
+                SetObjectValue(model, field.ObjectGraphRef, dataVal);
+            }
+        }
+
+        GetFieldBinding = function(ObjectGraphRef) {
+            var field = model.SearchFields.filter(function(obj) {
+                return obj.ObjectGraphRef == ObjectGraphRef;
+            });
+            return field.length == 1 ? field[0] : null;
+        }
+
+        toArray = function(obj) {
+            var res = [];
+            $.each(obj, function(key, value) {
+                res.push({ 'key': key, 'value': value });
+            });
+            return res;
+        }
+        sortObjectArray=function(objArr,prop, asc) {
+            objArr = objArr.sort(function(a, b) {
+                if (asc) return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+                else return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+            });
+            return objArr;
+        }
+        GetObjectValue = function(obj, str) {
+            str = str.split(".");
+            for (var i = 0; i < str.length; i++)
+                obj = obj[str[i]];
+            return obj;
+        }
+
+        SetObjectValue = function(obj, str, val) {
+            str = str.split(".");
+            while (str.length > 1)
+                obj = obj[str.shift()];
+            return obj[str.shift()] = val;
+        }
+
+        GetRowObjectGraphRef = function(value) {
+            return value.getAttribute("name").replace(/SearchFields\./g, "");
+        }
+
+        FillRegularFields = function() {
+            var fromDate = $("#DateFrom").val().length > 0 ? $("#DateFrom").val() + " 12:00 AM" : null;
+            var toDate = $("#DateTo").val().length > 0 ? $("#DateTo").val() + " 11:59:59 PM" : null;
+            if (fromDate != null || toDate != null) {
+                var isIncident = $("#DateTypeIncident:checked").length > 0;
+                var isReceived = $("#DateTypeReceived:checked").length > 0;
+                model.Ticket.IncidentAtFrom = isIncident ? fromDate : null;
+                model.Ticket.IncidentAtTo = isIncident ? toDate : null;
+                model.Ticket.ReceivedAtFrom = isReceived ? fromDate : null;
+                model.Ticket.ReceivedAtTo = isReceived ? toDate : null;
+            }
+            model.Ticket.Contact.Email = $("#Ticket_Contact_Email").val();
+            model.Ticket.Contact.Phone.Number = $("#Ticket_Contact_Phone_Number").val();
+            model.Ticket.FullName = $("#Ticket_FullName").val();
+            model.Ticket.Operator.Badge = $("#Ticket_Operator_Badge").val();
+        }
+
+        function isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+
+        function isInt(n) {
+            return n % 1 === 0;
+        }
+
+        function isFloat(n) {
+            return n === +n && n !== (n | 0);
+        }
+
+        toStatusString = function(ticketStatusId) {
+            var field = GetFieldBinding("Ticket.Status");
+            var data = GetObjectValue(model, field.SelectItemsRef);
+            var result = "";
+            $.each(data, function(key, value) {
+                if (typeof (key) === "string" && typeof (value) === "number" && value == ticketStatusId)
+                    result = key;
+            });
+            return result;
+        }
+
+        nullString = function(value) {
+            return ((value) ? value.toString() : "");
+        }
+
+        deptString = function(value) {
+            value = nullString(value);
+            return ((value) ? (value.indexOf(".") > -1 ? value.substring(value.indexOf(".") + 1) : value) : "");
+        }
+
+        clearAll = function() {
+            location.href = '@Url.Action("Search", "Ticket")';
+        }
+
+        $(document).ready(function() {
+            for (var i in model.SearchFields) {
+                SearchFieldsListElem.add(new Option(model.SearchFields[i].Name, model.SearchFields[i].ObjectGraphRef));
+            }
+
+            $("#add_row").click(function(eventData, handler) {
+                var val = SearchFieldsList.val();
+                AddField(val);
+            });
+
+            $(".date-picker").each(function() {
+                var that = $(this);
+                setTimeout(function() {
+                    that.datetimepicker({
+                        format: 'm/d/Y',
+                        timepicker: false
+                    });
+                }, 50);
+            });
+
+            $("#DateFrom").val(moment().format("MM/DD/YYYY"));
+            $("#DateTo").val(moment().format("MM/DD/YYYY"));
+
+            $("#SearchFieldsList").focus();
+
+            $('#SearchFieldsList option[value="Ticket.Id"]').prop('selected', true);
+
+            $("#SearchFields").on("click", ".removeclass0", function() {
+                var root = $(this).parent('div').parent('div');
+                if (root.length == 0) return false;
+                var ObjectGraphRef = GetRowObjectGraphRef(root[0]);
+                SetObjectValue(model, ObjectGraphRef, null);
+                SubRefCount(ObjectGraphRef);
+                root.remove();
+                return false;
+            });
+
+            LoadSearchSetList();
+            var defaultSet = LoadSearchSet("Default Search");
+            if (defaultSet != null) {
+                SetupSearchFields(defaultSet);
+                SetSearchListOption("Default Search");
+            } else if ($("#SearchSetList").length == 0) {
+                CreateDefaultSearchSet();
+                LoadSearchSetList();
+            }
+
+            $("#SearchSetList").change(function() {
+                ClearCurrentSearchSet();
+                var setName = $("#SearchSetList option:selected").val();
+                set = LoadSearchSet(setName);
+                if (set != null)
+                    SetupSearchFields(set);
+            });
+
+            $("#search-set-save").click(function() {
+                $.each(CurrentSearchSet, function(index, item) {
+                    item.Value = $("#" + item.ObjectGraphRef.replace(/\./g, "_")).prop(item.PropName);
+                    if (typeof item.Value === "undefined")
+                        item.Value = $("#" + item.ObjectGraphRef.replace(/\./g, "_") + item.PropName).val();
+                });
+                var setName = $("#SaveSearchSet").val();
+                if (setName == "")
+                    setName = $("#SearchSetList option:selected").val();
+                if (setName == "" || setName == "select...")
+                    return;
+                var set = SaveSearchSet(setName, CurrentSearchSet);
+                ResetSearchSets();
+                if (set != null)
+                    SetSearchListOption(setName);
+            });
+
+            $("#search-set-del").click(function() {
+                var setName = $("#SearchSetList option:selected").val();
+                DeleteSearchSet(setName);
+                ClearCurrentSearchSet();
+                ResetSearchSets();
+            });
+
+            $("#search").click(function(elem) {
+                FillRegularFields();
+                SearchFields.children().each(function(index, value) {
+                    LoadObjectValue(index, value);
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Search", "Ticket")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(model.Ticket),
+                    dataType: "json"
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    $("#SearchResults").text(textStatus);
+                }).done(function(data) {
+                    //$("#TicketSearchResultTable").floatThead('destroy');
+                    $("#TicketCount").html("" + data.Tickets.length + (data.Tickets.length == @(Html.Raw(Config.MaxSearchCount)) ? "<span class='control-group help-inline error'>: results truncated</div>" : ""));
+                    $("#SearchResults").show();
+                    var result = '';
+                    $("#TicketSearchResultTable").append(result);
+                    $("#TicketSearchResultTable thead").remove();
+                    $("#TicketSearchResultTable tbody").remove();
+                    result = '<thead><tr>\
+                                    <th>Ticket #</th>\
+                                    <th>Customer</th>\
+                                    <th>Ticket Status</th>\
+                                    <th>Incident Date</th>\
+                                    <th>Days Open</th>\
+                                    <th>Reasons</th>\
+                                    <th>Employee</th>\
+                                    <th>Department</th>\
+                                    <th>ADA</th>\
+                                    <th>Title VI</th>\
+                                    <th>Priority</th>\
+                                   </tr></thead>';
+                    $.each(data.Tickets, function(i, Ticket) {
+                        result += '<tr id="rowTicketSearchResultTable">' +
+                            '<td>' +
+                            '<a id="_' + Ticket.Id + '" href="@Url.Action("Update", "Ticket")/' +  Ticket.Id + '" target="_blank" ' +
+                                    'data-toggle="popover" data-content="' + toCommentsString(Ticket.Comments) + '" data-title="Ticket #' + Ticket.Id + '">' +  Ticket.Id + '</a>' +
+                                '</td>' +
+                                '<td>' + Ticket.Contact.Name.Last + ', ' + Ticket.Contact.Name.First + '</td>' +
+                                '<td>' + toStatusString(Ticket.Status) + '</td>' +
+                                '<td data-dateformat="M/D/YYYY">' + toDateString(Ticket.Incident.IncidentAt) + '</td>' +
+                                '<td>' + Ticket.DaysOpen + '</td>' +
+                                '<td>' + nullString(Ticket.Reasons).replace(/[\d]{1,2}\.\s+/img, ' ') + '</td>' +
+                                '<td>' + nullString(Ticket.Assignment.Employee.Id) + '</td>' +
+                                '<td>' + deptString(Ticket.Assignment.GroupContact.Value) + '</td>' +
+                                '<td>' + ((Ticket.IsAdaComplaint) ? "Y" : "N")  + '</td>' +
+                                '<td>' + ((Ticket.IsTitle6) ? "Y" : "N") + '</td>'+
+                                '<td>' + GetPriorityName(Ticket.Priority) + '</td>'+
+                             '</tr>';
+                });
+
+                $("#TicketSearchResultTable").html('<tbody>' + result + '</tbody>');
+                hasSearched = true;
+                $('#Searching_Modal').modal('hide');
+                EnableThead();
+                SetupHints();
+            });
+
+        });
+
+    });
+
+    // IF CSV, don't do event.preventDefault() or return false
+    // We actually need this to be a typical hyperlink
+    $(".export").on('click', function(event) {
+        // CSV
+        exportTableToCSV.apply(this, [$('#SearchContainer > table'), 'Tickets' + new Date().toString() + '.csv']);
+    });
+
+</script>
+
+}

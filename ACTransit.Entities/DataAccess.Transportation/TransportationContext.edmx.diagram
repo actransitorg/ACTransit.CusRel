@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="02145cff16db4c5f9358d7abb8657505" Name="Diagram1">
+        <EntityTypeShape EntityType="TransportationContext.RouteAttrib" Width="1.75" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TransportationContext.Booking" Width="1.75" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TransportationContext.Direction_codes" Width="1.75" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TransportationContext.Division" Width="1.75" PointX="3.75" PointY="5.75" />
+        <EntityTypeShape EntityType="TransportationContext.EmployeeInterface" Width="1.75" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TransportationContext.HolidayList" Width="1.75" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TransportationContext.incident_log" Width="1.75" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="TransportationContext.Route" Width="1.75" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="TransportationContext.VehicleRealTime" Width="1.75" PointX="3.75" PointY="8.75" />
+        <EntityTypeShape EntityType="TransportationContext.Bus_pull_out" Width="1.75" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TransportationContext.Bus_pull_out_History" Width="1.75" PointX="9.75" PointY="5.75" />
+        <EntityTypeShape EntityType="TransportationContext.VehicleInfo" Width="1.75" PointX="6.75" PointY="10.75" />
+        <EntityTypeShape EntityType="TransportationContext.StopDistrict" Width="1.75" PointX="9.75" PointY="10.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

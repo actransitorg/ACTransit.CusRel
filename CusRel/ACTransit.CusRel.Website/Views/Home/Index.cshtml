@@ -1,0 +1,29 @@
+﻿@using ACTransit.CusRel.Models.Helpers
+@model ACTransit.CusRel.Models.HomeModel
+@{
+    ViewBag.Title = "Home Page";
+    ViewBag.Breadcrumb = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="background-color: white !important">
+    @Html.Raw(Model.HomeContent)
+</div>
+
+@if (Html.IsDebug())
+{
+    <div class="jumbotron">
+        <h2>Claims</h2>
+        <div class="row">
+            @foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            {
+                <strong>@claim.Type</strong>
+                <span>(@claim.Value)</span>
+                <span>@claim.Issuer</span>
+                <br />
+            }
+        </div>
+    </div>
+}
+
+@section Scripts {
+}

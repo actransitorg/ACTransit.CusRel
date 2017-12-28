@@ -1,0 +1,812 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MapsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dtproperties">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="property" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="objectid" Type="int" />
+          <Property Name="property" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="255" />
+          <Property Name="uvalue" Type="nvarchar" MaxLength="255" />
+          <Property Name="lvalue" Type="image" />
+          <Property Name="version" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'PublicSchedule.dbo.map_stops' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="map_stops">
+          <Property Name="route_id" Type="varchar" MaxLength="50" />
+          <Property Name="trip_id" Type="varchar" MaxLength="50" />
+          <Property Name="service_day" Type="varchar" MaxLength="50" />
+          <Property Name="direction_of_travel" Type="varchar" MaxLength="50" />
+          <Property Name="stop_id" Type="varchar" MaxLength="50" />
+          <Property Name="stop_description" Type="varchar" MaxLength="50" />
+          <Property Name="longitude" Type="varchar" MaxLength="50" />
+          <Property Name="latitude" Type="varchar" MaxLength="50" />
+          <Property Name="stop_order" Type="int" />
+          <Property Name="block_num" Type="varchar" MaxLength="50" />
+          <Property Name="stop_time" Type="varchar" MaxLength="50" />
+          <Property Name="time_point_name" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PublicSchedule.dbo.sch_alert_lines' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="sch_alert_lines">
+          <Key>
+            <PropertyRef Name="recid" />
+          </Key>
+          <Property Name="recid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="alert_id" Type="int" />
+          <Property Name="line_id" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PublicSchedule.dbo.sch_alerts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="sch_alerts">
+          <Key>
+            <PropertyRef Name="alert_id" />
+          </Key>
+          <Property Name="alert_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="alert_date" Type="datetime" />
+          <Property Name="alert_start_date" Type="datetime" />
+          <Property Name="alert_end_date" Type="datetime" />
+          <Property Name="alert_name" Type="varchar" MaxLength="255" />
+          <Property Name="alert_description" Type="text" />
+          <Property Name="alert_is_draft" Type="int" />
+        </EntityType>
+        <EntityType Name="sch_day_codes">
+          <Key>
+            <PropertyRef Name="day_code" />
+          </Key>
+          <Property Name="day_code" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="adjectives" Type="varchar" MaxLength="50" />
+          <Property Name="long_names" Type="varchar" MaxLength="50" />
+          <Property Name="longer_names" Type="varchar" MaxLength="100" />
+          <Property Name="sort_order" Type="int" />
+        </EntityType>
+        <EntityType Name="sch_direction_codes">
+          <Key>
+            <PropertyRef Name="direction_code" />
+          </Key>
+          <Property Name="direction_code" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="direction_names" Type="varchar" MaxLength="50" />
+          <Property Name="direction_replace" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sch_footnote">
+          <Key>
+            <PropertyRef Name="footnote_letter" />
+          </Key>
+          <Property Name="footnote_letter" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="footnote_text" Type="text" />
+        </EntityType>
+        <EntityType Name="sch_lines">
+          <Key>
+            <PropertyRef Name="line_id" />
+          </Key>
+          <Property Name="line_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_id" Type="int" />
+          <Property Name="version_id" Type="int" />
+          <Property Name="line_name" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="text" />
+          <Property Name="directions_file" Type="varchar" MaxLength="50" />
+          <Property Name="stop_lists_file" Type="varchar" MaxLength="50" />
+          <Property Name="map_file" Type="varchar" MaxLength="50" />
+          <Property Name="last_update" Type="varchar" MaxLength="50" />
+          <Property Name="cmyk_value" Type="varchar" MaxLength="50" />
+          <Property Name="rgb_value" Type="varchar" MaxLength="50" />
+          <Property Name="is_draft" Type="int" />
+          <Property Name="is_processing" Type="int" />
+          <Property Name="line_pdb_updated" Type="int" />
+          <Property Name="line_update_by" Type="varchar" MaxLength="20" />
+          <Property Name="line_update_timestamp" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sch_maps">
+          <Key>
+            <PropertyRef Name="map_id" />
+          </Key>
+          <Property Name="map_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version_id" Type="int" />
+          <Property Name="map_code" Type="varchar" MaxLength="50" />
+          <Property Name="map_category_id" Type="int" />
+          <Property Name="map_city" Type="varchar" MaxLength="100" />
+          <Property Name="map_type" Type="int" />
+          <Property Name="map_center_lat_lng_zoom" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sch_maps_limit">
+          <Key>
+            <PropertyRef Name="map_limit_id" />
+          </Key>
+          <Property Name="map_limit_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="map_id" Type="int" />
+          <Property Name="limit_zoom" Type="int" />
+          <Property Name="limit_x_min" Type="int" />
+          <Property Name="limit_x_max" Type="int" />
+          <Property Name="limit_y_min" Type="int" />
+          <Property Name="limit_y_max" Type="int" />
+        </EntityType>
+        <EntityType Name="sch_schedule">
+          <Key>
+            <PropertyRef Name="schedule_id" />
+          </Key>
+          <Property Name="schedule_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="schedule_code" Type="varchar" MaxLength="50" />
+          <Property Name="schedule_type" Type="int" />
+          <Property Name="line_group_id" Type="int" />
+          <Property Name="type" Type="varchar" MaxLength="5" />
+          <Property Name="notes" Type="text" />
+          <Property Name="schedule_id_equivalent" Type="int" />
+          <Property Name="direction_code" Type="varchar" MaxLength="5" />
+          <Property Name="day_code" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="sch_schedule_lines">
+          <Key>
+            <PropertyRef Name="recid" />
+          </Key>
+          <Property Name="recid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="line_id" Type="int" />
+          <Property Name="schedule_id" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PublicSchedule.dbo.sch_schedule_versions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="sch_schedule_versions">
+          <Key>
+            <PropertyRef Name="version_id" />
+          </Key>
+          <Property Name="version_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version_name" Type="varchar" MaxLength="255" />
+          <Property Name="version_preview_date" Type="datetime" />
+          <Property Name="version_start_date" Type="datetime" />
+          <Property Name="version_update_by" Type="varchar" MaxLength="20" />
+          <Property Name="version_update_in_progress" Type="int" />
+          <Property Name="version_update_timestamp" Type="datetime" />
+          <Property Name="is_processing" Type="int" />
+        </EntityType>
+        <EntityType Name="sch_special_day_codes">
+          <Key>
+            <PropertyRef Name="abbreviation" />
+          </Key>
+          <Property Name="abbreviation" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="description" Type="text" />
+        </EntityType>
+        <EntityType Name="sch_timepoints">
+          <Key>
+            <PropertyRef Name="timepoint_id" />
+          </Key>
+          <Property Name="timepoint_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="schedule_id" Type="int" />
+          <Property Name="timepoint_code" Type="varchar" MaxLength="50" />
+          <Property Name="timepoint_name" Type="varchar" MaxLength="150" />
+          <Property Name="city" Type="varchar" MaxLength="150" />
+          <Property Name="city_redundancy" Type="int" />
+          <Property Name="neighborhood" Type="varchar" MaxLength="50" />
+          <Property Name="latitude" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="longitude" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="timepoint_notes" Type="text" />
+          <Property Name="sort_order" Type="int" />
+        </EntityType>
+        <EntityType Name="sch_trips">
+          <Key>
+            <PropertyRef Name="trip_id" />
+          </Key>
+          <Property Name="trip_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="abbreviation" Type="varchar" MaxLength="2" />
+          <Property Name="line_id" Type="int" />
+          <Property Name="timepoint_id" Type="int" />
+          <Property Name="footnote_letter" Type="varchar" MaxLength="50" />
+          <Property Name="stop_time" Type="varchar" MaxLength="10" />
+          <Property Name="sort_order" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PublicSchedule.dbo.sch_schedule_line_name_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="sch_schedule_line_name_info">
+          <Key>
+            <PropertyRef Name="direction_code" />
+            <PropertyRef Name="day_code" />
+            <PropertyRef Name="schedule_id" />
+          </Key>
+          <Property Name="direction_replace" Type="varchar" MaxLength="50" />
+          <Property Name="direction_names" Type="varchar" MaxLength="50" />
+          <Property Name="direction_code" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="day_code" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="adjectives" Type="varchar" MaxLength="50" />
+          <Property Name="schedule_id" Type="int" Nullable="false" />
+          <Property Name="line_id" Type="int" />
+          <Property Name="sort_order" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PublicSchedule.dbo.sch_schedule_line_search' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="sch_schedule_line_search">
+          <Key>
+            <PropertyRef Name="schedule_id" />
+          </Key>
+          <Property Name="schedule_id" Type="int" Nullable="false" />
+          <Property Name="line_id" Type="int" />
+          <Property Name="line_name" Type="varchar" MaxLength="50" />
+          <Property Name="notes" Type="text" />
+          <Property Name="direction_replace" Type="varchar" MaxLength="50" />
+          <Property Name="direction_names" Type="varchar" MaxLength="50" />
+          <Property Name="direction_code" Type="varchar" MaxLength="5" />
+          <Property Name="day_code" Type="varchar" MaxLength="5" />
+          <Property Name="adjectives" Type="varchar" MaxLength="50" />
+          <Property Name="sort_order" Type="int" />
+        </EntityType>
+        <EntityContainer Name="MapsModelStoreContainer">
+          <EntitySet Name="dtproperties" EntityType="Self.dtproperties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_day_codes" EntityType="Self.sch_day_codes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_direction_codes" EntityType="Self.sch_direction_codes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_footnote" EntityType="Self.sch_footnote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_lines" EntityType="Self.sch_lines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_maps" EntityType="Self.sch_maps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_maps_limit" EntityType="Self.sch_maps_limit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_schedule" EntityType="Self.sch_schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_schedule_lines" EntityType="Self.sch_schedule_lines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_special_day_codes" EntityType="Self.sch_special_day_codes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_timepoints" EntityType="Self.sch_timepoints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_trips" EntityType="Self.sch_trips" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sch_alert_lines" EntityType="Self.sch_alert_lines" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [sch_alert_lines].[recid] AS [recid], 
+    [sch_alert_lines].[alert_id] AS [alert_id], 
+    [sch_alert_lines].[line_id] AS [line_id]
+    FROM [dbo].[sch_alert_lines] AS [sch_alert_lines]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="sch_alerts" EntityType="Self.sch_alerts" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [sch_alerts].[alert_id] AS [alert_id], 
+    [sch_alerts].[alert_date] AS [alert_date], 
+    [sch_alerts].[alert_start_date] AS [alert_start_date], 
+    [sch_alerts].[alert_end_date] AS [alert_end_date], 
+    [sch_alerts].[alert_name] AS [alert_name], 
+    [sch_alerts].[alert_description] AS [alert_description], 
+    [sch_alerts].[alert_is_draft] AS [alert_is_draft]
+    FROM [dbo].[sch_alerts] AS [sch_alerts]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="sch_schedule_versions" EntityType="Self.sch_schedule_versions" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [sch_schedule_versions].[version_id] AS [version_id], 
+    [sch_schedule_versions].[version_name] AS [version_name], 
+    [sch_schedule_versions].[version_preview_date] AS [version_preview_date], 
+    [sch_schedule_versions].[version_start_date] AS [version_start_date], 
+    [sch_schedule_versions].[version_update_by] AS [version_update_by], 
+    [sch_schedule_versions].[version_update_in_progress] AS [version_update_in_progress], 
+    [sch_schedule_versions].[version_update_timestamp] AS [version_update_timestamp], 
+    [sch_schedule_versions].[is_processing] AS [is_processing]
+    FROM [dbo].[sch_schedule_versions] AS [sch_schedule_versions]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="sch_schedule_line_name_info" EntityType="Self.sch_schedule_line_name_info" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [sch_schedule_line_name_info].[direction_replace] AS [direction_replace], 
+    [sch_schedule_line_name_info].[direction_names] AS [direction_names], 
+    [sch_schedule_line_name_info].[direction_code] AS [direction_code], 
+    [sch_schedule_line_name_info].[day_code] AS [day_code], 
+    [sch_schedule_line_name_info].[adjectives] AS [adjectives], 
+    [sch_schedule_line_name_info].[schedule_id] AS [schedule_id], 
+    [sch_schedule_line_name_info].[line_id] AS [line_id], 
+    [sch_schedule_line_name_info].[sort_order] AS [sort_order]
+    FROM [dbo].[sch_schedule_line_name_info] AS [sch_schedule_line_name_info]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="sch_schedule_line_search" EntityType="Self.sch_schedule_line_search" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [sch_schedule_line_search].[schedule_id] AS [schedule_id], 
+    [sch_schedule_line_search].[line_id] AS [line_id], 
+    [sch_schedule_line_search].[line_name] AS [line_name], 
+    [sch_schedule_line_search].[notes] AS [notes], 
+    [sch_schedule_line_search].[direction_replace] AS [direction_replace], 
+    [sch_schedule_line_search].[direction_names] AS [direction_names], 
+    [sch_schedule_line_search].[direction_code] AS [direction_code], 
+    [sch_schedule_line_search].[day_code] AS [day_code], 
+    [sch_schedule_line_search].[adjectives] AS [adjectives], 
+    [sch_schedule_line_search].[sort_order] AS [sort_order]
+    FROM [dbo].[sch_schedule_line_search] AS [sch_schedule_line_search]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MapsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dtproperties">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="property" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="objectid" Type="Int32" />
+          <Property Name="property" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="uvalue" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="lvalue" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="version" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sch_day_codes">
+          <Key>
+            <PropertyRef Name="day_code" />
+          </Key>
+          <Property Name="day_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="adjectives" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="long_names" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="longer_names" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="sort_order" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sch_direction_codes">
+          <Key>
+            <PropertyRef Name="direction_code" />
+          </Key>
+          <Property Name="direction_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="direction_names" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="direction_replace" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sch_footnote">
+          <Key>
+            <PropertyRef Name="footnote_letter" />
+          </Key>
+          <Property Name="footnote_letter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="footnote_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sch_lines">
+          <Key>
+            <PropertyRef Name="line_id" />
+          </Key>
+          <Property Name="line_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="version_id" Type="Int32" />
+          <Property Name="line_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="directions_file" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="stop_lists_file" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="map_file" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="last_update" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cmyk_value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rgb_value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="is_draft" Type="Int32" />
+          <Property Name="is_processing" Type="Int32" />
+          <Property Name="line_pdb_updated" Type="Int32" />
+          <Property Name="line_update_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="line_update_timestamp" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="sch_maps">
+          <Key>
+            <PropertyRef Name="map_id" />
+          </Key>
+          <Property Name="map_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version_id" Type="Int32" />
+          <Property Name="map_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="map_category_id" Type="Int32" />
+          <Property Name="map_city" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="map_type" Type="Int32" />
+          <Property Name="map_center_lat_lng_zoom" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sch_maps_limit">
+          <Key>
+            <PropertyRef Name="map_limit_id" />
+          </Key>
+          <Property Name="map_limit_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="map_id" Type="Int32" />
+          <Property Name="limit_zoom" Type="Int32" />
+          <Property Name="limit_x_min" Type="Int32" />
+          <Property Name="limit_x_max" Type="Int32" />
+          <Property Name="limit_y_min" Type="Int32" />
+          <Property Name="limit_y_max" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sch_schedule">
+          <Key>
+            <PropertyRef Name="schedule_id" />
+          </Key>
+          <Property Name="schedule_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="schedule_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="schedule_type" Type="Int32" />
+          <Property Name="line_group_id" Type="Int32" />
+          <Property Name="type" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="schedule_id_equivalent" Type="Int32" />
+          <Property Name="direction_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="day_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sch_schedule_lines">
+          <Key>
+            <PropertyRef Name="recid" />
+          </Key>
+          <Property Name="recid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="line_id" Type="Int32" />
+          <Property Name="schedule_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sch_special_day_codes">
+          <Key>
+            <PropertyRef Name="abbreviation" />
+          </Key>
+          <Property Name="abbreviation" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sch_timepoints">
+          <Key>
+            <PropertyRef Name="timepoint_id" />
+          </Key>
+          <Property Name="timepoint_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="schedule_id" Type="Int32" />
+          <Property Name="timepoint_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="timepoint_name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="city_redundancy" Type="Int32" />
+          <Property Name="neighborhood" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="latitude" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="longitude" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="timepoint_notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sort_order" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sch_trips">
+          <Key>
+            <PropertyRef Name="trip_id" />
+          </Key>
+          <Property Name="trip_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="abbreviation" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="line_id" Type="Int32" />
+          <Property Name="timepoint_id" Type="Int32" />
+          <Property Name="footnote_letter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="stop_time" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="sort_order" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="sch_alert_lines">
+          <Key>
+            <PropertyRef Name="recid" />
+          </Key>
+          <Property Name="recid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="alert_id" Type="Int32" />
+          <Property Name="line_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sch_alerts">
+          <Key>
+            <PropertyRef Name="alert_id" />
+          </Key>
+          <Property Name="alert_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="alert_date" Type="DateTime" Precision="3" />
+          <Property Name="alert_start_date" Type="DateTime" Precision="3" />
+          <Property Name="alert_end_date" Type="DateTime" Precision="3" />
+          <Property Name="alert_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="alert_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="alert_is_draft" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sch_schedule_versions">
+          <Key>
+            <PropertyRef Name="version_id" />
+          </Key>
+          <Property Name="version_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="version_preview_date" Type="DateTime" Precision="3" />
+          <Property Name="version_start_date" Type="DateTime" Precision="3" />
+          <Property Name="version_update_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="version_update_in_progress" Type="Int32" />
+          <Property Name="version_update_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="is_processing" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sch_schedule_line_name_info">
+          <Key>
+            <PropertyRef Name="direction_code" />
+            <PropertyRef Name="day_code" />
+            <PropertyRef Name="schedule_id" />
+          </Key>
+          <Property Name="direction_replace" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="direction_names" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="direction_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="day_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="adjectives" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="schedule_id" Type="Int32" Nullable="false" />
+          <Property Name="line_id" Type="Int32" />
+          <Property Name="sort_order" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sch_schedule_line_search">
+          <Key>
+            <PropertyRef Name="schedule_id" />
+          </Key>
+          <Property Name="schedule_id" Type="Int32" Nullable="false" />
+          <Property Name="line_id" Type="Int32" />
+          <Property Name="line_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="direction_replace" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="direction_names" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="direction_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="day_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="adjectives" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sort_order" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="MapsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dtproperties" EntityType="Self.dtproperties" />
+          <EntitySet Name="sch_day_codes" EntityType="Self.sch_day_codes" />
+          <EntitySet Name="sch_direction_codes" EntityType="Self.sch_direction_codes" />
+          <EntitySet Name="sch_footnote" EntityType="Self.sch_footnote" />
+          <EntitySet Name="sch_lines" EntityType="Self.sch_lines" />
+          <EntitySet Name="sch_maps" EntityType="Self.sch_maps" />
+          <EntitySet Name="sch_maps_limit" EntityType="Self.sch_maps_limit" />
+          <EntitySet Name="sch_schedule" EntityType="Self.sch_schedule" />
+          <EntitySet Name="sch_schedule_lines" EntityType="Self.sch_schedule_lines" />
+          <EntitySet Name="sch_special_day_codes" EntityType="Self.sch_special_day_codes" />
+          <EntitySet Name="sch_timepoints" EntityType="Self.sch_timepoints" />
+          <EntitySet Name="sch_trips" EntityType="Self.sch_trips" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="sch_alert_lines" EntityType="Self.sch_alert_lines" />
+          <EntitySet Name="sch_alerts" EntityType="Self.sch_alerts" />
+          <EntitySet Name="sch_schedule_versions" EntityType="Self.sch_schedule_versions" />
+          <EntitySet Name="sch_schedule_line_name_info" EntityType="Self.sch_schedule_line_name_info" />
+          <EntitySet Name="sch_schedule_line_search" EntityType="Self.sch_schedule_line_search" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MapsModelStoreContainer" CdmEntityContainer="MapsEntities">
+          <EntitySetMapping Name="dtproperties">
+            <EntityTypeMapping TypeName="MapsModel.dtproperties">
+              <MappingFragment StoreEntitySet="dtproperties">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="objectid" ColumnName="objectid" />
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="uvalue" ColumnName="uvalue" />
+                <ScalarProperty Name="lvalue" ColumnName="lvalue" />
+                <ScalarProperty Name="version" ColumnName="version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_day_codes">
+            <EntityTypeMapping TypeName="MapsModel.sch_day_codes">
+              <MappingFragment StoreEntitySet="sch_day_codes">
+                <ScalarProperty Name="day_code" ColumnName="day_code" />
+                <ScalarProperty Name="adjectives" ColumnName="adjectives" />
+                <ScalarProperty Name="long_names" ColumnName="long_names" />
+                <ScalarProperty Name="longer_names" ColumnName="longer_names" />
+                <ScalarProperty Name="sort_order" ColumnName="sort_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_direction_codes">
+            <EntityTypeMapping TypeName="MapsModel.sch_direction_codes">
+              <MappingFragment StoreEntitySet="sch_direction_codes">
+                <ScalarProperty Name="direction_code" ColumnName="direction_code" />
+                <ScalarProperty Name="direction_names" ColumnName="direction_names" />
+                <ScalarProperty Name="direction_replace" ColumnName="direction_replace" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_footnote">
+            <EntityTypeMapping TypeName="MapsModel.sch_footnote">
+              <MappingFragment StoreEntitySet="sch_footnote">
+                <ScalarProperty Name="footnote_letter" ColumnName="footnote_letter" />
+                <ScalarProperty Name="footnote_text" ColumnName="footnote_text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_lines">
+            <EntityTypeMapping TypeName="MapsModel.sch_lines">
+              <MappingFragment StoreEntitySet="sch_lines">
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="version_id" ColumnName="version_id" />
+                <ScalarProperty Name="line_name" ColumnName="line_name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="directions_file" ColumnName="directions_file" />
+                <ScalarProperty Name="stop_lists_file" ColumnName="stop_lists_file" />
+                <ScalarProperty Name="map_file" ColumnName="map_file" />
+                <ScalarProperty Name="last_update" ColumnName="last_update" />
+                <ScalarProperty Name="cmyk_value" ColumnName="cmyk_value" />
+                <ScalarProperty Name="rgb_value" ColumnName="rgb_value" />
+                <ScalarProperty Name="is_draft" ColumnName="is_draft" />
+                <ScalarProperty Name="is_processing" ColumnName="is_processing" />
+                <ScalarProperty Name="line_pdb_updated" ColumnName="line_pdb_updated" />
+                <ScalarProperty Name="line_update_by" ColumnName="line_update_by" />
+                <ScalarProperty Name="line_update_timestamp" ColumnName="line_update_timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_maps">
+            <EntityTypeMapping TypeName="MapsModel.sch_maps">
+              <MappingFragment StoreEntitySet="sch_maps">
+                <ScalarProperty Name="map_id" ColumnName="map_id" />
+                <ScalarProperty Name="version_id" ColumnName="version_id" />
+                <ScalarProperty Name="map_code" ColumnName="map_code" />
+                <ScalarProperty Name="map_category_id" ColumnName="map_category_id" />
+                <ScalarProperty Name="map_city" ColumnName="map_city" />
+                <ScalarProperty Name="map_type" ColumnName="map_type" />
+                <ScalarProperty Name="map_center_lat_lng_zoom" ColumnName="map_center_lat_lng_zoom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_maps_limit">
+            <EntityTypeMapping TypeName="MapsModel.sch_maps_limit">
+              <MappingFragment StoreEntitySet="sch_maps_limit">
+                <ScalarProperty Name="map_limit_id" ColumnName="map_limit_id" />
+                <ScalarProperty Name="map_id" ColumnName="map_id" />
+                <ScalarProperty Name="limit_zoom" ColumnName="limit_zoom" />
+                <ScalarProperty Name="limit_x_min" ColumnName="limit_x_min" />
+                <ScalarProperty Name="limit_x_max" ColumnName="limit_x_max" />
+                <ScalarProperty Name="limit_y_min" ColumnName="limit_y_min" />
+                <ScalarProperty Name="limit_y_max" ColumnName="limit_y_max" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_schedule">
+            <EntityTypeMapping TypeName="MapsModel.sch_schedule">
+              <MappingFragment StoreEntitySet="sch_schedule">
+                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
+                <ScalarProperty Name="schedule_code" ColumnName="schedule_code" />
+                <ScalarProperty Name="schedule_type" ColumnName="schedule_type" />
+                <ScalarProperty Name="line_group_id" ColumnName="line_group_id" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="schedule_id_equivalent" ColumnName="schedule_id_equivalent" />
+                <ScalarProperty Name="direction_code" ColumnName="direction_code" />
+                <ScalarProperty Name="day_code" ColumnName="day_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_schedule_lines">
+            <EntityTypeMapping TypeName="MapsModel.sch_schedule_lines">
+              <MappingFragment StoreEntitySet="sch_schedule_lines">
+                <ScalarProperty Name="recid" ColumnName="recid" />
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_special_day_codes">
+            <EntityTypeMapping TypeName="MapsModel.sch_special_day_codes">
+              <MappingFragment StoreEntitySet="sch_special_day_codes">
+                <ScalarProperty Name="abbreviation" ColumnName="abbreviation" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_timepoints">
+            <EntityTypeMapping TypeName="MapsModel.sch_timepoints">
+              <MappingFragment StoreEntitySet="sch_timepoints">
+                <ScalarProperty Name="timepoint_id" ColumnName="timepoint_id" />
+                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
+                <ScalarProperty Name="timepoint_code" ColumnName="timepoint_code" />
+                <ScalarProperty Name="timepoint_name" ColumnName="timepoint_name" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="city_redundancy" ColumnName="city_redundancy" />
+                <ScalarProperty Name="neighborhood" ColumnName="neighborhood" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="timepoint_notes" ColumnName="timepoint_notes" />
+                <ScalarProperty Name="sort_order" ColumnName="sort_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_trips">
+            <EntityTypeMapping TypeName="MapsModel.sch_trips">
+              <MappingFragment StoreEntitySet="sch_trips">
+                <ScalarProperty Name="trip_id" ColumnName="trip_id" />
+                <ScalarProperty Name="abbreviation" ColumnName="abbreviation" />
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+                <ScalarProperty Name="timepoint_id" ColumnName="timepoint_id" />
+                <ScalarProperty Name="footnote_letter" ColumnName="footnote_letter" />
+                <ScalarProperty Name="stop_time" ColumnName="stop_time" />
+                <ScalarProperty Name="sort_order" ColumnName="sort_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MapsModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_alert_lines">
+            <EntityTypeMapping TypeName="MapsModel.sch_alert_lines">
+              <MappingFragment StoreEntitySet="sch_alert_lines">
+                <ScalarProperty Name="recid" ColumnName="recid" />
+                <ScalarProperty Name="alert_id" ColumnName="alert_id" />
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_alerts">
+            <EntityTypeMapping TypeName="MapsModel.sch_alerts">
+              <MappingFragment StoreEntitySet="sch_alerts">
+                <ScalarProperty Name="alert_id" ColumnName="alert_id" />
+                <ScalarProperty Name="alert_date" ColumnName="alert_date" />
+                <ScalarProperty Name="alert_start_date" ColumnName="alert_start_date" />
+                <ScalarProperty Name="alert_end_date" ColumnName="alert_end_date" />
+                <ScalarProperty Name="alert_name" ColumnName="alert_name" />
+                <ScalarProperty Name="alert_description" ColumnName="alert_description" />
+                <ScalarProperty Name="alert_is_draft" ColumnName="alert_is_draft" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_schedule_versions">
+            <EntityTypeMapping TypeName="MapsModel.sch_schedule_versions">
+              <MappingFragment StoreEntitySet="sch_schedule_versions">
+                <ScalarProperty Name="version_id" ColumnName="version_id" />
+                <ScalarProperty Name="version_name" ColumnName="version_name" />
+                <ScalarProperty Name="version_preview_date" ColumnName="version_preview_date" />
+                <ScalarProperty Name="version_start_date" ColumnName="version_start_date" />
+                <ScalarProperty Name="version_update_by" ColumnName="version_update_by" />
+                <ScalarProperty Name="version_update_in_progress" ColumnName="version_update_in_progress" />
+                <ScalarProperty Name="version_update_timestamp" ColumnName="version_update_timestamp" />
+                <ScalarProperty Name="is_processing" ColumnName="is_processing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_schedule_line_name_info">
+            <EntityTypeMapping TypeName="MapsModel.sch_schedule_line_name_info">
+              <MappingFragment StoreEntitySet="sch_schedule_line_name_info">
+                <ScalarProperty Name="direction_replace" ColumnName="direction_replace" />
+                <ScalarProperty Name="direction_names" ColumnName="direction_names" />
+                <ScalarProperty Name="direction_code" ColumnName="direction_code" />
+                <ScalarProperty Name="day_code" ColumnName="day_code" />
+                <ScalarProperty Name="adjectives" ColumnName="adjectives" />
+                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+                <ScalarProperty Name="sort_order" ColumnName="sort_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sch_schedule_line_search">
+            <EntityTypeMapping TypeName="MapsModel.sch_schedule_line_search">
+              <MappingFragment StoreEntitySet="sch_schedule_line_search">
+                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+                <ScalarProperty Name="line_name" ColumnName="line_name" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="direction_replace" ColumnName="direction_replace" />
+                <ScalarProperty Name="direction_names" ColumnName="direction_names" />
+                <ScalarProperty Name="direction_code" ColumnName="direction_code" />
+                <ScalarProperty Name="day_code" ColumnName="day_code" />
+                <ScalarProperty Name="adjectives" ColumnName="adjectives" />
+                <ScalarProperty Name="sort_order" ColumnName="sort_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

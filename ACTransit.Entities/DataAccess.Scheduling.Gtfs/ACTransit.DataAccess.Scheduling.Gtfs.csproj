@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8C605775-89F7-4931-84BF-0975E85D2CA9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ACTransit.DataAccess.Scheduling.Gtfs</RootNamespace>
+    <AssemblyName>ACTransit.DataAccess.Scheduling.Gtfs</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    
+    
+    
+    
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nuget|AnyCPU'">
+    <OutputPath>bin\Nuget\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\GtfsImportUnitOfWork.cs" />
+    <Compile Include="Repositories\SchedulingGtfsEntities.cs" />
+    <Compile Include="Repositories\SchedulingGtfsRepository.cs" />
+    <Compile Include="Repositories\SchedulingGtfsUnitOfWork.cs" />
+    <Compile Include="SchedulingGtfsContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SchedulingGtfsContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SchedulingGtfsContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SchedulingGtfsContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="SchedulingEntities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ACTransit.DataAccess.Scheduling.Gtfs.nuspec" />
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+    <EntityDeploy Include="SchedulingGtfsContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SchedulingGtfsContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="SchedulingGtfsContext.edmx.diagram">
+      <DependentUpon>SchedulingGtfsContext.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ACTransit.Framework\ACTransit.Framework.DataAccess\ACTransit.Framework.DataAccess.csproj">
+      <Project>{de1ebef9-ab81-4a7e-bd81-b5200853f84a}</Project>
+      <Name>ACTransit.Framework.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ACTransit.Framework\ACTransit.Framework\ACTransit.Framework.csproj">
+      <Project>{cbab0fa8-b673-4596-94cd-3ae0a910a873}</Project>
+      <Name>ACTransit.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entities.Scheduling.Gtfs\ACTransit.Entities.Scheduling.Gtfs.csproj">
+      <Project>{0bdf1e21-b961-4b0b-a28f-046e2e4fd91e}</Project>
+      <Name>ACTransit.Entities.Scheduling.Gtfs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entities.Scheduling\ACTransit.Entities.Scheduling.csproj">
+      <Project>{fe135ceb-2e71-4096-9fce-bb095734a2d1}</Project>
+      <Name>ACTransit.Entities.Scheduling</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SchedulingGtfsContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SchedulingGtfsContext.edmx</DependentUpon>
+      <LastGenOutput>SchedulingGtfsContext.Context.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if NOT $(ConfigurationName) == Nuget GOTO end
+$(SolutionDir).nuget\publish.bat "$(ProjectName)" "$(ProjectPath)"
+:end</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

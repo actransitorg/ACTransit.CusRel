@@ -1,0 +1,1264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SchedulingGtfsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Agency">
+          <Key>
+            <PropertyRef Name="AgencyId" />
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="AgencyId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Url" Type="varchar" MaxLength="256" />
+          <Property Name="TimeZone" Type="varchar" MaxLength="100" />
+          <Property Name="Phone" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Calendar">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ServiceId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Monday" Type="bit" Nullable="false" />
+          <Property Name="Tuesday" Type="bit" Nullable="false" />
+          <Property Name="Wednesday" Type="bit" Nullable="false" />
+          <Property Name="Thursday" Type="bit" Nullable="false" />
+          <Property Name="Friday" Type="bit" Nullable="false" />
+          <Property Name="Saturday" Type="bit" Nullable="false" />
+          <Property Name="Sunday" Type="bit" Nullable="false" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+        </EntityType>
+        <EntityType Name="CalendarDate">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="ServiceId" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ServiceId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="ExceptionType" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ImportInfo">
+          <Key>
+            <PropertyRef Name="ImportInfoId" />
+          </Key>
+          <Property Name="ImportInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreationDateTime" Type="datetime" Nullable="false" />
+          <Property Name="BookingId" Type="varchar" MaxLength="10" />
+          <Property Name="FileName" Type="varchar" MaxLength="256" />
+          <Property Name="EarliestServiceDate" Type="date" />
+          <Property Name="LatestServiceDate" Type="date" />
+          <Property Name="LastImportStepId" Type="int" />
+          <Property Name="WorkingDirectory" Type="varchar" MaxLength="1024" />
+          <Property Name="ImportDirectory" Type="varchar" MaxLength="1024" />
+          <Property Name="AddUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="UpdUserId" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="3" />
+        </EntityType>
+        <EntityType Name="ImportLog">
+          <Key>
+            <PropertyRef Name="ImportLogId" />
+          </Key>
+          <Property Name="ImportLogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImportInfoId" Type="int" Nullable="false" />
+          <Property Name="ImportStepId" Type="int" Nullable="false" />
+          <Property Name="LogDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="2048" Nullable="false" />
+          <Property Name="Successful" Type="bit" Nullable="false" />
+          <Property Name="ErrorText" Type="varchar(max)" />
+          <Property Name="AddUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="UpdUserId" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="3" />
+        </EntityType>
+        <EntityType Name="ImportStep">
+          <Key>
+            <PropertyRef Name="ImportStepId" />
+          </Key>
+          <Property Name="ImportStepId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StepName" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="StepDescription" Type="varchar" MaxLength="1024" Nullable="false" />
+          <Property Name="AddUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="UpdUserId" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="3" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="RouteId" />
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="RouteId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="AgencyId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ShortName" Type="varchar" MaxLength="256" />
+          <Property Name="LongName" Type="varchar" MaxLength="256" />
+          <Property Name="RouteType" Type="varchar" MaxLength="100" />
+          <Property Name="Url" Type="varchar" MaxLength="256" />
+          <Property Name="TextColor" Type="varchar" MaxLength="100" />
+          <Property Name="Color" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Shape">
+          <Key>
+            <PropertyRef Name="ShapeId" />
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="Sequence" />
+          </Key>
+          <Property Name="ShapeId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Sequence" Type="int" Nullable="false" />
+          <Property Name="Latitude" Type="numeric" Precision="18" Scale="12" />
+          <Property Name="Longitude" Type="numeric" Precision="18" Scale="12" />
+          <Property Name="DistanceTraveled" Type="numeric" Precision="18" Scale="12" />
+        </EntityType>
+        <EntityType Name="Stop">
+          <Key>
+            <PropertyRef Name="StopId" />
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="StopId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="StopCode" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar" MaxLength="256" />
+          <Property Name="Latitude" Type="numeric" Precision="18" Scale="12" />
+          <Property Name="Longitude" Type="numeric" Precision="18" Scale="12" />
+          <Property Name="ZoneId" Type="varchar" MaxLength="100" />
+          <Property Name="Url" Type="varchar" MaxLength="256" />
+          <Property Name="LocationType" Type="varchar" MaxLength="100" />
+          <Property Name="ParentStation" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="StopTime">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="TripId" />
+            <PropertyRef Name="StopId" />
+            <PropertyRef Name="Sequence" />
+          </Key>
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TripId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="StopId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ArrivalTime" Type="varchar" MaxLength="100" />
+          <Property Name="DepartureTime" Type="varchar" MaxLength="100" />
+          <Property Name="Sequence" Type="int" Nullable="false" />
+          <Property Name="PickupType" Type="varchar" MaxLength="100" />
+          <Property Name="DropOffType" Type="varchar" MaxLength="100" />
+          <Property Name="StopHeadsign" Type="varchar" MaxLength="256" />
+          <Property Name="DistanceTraveled" Type="numeric" Precision="18" Scale="12" />
+          <Property Name="Timepoint" Type="bit" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="TripId" />
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="TripId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="RouteId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ServiceId" Type="varchar" MaxLength="100" />
+          <Property Name="TripHeadsign" Type="varchar" MaxLength="256" />
+          <Property Name="DirectionId" Type="varchar" MaxLength="100" />
+          <Property Name="BlockId" Type="varchar" MaxLength="100" />
+          <Property Name="ShapeId" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TripMap">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="TripId" />
+            <PropertyRef Name="GtfsTripId" />
+          </Key>
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TripId" Type="int" Nullable="false" />
+          <Property Name="GtfsTripId" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="AddUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="UpdUserId" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="3" />
+          <Property Name="SysRecNo" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Agency_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Agency" Type="Self.Agency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Agency">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Calendar_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Calendar" Type="Self.Calendar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Calendar">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CalendarDates_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="CalendarDate" Type="Self.CalendarDate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="CalendarDate">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportInfo_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+          <End Role="ImportInfo" Type="Self.ImportInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="ImportInfo">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportInfo_ImportStep">
+          <End Role="ImportStep" Type="Self.ImportStep" Multiplicity="0..1" />
+          <End Role="ImportInfo" Type="Self.ImportInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportStep">
+              <PropertyRef Name="ImportStepId" />
+            </Principal>
+            <Dependent Role="ImportInfo">
+              <PropertyRef Name="LastImportStepId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportLog_ImportInfo">
+          <End Role="ImportInfo" Type="Self.ImportInfo" Multiplicity="1" />
+          <End Role="ImportLog" Type="Self.ImportLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportInfo">
+              <PropertyRef Name="ImportInfoId" />
+            </Principal>
+            <Dependent Role="ImportLog">
+              <PropertyRef Name="ImportInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportLog_ImportStep">
+          <End Role="ImportStep" Type="Self.ImportStep" Multiplicity="1" />
+          <End Role="ImportLog" Type="Self.ImportLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportStep">
+              <PropertyRef Name="ImportStepId" />
+            </Principal>
+            <Dependent Role="ImportLog">
+              <PropertyRef Name="ImportStepId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_Agency">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="AgencyId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="AgencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shape_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Shape" Type="Self.Shape" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Shape">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stop_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Stop" Type="Self.Stop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Stop">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StopTime_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="StopTime" Type="Self.StopTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="StopTime">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StopTime_Stop">
+          <End Role="Stop" Type="Self.Stop" Multiplicity="1" />
+          <End Role="StopTime" Type="Self.StopTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stop">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="StopId" />
+            </Principal>
+            <Dependent Role="StopTime">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="StopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StopTime_Trip">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="StopTime" Type="Self.StopTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="TripId" />
+            </Principal>
+            <Dependent Role="StopTime">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="TripId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_Route">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripMap_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="TripMap" Type="Self.TripMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="TripMap">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripMap_GtfsTripId">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="TripMap" Type="Self.TripMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="TripId" />
+            </Principal>
+            <Dependent Role="TripMap">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="GtfsTripId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchedulingGtfsModelStoreContainer">
+          <EntitySet Name="Agency" EntityType="Self.Agency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Calendar" EntityType="Self.Calendar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CalendarDate" EntityType="Self.CalendarDate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportInfo" EntityType="Self.ImportInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportLog" EntityType="Self.ImportLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportStep" EntityType="Self.ImportStep" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Route" EntityType="Self.Route" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shape" EntityType="Self.Shape" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stop" EntityType="Self.Stop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StopTime" EntityType="Self.StopTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trip" EntityType="Self.Trip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TripMap" EntityType="Self.TripMap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="HASTUS" store:Type="Tables" />
+          <AssociationSet Name="FK_Agency_Booking" Association="Self.FK_Agency_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Agency" EntitySet="Agency" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Calendar_Booking" Association="Self.FK_Calendar_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Calendar" EntitySet="Calendar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CalendarDates_Booking" Association="Self.FK_CalendarDates_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="CalendarDate" EntitySet="CalendarDate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportInfo_Booking" Association="Self.FK_ImportInfo_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="ImportInfo" EntitySet="ImportInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportInfo_ImportStep" Association="Self.FK_ImportInfo_ImportStep">
+            <End Role="ImportStep" EntitySet="ImportStep" />
+            <End Role="ImportInfo" EntitySet="ImportInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportLog_ImportInfo" Association="Self.FK_ImportLog_ImportInfo">
+            <End Role="ImportInfo" EntitySet="ImportInfo" />
+            <End Role="ImportLog" EntitySet="ImportLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportLog_ImportStep" Association="Self.FK_ImportLog_ImportStep">
+            <End Role="ImportStep" EntitySet="ImportStep" />
+            <End Role="ImportLog" EntitySet="ImportLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_Agency" Association="Self.FK_Route_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_Booking" Association="Self.FK_Route_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shape_Booking" Association="Self.FK_Shape_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Shape" EntitySet="Shape" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stop_Booking" Association="Self.FK_Stop_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Stop" EntitySet="Stop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StopTime_Booking" Association="Self.FK_StopTime_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="StopTime" EntitySet="StopTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StopTime_Stop" Association="Self.FK_StopTime_Stop">
+            <End Role="Stop" EntitySet="Stop" />
+            <End Role="StopTime" EntitySet="StopTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StopTime_Trip" Association="Self.FK_StopTime_Trip">
+            <End Role="Trip" EntitySet="Trip" />
+            <End Role="StopTime" EntitySet="StopTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_Booking" Association="Self.FK_Trip_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Trip" EntitySet="Trip" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_Route" Association="Self.FK_Trip_Route">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Trip" EntitySet="Trip" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripMap_Booking" Association="Self.FK_TripMap_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="TripMap" EntitySet="TripMap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripMap_GtfsTripId" Association="Self.FK_TripMap_GtfsTripId">
+            <End Role="Trip" EntitySet="Trip" />
+            <End Role="TripMap" EntitySet="TripMap" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchedulingGtfsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Agency">
+          <Key>
+            <PropertyRef Name="AgencyId" />
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="AgencyId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="TimeZone" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK_Agency_Booking" FromRole="Agency" ToRole="Booking" />
+          <NavigationProperty Name="Routes" Relationship="Self.FK_Route_Agency" FromRole="Agency" ToRole="Route" />
+        </EntityType>
+        <EntityType Name="Calendar">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ServiceId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Monday" Type="Boolean" Nullable="false" />
+          <Property Name="Tuesday" Type="Boolean" Nullable="false" />
+          <Property Name="Wednesday" Type="Boolean" Nullable="false" />
+          <Property Name="Thursday" Type="Boolean" Nullable="false" />
+          <Property Name="Friday" Type="Boolean" Nullable="false" />
+          <Property Name="Saturday" Type="Boolean" Nullable="false" />
+          <Property Name="Sunday" Type="Boolean" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK_Calendar_Booking" FromRole="Calendar" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="CalendarDate">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="ServiceId" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ServiceId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExceptionType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK_CalendarDates_Booking" FromRole="CalendarDate" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="ImportInfo">
+          <Key>
+            <PropertyRef Name="ImportInfoId" />
+          </Key>
+          <Property Name="ImportInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreationDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="EarliestServiceDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestServiceDate" Type="DateTime" Precision="0" />
+          <Property Name="LastImportStepId" Type="Int32" />
+          <Property Name="WorkingDirectory" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="ImportDirectory" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="AddUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK_ImportInfo_Booking" FromRole="ImportInfo" ToRole="Booking" />
+          <NavigationProperty Name="ImportStep" Relationship="Self.FK_ImportInfo_ImportStep" FromRole="ImportInfo" ToRole="ImportStep" />
+          <NavigationProperty Name="ImportLogs" Relationship="Self.FK_ImportLog_ImportInfo" FromRole="ImportInfo" ToRole="ImportLog" />
+        </EntityType>
+        <EntityType Name="ImportLog">
+          <Key>
+            <PropertyRef Name="ImportLogId" />
+          </Key>
+          <Property Name="ImportLogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImportInfoId" Type="Int32" Nullable="false" />
+          <Property Name="ImportStepId" Type="Int32" Nullable="false" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Description" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Successful" Type="Boolean" Nullable="false" />
+          <Property Name="ErrorText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AddUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ImportInfo" Relationship="Self.FK_ImportLog_ImportInfo" FromRole="ImportLog" ToRole="ImportInfo" />
+          <NavigationProperty Name="ImportStep" Relationship="Self.FK_ImportLog_ImportStep" FromRole="ImportLog" ToRole="ImportStep" />
+        </EntityType>
+        <EntityType Name="ImportStep">
+          <Key>
+            <PropertyRef Name="ImportStepId" />
+          </Key>
+          <Property Name="ImportStepId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StepName" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StepDescription" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AddUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ImportInfoes" Relationship="Self.FK_ImportInfo_ImportStep" FromRole="ImportStep" ToRole="ImportInfo" />
+          <NavigationProperty Name="ImportLogs" Relationship="Self.FK_ImportLog_ImportStep" FromRole="ImportStep" ToRole="ImportLog" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="RouteId" />
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="RouteId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AgencyId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ShortName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="LongName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="RouteType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="TextColor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Agency" Relationship="Self.FK_Route_Agency" FromRole="Route" ToRole="Agency" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK_Route_Booking" FromRole="Route" ToRole="Booking" />
+          <NavigationProperty Name="Trips" Relationship="Self.FK_Trip_Route" FromRole="Route" ToRole="Trip" />
+        </EntityType>
+        <EntityType Name="Shape">
+          <Key>
+            <PropertyRef Name="ShapeId" />
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="Sequence" />
+          </Key>
+          <Property Name="ShapeId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="18" Scale="12" />
+          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="12" />
+          <Property Name="DistanceTraveled" Type="Decimal" Precision="18" Scale="12" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK_Shape_Booking" FromRole="Shape" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="Stop">
+          <Key>
+            <PropertyRef Name="StopId" />
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="StopId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StopCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="18" Scale="12" />
+          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="12" />
+          <Property Name="ZoneId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="LocationType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ParentStation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK_Stop_Booking" FromRole="Stop" ToRole="Booking" />
+          <NavigationProperty Name="StopTimes" Relationship="Self.FK_StopTime_Stop" FromRole="Stop" ToRole="StopTime" />
+        </EntityType>
+        <EntityType Name="StopTime">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="TripId" />
+            <PropertyRef Name="StopId" />
+            <PropertyRef Name="Sequence" />
+          </Key>
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TripId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StopId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ArrivalTime" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DepartureTime" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" />
+          <Property Name="PickupType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DropOffType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StopHeadsign" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="DistanceTraveled" Type="Decimal" Precision="18" Scale="12" />
+          <Property Name="Timepoint" Type="Boolean" />
+          <NavigationProperty Name="Stop" Relationship="Self.FK_StopTime_Stop" FromRole="StopTime" ToRole="Stop" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK_StopTime_Booking" FromRole="StopTime" ToRole="Booking" />
+          <NavigationProperty Name="Trip" Relationship="Self.FK_StopTime_Trip" FromRole="StopTime" ToRole="Trip" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="TripId" />
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="TripId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RouteId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ServiceId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TripHeadsign" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="DirectionId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BlockId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ShapeId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_Trip_Route" FromRole="Trip" ToRole="Route" />
+          <NavigationProperty Name="StopTimes" Relationship="Self.FK_StopTime_Trip" FromRole="Trip" ToRole="StopTime" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK_Trip_Booking" FromRole="Trip" ToRole="Booking" />
+          <NavigationProperty Name="TripMaps" Relationship="Self.FK_TripMap_GtfsTripId" FromRole="Trip" ToRole="TripMap" />
+        </EntityType>
+        <EntityType Name="TripMap">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="TripId" />
+            <PropertyRef Name="GtfsTripId" />
+          </Key>
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TripId" Type="Int32" Nullable="false" />
+          <Property Name="GtfsTripId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Trip" Relationship="Self.FK_TripMap_GtfsTripId" FromRole="TripMap" ToRole="Trip" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK_TripMap_Booking" FromRole="TripMap" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AddUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdDateTime" Type="DateTime" Precision="3" />
+          <Property Name="SysRecNo" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Agencies" Relationship="Self.FK_Agency_Booking" FromRole="Booking" ToRole="Agency" />
+          <NavigationProperty Name="Calendars" Relationship="Self.FK_Calendar_Booking" FromRole="Booking" ToRole="Calendar" />
+          <NavigationProperty Name="CalendarDates" Relationship="Self.FK_CalendarDates_Booking" FromRole="Booking" ToRole="CalendarDate" />
+          <NavigationProperty Name="ImportInfoes" Relationship="Self.FK_ImportInfo_Booking" FromRole="Booking" ToRole="ImportInfo" />
+          <NavigationProperty Name="Routes" Relationship="Self.FK_Route_Booking" FromRole="Booking" ToRole="Route" />
+          <NavigationProperty Name="Shapes" Relationship="Self.FK_Shape_Booking" FromRole="Booking" ToRole="Shape" />
+          <NavigationProperty Name="Stops" Relationship="Self.FK_Stop_Booking" FromRole="Booking" ToRole="Stop" />
+          <NavigationProperty Name="StopTimes" Relationship="Self.FK_StopTime_Booking" FromRole="Booking" ToRole="StopTime" />
+          <NavigationProperty Name="Trips" Relationship="Self.FK_Trip_Booking" FromRole="Booking" ToRole="Trip" />
+          <NavigationProperty Name="TripMaps" Relationship="Self.FK_TripMap_Booking" FromRole="Booking" ToRole="TripMap" />
+        </EntityType>
+        <Association Name="FK_Agency_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Agency" Type="Self.Agency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Agency">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_Agency">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="AgencyId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="AgencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Calendar_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Calendar" Type="Self.Calendar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Calendar">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CalendarDates_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="CalendarDate" Type="Self.CalendarDate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="CalendarDate">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportInfo_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+          <End Role="ImportInfo" Type="Self.ImportInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="ImportInfo">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportInfo_ImportStep">
+          <End Role="ImportStep" Type="Self.ImportStep" Multiplicity="0..1" />
+          <End Role="ImportInfo" Type="Self.ImportInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportStep">
+              <PropertyRef Name="ImportStepId" />
+            </Principal>
+            <Dependent Role="ImportInfo">
+              <PropertyRef Name="LastImportStepId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportLog_ImportInfo">
+          <End Role="ImportInfo" Type="Self.ImportInfo" Multiplicity="1" />
+          <End Role="ImportLog" Type="Self.ImportLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportInfo">
+              <PropertyRef Name="ImportInfoId" />
+            </Principal>
+            <Dependent Role="ImportLog">
+              <PropertyRef Name="ImportInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportLog_ImportStep">
+          <End Role="ImportStep" Type="Self.ImportStep" Multiplicity="1" />
+          <End Role="ImportLog" Type="Self.ImportLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportStep">
+              <PropertyRef Name="ImportStepId" />
+            </Principal>
+            <Dependent Role="ImportLog">
+              <PropertyRef Name="ImportStepId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_Route">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shape_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Shape" Type="Self.Shape" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Shape">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stop_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Stop" Type="Self.Stop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Stop">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StopTime_Stop">
+          <End Role="Stop" Type="Self.Stop" Multiplicity="1" />
+          <End Role="StopTime" Type="Self.StopTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stop">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="StopId" />
+            </Principal>
+            <Dependent Role="StopTime">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="StopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StopTime_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="StopTime" Type="Self.StopTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="StopTime">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StopTime_Trip">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="StopTime" Type="Self.StopTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="TripId" />
+            </Principal>
+            <Dependent Role="StopTime">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="TripId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripMap_GtfsTripId">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="TripMap" Type="Self.TripMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="TripId" />
+            </Principal>
+            <Dependent Role="TripMap">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="GtfsTripId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripMap_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="TripMap" Type="Self.TripMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="TripMap">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchedulingGtfsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Agencies" EntityType="Self.Agency" />
+          <EntitySet Name="Calendars" EntityType="Self.Calendar" />
+          <EntitySet Name="CalendarDates" EntityType="Self.CalendarDate" />
+          <EntitySet Name="ImportInfoes" EntityType="Self.ImportInfo" />
+          <EntitySet Name="ImportLogs" EntityType="Self.ImportLog" />
+          <EntitySet Name="ImportSteps" EntityType="Self.ImportStep" />
+          <EntitySet Name="Routes" EntityType="Self.Route" />
+          <EntitySet Name="Shapes" EntityType="Self.Shape" />
+          <EntitySet Name="Stops" EntityType="Self.Stop" />
+          <EntitySet Name="StopTimes" EntityType="Self.StopTime" />
+          <EntitySet Name="Trips" EntityType="Self.Trip" />
+          <EntitySet Name="TripMaps" EntityType="Self.TripMap" />
+          <EntitySet Name="Bookings" EntityType="Self.Booking" />
+          <AssociationSet Name="FK_Agency_Booking" Association="Self.FK_Agency_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Agency" EntitySet="Agencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_Agency" Association="Self.FK_Route_Agency">
+            <End Role="Agency" EntitySet="Agencies" />
+            <End Role="Route" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Calendar_Booking" Association="Self.FK_Calendar_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Calendar" EntitySet="Calendars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CalendarDates_Booking" Association="Self.FK_CalendarDates_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="CalendarDate" EntitySet="CalendarDates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportInfo_Booking" Association="Self.FK_ImportInfo_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="ImportInfo" EntitySet="ImportInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportInfo_ImportStep" Association="Self.FK_ImportInfo_ImportStep">
+            <End Role="ImportStep" EntitySet="ImportSteps" />
+            <End Role="ImportInfo" EntitySet="ImportInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportLog_ImportInfo" Association="Self.FK_ImportLog_ImportInfo">
+            <End Role="ImportInfo" EntitySet="ImportInfoes" />
+            <End Role="ImportLog" EntitySet="ImportLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportLog_ImportStep" Association="Self.FK_ImportLog_ImportStep">
+            <End Role="ImportStep" EntitySet="ImportSteps" />
+            <End Role="ImportLog" EntitySet="ImportLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_Booking" Association="Self.FK_Route_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Route" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_Route" Association="Self.FK_Trip_Route">
+            <End Role="Route" EntitySet="Routes" />
+            <End Role="Trip" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shape_Booking" Association="Self.FK_Shape_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Shape" EntitySet="Shapes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stop_Booking" Association="Self.FK_Stop_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Stop" EntitySet="Stops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StopTime_Stop" Association="Self.FK_StopTime_Stop">
+            <End Role="Stop" EntitySet="Stops" />
+            <End Role="StopTime" EntitySet="StopTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StopTime_Booking" Association="Self.FK_StopTime_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="StopTime" EntitySet="StopTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StopTime_Trip" Association="Self.FK_StopTime_Trip">
+            <End Role="Trip" EntitySet="Trips" />
+            <End Role="StopTime" EntitySet="StopTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_Booking" Association="Self.FK_Trip_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Trip" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripMap_GtfsTripId" Association="Self.FK_TripMap_GtfsTripId">
+            <End Role="Trip" EntitySet="Trips" />
+            <End Role="TripMap" EntitySet="TripMaps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripMap_Booking" Association="Self.FK_TripMap_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="TripMap" EntitySet="TripMaps" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SchedulingGtfsModelStoreContainer" CdmEntityContainer="SchedulingGtfsEntities">
+          <EntitySetMapping Name="Agencies">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.Agency">
+              <MappingFragment StoreEntitySet="Agency">
+                <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calendars">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.Calendar">
+              <MappingFragment StoreEntitySet="Calendar">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="Monday" ColumnName="Monday" />
+                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
+                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
+                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+                <ScalarProperty Name="Friday" ColumnName="Friday" />
+                <ScalarProperty Name="Saturday" ColumnName="Saturday" />
+                <ScalarProperty Name="Sunday" ColumnName="Sunday" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CalendarDates">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.CalendarDate">
+              <MappingFragment StoreEntitySet="CalendarDate">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ExceptionType" ColumnName="ExceptionType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportInfoes">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.ImportInfo">
+              <MappingFragment StoreEntitySet="ImportInfo">
+                <ScalarProperty Name="ImportInfoId" ColumnName="ImportInfoId" />
+                <ScalarProperty Name="CreationDateTime" ColumnName="CreationDateTime" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="EarliestServiceDate" ColumnName="EarliestServiceDate" />
+                <ScalarProperty Name="LatestServiceDate" ColumnName="LatestServiceDate" />
+                <ScalarProperty Name="LastImportStepId" ColumnName="LastImportStepId" />
+                <ScalarProperty Name="WorkingDirectory" ColumnName="WorkingDirectory" />
+                <ScalarProperty Name="ImportDirectory" ColumnName="ImportDirectory" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportLogs">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.ImportLog">
+              <MappingFragment StoreEntitySet="ImportLog">
+                <ScalarProperty Name="ImportLogId" ColumnName="ImportLogId" />
+                <ScalarProperty Name="ImportInfoId" ColumnName="ImportInfoId" />
+                <ScalarProperty Name="ImportStepId" ColumnName="ImportStepId" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Successful" ColumnName="Successful" />
+                <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportSteps">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.ImportStep">
+              <MappingFragment StoreEntitySet="ImportStep">
+                <ScalarProperty Name="ImportStepId" ColumnName="ImportStepId" />
+                <ScalarProperty Name="StepName" ColumnName="StepName" />
+                <ScalarProperty Name="StepDescription" ColumnName="StepDescription" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Routes">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.Route">
+              <MappingFragment StoreEntitySet="Route">
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="LongName" ColumnName="LongName" />
+                <ScalarProperty Name="RouteType" ColumnName="RouteType" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="TextColor" ColumnName="TextColor" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shapes">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.Shape">
+              <MappingFragment StoreEntitySet="Shape">
+                <ScalarProperty Name="ShapeId" ColumnName="ShapeId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="DistanceTraveled" ColumnName="DistanceTraveled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stops">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.Stop">
+              <MappingFragment StoreEntitySet="Stop">
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="StopCode" ColumnName="StopCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="LocationType" ColumnName="LocationType" />
+                <ScalarProperty Name="ParentStation" ColumnName="ParentStation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StopTimes">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.StopTime">
+              <MappingFragment StoreEntitySet="StopTime">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="TripId" ColumnName="TripId" />
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+                <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="PickupType" ColumnName="PickupType" />
+                <ScalarProperty Name="DropOffType" ColumnName="DropOffType" />
+                <ScalarProperty Name="StopHeadsign" ColumnName="StopHeadsign" />
+                <ScalarProperty Name="DistanceTraveled" ColumnName="DistanceTraveled" />
+                <ScalarProperty Name="Timepoint" ColumnName="Timepoint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trips">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.Trip">
+              <MappingFragment StoreEntitySet="Trip">
+                <ScalarProperty Name="TripId" ColumnName="TripId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="TripHeadsign" ColumnName="TripHeadsign" />
+                <ScalarProperty Name="DirectionId" ColumnName="DirectionId" />
+                <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+                <ScalarProperty Name="ShapeId" ColumnName="ShapeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripMaps">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.TripMap">
+              <MappingFragment StoreEntitySet="TripMap">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="TripId" ColumnName="TripId" />
+                <ScalarProperty Name="GtfsTripId" ColumnName="GtfsTripId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="SchedulingGtfsModel.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

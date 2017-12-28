@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/your.SSRS.server
+"Executed " &amp; FormatDateTime(Today,DateFormat.ShortDate)</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <Color>=IIF(CountRows("dsMain") = 0 , "Red" , "SteelBlue")</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>textbox1</rd:DefaultName>
+        <Left>6.25in</Left>
+        <Height>0.35069in</Height>
+        <Width>4in</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="textbox14">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Transportation</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>textbox1</rd:DefaultName>
+        <Top>0.42286in</Top>
+        <Height>0.20834in</Height>
+        <Width>1.78125in</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Bottom</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Image Name="Image1">
+        <Source>Embedded</Source>
+        <Value>logo</Value>
+        <Top>0.00931in</Top>
+        <Height>0.47917in</Height>
+        <Width>1.78125in</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Image>
+    </ReportItems>
+    <Height>1.3in</Height>
+    <Style />
+  </Body>
+  <Width>10.25in</Width>
+  <Page>
+    <PageHeight>8.5in</PageHeight>
+    <PageWidth>11in</PageWidth>
+    <LeftMargin>0.25in</LeftMargin>
+    <RightMargin>0.25in</RightMargin>
+    <TopMargin>0.25in</TopMargin>
+    <BottomMargin>0.25in</BottomMargin>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSourceRestroomFinder">
+      <ConnectionProperties>
+        <DataProvider>your.SSRS.serverInitial Catalog=RestroomFinder</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+      <rd:SecurityType>Integrated</rd:SecurityType>
+      <rd:DataSourceID>c53083d5-2f67-4f88-9384-9b84c8f4d79c</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsMain">
+      <Query>
+        <DataSourceName>DataSourceRestroomFinder</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@RestroomType">
+            <Value>=Parameters!RestroomType.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@RestroomName">
+            <Value>=Parameters!RestroomName.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@City">
+            <Value>=Parameters!City.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@Route">
+            <Value>=Parameters!Route.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>dbo.GetRestroomList</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="RestroomId">
+          <DataField>RestroomId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RestroomType">
+          <DataField>RestroomType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RestroomName">
+          <DataField>RestroomName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address">
+          <DataField>Address</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SortOrderBlankNameLast">
+          <DataField>SortOrderBlankNameLast</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="City">
+          <DataField>City</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="State">
+          <DataField>State</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Zip">
+          <DataField>Zip</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Country">
+          <DataField>Country</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DrinkingWater">
+          <DataField>DrinkingWater</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ACTRoute">
+          <DataField>ACTRoute</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Hours">
+          <DataField>Hours</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Note">
+          <DataField>Note</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GoogleMapsLinkNewWindow">
+          <DataField>GoogleMapsLinkNewWindow</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GoogleMapsLink">
+          <DataField>GoogleMapsLink</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsRestroomType">
+      <Query>
+        <DataSourceName>DataSourceRestroomFinder</DataSourceName>
+        <CommandText>SELECT CAST( '(All)' AS VARCHAR(25)) RestroomType
+UNION ALL
+SELECT DISTINCT
+  [RestroomType]
+FROM dbo.[Restroom]</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="RestroomType">
+          <DataField>RestroomType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsRestroomName">
+      <Query>
+        <DataSourceName>DataSourceRestroomFinder</DataSourceName>
+        <CommandText>
+SELECT CAST( '(All)' AS VARCHAR(128)) RestroomName
+UNION ALL
+SELECT DISTINCT
+  RTRIM(LTRIM(REPLACE([RestroomName],',',''))) RestroomName
+FROM dbo.[Restroom]
+WHERE RestroomName IS NOT NULL
+ORDER BY 1</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="RestroomName">
+          <DataField>RestroomName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsRoute">
+      <Query>
+        <DataSourceName>DataSourceRestroomFinder</DataSourceName>
+        <CommandText>SELECT CAST( '(All)' AS VARCHAR(25)) Route
+UNION ALL
+SELECT DISTINCT o.Route
+FROM [RestroomFinder].[dbo].[Restroom] s
+CROSS APPLY
+(
+  SELECT STR Route 
+  FROM dbo.CharToTable(s.ACTRoute,',')
+  WHERE STR != ''
+) o
+ORDER BY 1</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Route">
+          <DataField>Route</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsCity">
+      <Query>
+        <DataSourceName>DataSourceRestroomFinder</DataSourceName>
+        <CommandText>
+SELECT CAST( '(All)' AS VARCHAR(128)) City
+UNION ALL
+SELECT DISTINCT
+  RTRIM(LTRIM(REPLACE(City,',',''))) City
+FROM dbo.[Restroom]
+WHERE City IS NOT NULL
+ORDER BY 1</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="City">
+          <DataField>City</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="RestroomType">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>(All)</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Restroom Type</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsRestroomType</DataSetName>
+          <ValueField>RestroomType</ValueField>
+          <LabelField>RestroomType</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="RestroomName">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>(All)</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Restroom Name</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsRestroomName</DataSetName>
+          <ValueField>RestroomName</ValueField>
+          <LabelField>RestroomName</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="City">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>(All)</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>City</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsCity</DataSetName>
+          <ValueField>City</ValueField>
+          <LabelField>City</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="Route">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>(All)</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Route</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsRoute</DataSetName>
+          <ValueField>Route</ValueField>
+          <LabelField>Route</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+  </ReportParameters>
+  <EmbeddedImages>
+    <EmbeddedImage Name="logo">
+      <MIMEType>image/gif</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <Language>en-US</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>a7ab0a8d-acc3-47bf-b3b8-ce4c36e05921</rd:ReportID>
+</Report>

@@ -1,0 +1,92 @@
+﻿@using ACTransit.CusRel.Models.Helpers
+@model ACTransit.CusRel.Models.EditGroupContactModel
+
+@{
+    ViewBag.Title = "Edit Dept Contact";
+    ViewBag.Breadcrumb = "Admin > Edit Dept Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+    <style>
+        #GroupContact-list thead tr th, #GroupContact-list tbody tr td {
+            white-space: nowrap;
+        }
+
+        #GroupContact-list tbody tr {
+            cursor: pointer;
+        }
+
+            #GroupContact-list tbody tr:nth-child(even) {
+                background-color: #adbdbc;
+            }
+    </style>
+}
+
+<br />
+<div class="content">
+    @using (@Html.BeginForm("EditGroupContact", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1 class="panel-title text-center">Edit GroupContact</h1>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.GroupContact.Code, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <p class="col-md-6 col-sm-6 form-control-static">@Html.DisplayFor(model => model.GroupContact.Code)</p>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.GroupContact.Description, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.GroupContact.Description, new { @class = "form-control field-height", maxlength = 30, size = 30 })
+                                @Html.ValidationMessageFor(model => model.GroupContact.Description, string.Empty, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.GroupContact.Email, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.GroupContact.Email, new { @class = "form-control field-height", maxlength = 50, size = 50 })
+                                @Html.ValidationMessageFor(model => model.GroupContact.Email, string.Empty, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.GroupContact.IsVisible, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.CheckBoxFor(model => model.IsVisible, new { @class = "checkbox-fix" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.GroupContact.Order, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.GroupContact.Order, new { @class = "form-control field-height", maxlength = 2, size = 2, @style="width: 40px" })
+                                @Html.ValidationMessageFor(model => model.GroupContact.Order, string.Empty, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.GroupContact.Code)
+
+    <button class="btn btn-primary">Save</button>
+
+        @Html.ActionLink("Cancel", "GroupContacts", "Admin", new { }, new { @class = "btn btn-warning" })
+
+    }
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/jquery.exportCSV.js")
+
+}

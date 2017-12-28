@@ -1,0 +1,228 @@
+﻿@using ACTransit.CusRel.Models.Helpers
+@model ACTransit.CusRel.Models.OpenTicketsReportModel
+
+@{
+    ViewBag.Title = "Open Age Tickets";
+    ViewBag.Breadcrumb = "Reports > Open Age Tickets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    @Styles.Render("~/Content/Tables")
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/jquery.datetimepicker-2.4.0.css")" rel="stylesheet" />
+}
+
+}
+@*@section Actions{
+    <button id="search" class="btn btn-primary btn-panel-title" type="button">Search</button>
+}*@
+                @Html.HiddenFor(model => model.ReportParams.RangeStart)
+                @Html.HiddenFor(model => model.ReportParams.RangeEnd)
+
+<div class="row">
+    <div class="col-md-12 well normaltext">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <div class="row">
+                    <h1 class="panel-title text-center">
+                        <span style="padding-left: 4em">
+                            Open Tickets (by Department)
+                            <a href="javascript:print('OpenTicketsReportTable','Open Age Tickets',rangeDate)" data-tool="Print" class="printAnchor glyphicon glyphicon-print pull-right" data-title="print" rel="tooltip" style=""></a>
+                            <a href="#" class="export pull-right glyphicon glyphicon-download-alt" data-title="download csv" rel="tooltip"></a>
+                        </span>
+                    </h1>
+                </div>
+            </div>
+            <div class="panel-body" style="margin:0px 0px">
+                <div class="row form-group field-margin">
+                    <div id="SearchResults">
+                        <table class="table sortable" id="OpenTicketsReportTable">
+                            <thead>
+                                <tr>
+                                    <th>Department</th>
+                                    <th>0-10 Days</th>
+                                    <th>11-29 Days</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.Over30Count)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.TotalCount)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Result.Report.Items)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (item.Code != null)
+                                            {
+                                                @Html.ActionLink(item.Description.Trim(), "ForAction", new {id = item.Code})
+                                            }
+                                            else { @item.Description }
+                                        </td>
+                                        <td>@item.NewCount</td>
+                                        <td>@item.WorkingCount</td>
+                                        <td>@item.Over30Count</td>
+                                        <td>@item.TotalCount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 well normaltext">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <div class="row">
+                    <h1 class="panel-title text-center">
+                        <span style="padding-left: 4em">
+                            Open Tickets (by Group)
+                            <a href="javascript:startPrint('OpenTicketsReportGroupTable','OpenTicketsByGroup',rangeDate)" data-tool="Print" class="printAnchor glyphicon glyphicon-print pull-right" data-title="print" rel="tooltip" style=""></a>
+                            <a href="#" class="export pull-right glyphicon glyphicon-download-alt" data-title="download csv" rel="tooltip"></a>
+                        </span>
+                    </h1>
+                </div>
+            </div>
+            <div class="panel-body" style="margin:0px 0px">
+                <div class="row form-group field-margin">
+                    <div id="SearchResults">
+                        <table class="table sortable" id="OpenTicketsReportGroupTable">
+                            <thead>
+                                <tr>
+                                    <th>@Html.GetDisplayName(model => model.Header.Description)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.NewCount)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.WorkingCount)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.Over30Count)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.TotalCount)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Result.Report.GroupItems)
+                                {
+                                    <tr>
+                                        <td>@item.Description</td>
+                                        <td>@item.NewCount</td>
+                                        <td>@item.WorkingCount</td>
+                                        <td>@item.Over30Count</td>
+                                        <td>@item.TotalCount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Tables")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/jquery.exportCSV.js")
+    <script type="text/javascript">
+        var ReportParams = @Html.Raw(Json.Encode(Model.ReportParams));
+        var PostReportParams = @Html.Raw(Json.Encode(Model.PostReportParams));
+        var rangeDate = ' - ' + 'Start Date: ' + $('#ReportParams_RangeStart').val() + '   ' + '   End Date: ' + $('#ReportParams_RangeEnd').val();
+
+        $(".date-picker").each(function() {
+            var that = $(this);
+            setTimeout(function() {
+                that.datetimepicker({
+                    format: 'm/d/Y',
+                    timepicker: false,
+                });
+            }, 50);
+        });
+
+        function pageTop() {
+            return $(".navbar-fixed-top").height();
+        }
+
+        function EnableThead() {
+            $.bootstrapSortable(true);
+            return;
+            $("#OpenTicketsReportTable").floatThead({
+                scrollingTop: pageTop,
+                useAbsolutePositioning: false
+            });
+            $(".table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td").css("padding", "1px 0px 5px 0px", "important");
+        }
+
+        EnableThead();
+
+        function startPrint(tableName, titleName, assignValue) {
+            //$("#OpenTicketsReportTable").floatThead('destroy');
+            print(tableName, titleName, assignValue);
+            EnableThead();
+        }
+
+        $("#search").on('click', function() {
+            RefreshView();
+            var rangeStart = $('#ReportParams_RangeStart').val();
+            var rangeEnd = $('#ReportParams_RangeEnd').val();
+            rangeDate = '- ' + 'StartDate :' + rangeStart + '   ' + '   EndDate :' + rangeEnd;
+        });
+
+        RefreshView = function() {
+            var rangeStart = $("#ReportParams_RangeStart").val().length > 0 ? $("#ReportParams_RangeStart").val() + " 12:00 AM" : null;
+            var rangeEnd = $("#ReportParams_RangeEnd").val().length > 0 ? $("#ReportParams_RangeEnd").val() + " 11:59:59 PM" : null;
+            PostReportParams.RangeStart = rangeStart;
+            PostReportParams.RangeEnd = rangeEnd;
+            $.ajax({
+                type: "POST",
+                url: "OpenTickets",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(PostReportParams),
+                success: function(result) {
+                    var data = result.Report.Items;
+                    var content = '';
+                    for (var i = 0; i < data.length; i++) {
+                        content +=
+                            '<tr>\
+                                    <td><a href="@Url.Action("ForAction")/' + data[i].Code + '">' + toNullString(data[i].Description) + '</a></td>\
+                                    <td>' + data[i].NewCount + '</td>\
+                                    <td>' + data[i].WorkingCount + '</td>\
+                                    <td>' + data[i].Over30Count + '</td>\
+                                    <td>' + data[i].TotalCount + '</td>\
+                                </tr>';
+                    }
+                    $('#OpenTicketsReportTable tbody').html(content);
+                    $("#OpenTicketsReportTable").floatThead('reflow');
+
+                    data = result.Report.GroupItems;
+                    content = '';
+                    for (var i = 0; i < data.length; i++) {
+                        content +=
+                            '<tr>\
+                                    <td>' + toNullString(data[i].Description) + '</td>\
+                                    <td>' + data[i].NewCount + '</td>\
+                                    <td>' + data[i].WorkingCount + '</td>\
+                                    <td>' + data[i].Over30Count + '</td>\
+                                    <td>' + data[i].TotalCount + '</td>\
+                                </tr>';
+                    }
+                    $('#OpenTicketsReportGroupTable tbody').html(content);
+
+
+                    $.bootstrapSortable(true);
+                },
+                fail: function(e, data) {
+
+                }
+            });
+        };
+        // IF CSV, don't do event.preventDefault() or return false
+        // We actually need this to be a typical hyperlink
+        $(".export").on('click', function(event) {
+            // CSV
+            exportTableToCSV.apply(this, [$('#SearchResults > table'), 'OpenTickets.csv']);
+        });
+    </script>
+}

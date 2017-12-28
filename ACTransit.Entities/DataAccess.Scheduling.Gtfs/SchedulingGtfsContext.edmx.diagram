@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="07b9ac10b1174d36b54dcc7519748dff" Name="Diagram1">
+        <EntityTypeShape EntityType="SchedulingGtfsModel.Agency" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.Calendar" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.CalendarDate" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.ImportInfo" Width="1.5" PointX="6" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.ImportLog" Width="1.5" PointX="8.25" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.ImportStep" Width="1.5" PointX="3.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.Route" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.Shape" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.Stop" Width="1.5" PointX="3" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.StopTime" Width="1.5" PointX="10.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.Trip" Width="1.5" PointX="7.5" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.TripMap" Width="1.5" PointX="9.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchedulingGtfsModel.Booking" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_Agency_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_Route_Agency" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_Calendar_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_CalendarDates_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_ImportInfo_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_ImportInfo_ImportStep" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_ImportLog_ImportInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_ImportLog_ImportStep" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_Route_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_Trip_Route" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_Shape_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_Stop_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_StopTime_Stop" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_StopTime_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_StopTime_Trip" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_Trip_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_TripMap_GtfsTripId" ManuallyRouted="false" />
+        <AssociationConnector Association="SchedulingGtfsModel.FK_TripMap_Booking" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5a454f759caa499ba995df3ed9b6a509" Name="Diagram1" ZoomLevel="99">
+        <EntityTypeShape EntityType="CusRelModel.AuthorizedUsers" Width="1.625" PointX="0.625" PointY="0.75" />
+        <EntityTypeShape EntityType="CusRelModel.tblAttachments" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CusRelModel.tblContactHistory" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CusRelModel.tblContacts" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="CusRelModel.tblCustomerComplaintCodes" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="CusRelModel.tblCustomerReferenceCodes" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="CusRelModel.tblIncidentUpdateHistory" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CusRelModel.tblResearchHistory" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="CusRelModel.tblUpdateLog" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="CusRelModel.EmplDW_Department" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="CusRelModel.EmplDW_Employees" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="CusRelModel.tblLinkedContacts" Width="1.5" PointX="9.5" PointY="0.75" />
+        <EntityTypeShape EntityType="CusRelModel.Settings" Width="1.5" PointX="9.375" PointY="3.75" />
+        <AssociationConnector Association="CusRelModel.FK_tblAttachments_tblContacts" />
+        <AssociationConnector Association="CusRelModel.FK_tblContactHistory_tblContacts" />
+        <AssociationConnector Association="CusRelModel.FK_tblIncidentUpdateHistory_tblContacts" />
+        <AssociationConnector Association="CusRelModel.FK_tblLinkedContacts_tblContacts" />
+        <AssociationConnector Association="CusRelModel.FK_tblLinkedContacts_tblContacts1" />
+        <AssociationConnector Association="CusRelModel.FK_tblResearchHistory_tblContacts" />
+        <AssociationConnector Association="CusRelModel.FK_tblUpdateLog_tblContacts" />
+        <EntityTypeShape EntityType="CusRelModel.tblAttachmentsTemp" Width="1.5" PointX="3" PointY="11.25" />
+        <AssociationConnector Association="CusRelModel.FK_tblAttachmentsTemp_tblContacts" />
+        <EntityTypeShape EntityType="CusRelModel.tblViewHistory" Width="1.5" PointX="3" PointY="16.625" />
+        <AssociationConnector Association="CusRelModel.FK_tblViewHistory_tblContacts" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

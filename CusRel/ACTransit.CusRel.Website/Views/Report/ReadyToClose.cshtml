@@ -1,0 +1,149 @@
+﻿@using ACTransit.CusRel.Models.Helpers
+@using ACTransit.Framework.Extensions
+@model ACTransit.CusRel.Models.ReadyToCloseReportModel
+
+@{
+    ViewBag.Title = "Ready To Close";
+    ViewBag.Breadcrumb = "Reports > Ready To Close";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    @Styles.Render("~/Content/Tables")
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+}
+
+@section Actions{
+    <button id="submitChanges" class="btn btn-primary btn-panel-title" type="button">Update</button>
+}
+<div class="row row-first">
+    <div class="col-md-12 well normaltext">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <div class="row">
+                    <h1 class="panel-title text-center">
+                        <span style="padding-left: 4em">
+                            Tickets (<span id="TicketCount">@Model.Result.Report.Items.Count()</span>)
+                            <a href="javascript:startPrint('ReadyToCloseReportTable','Ready To Close','')" data-tool="Print" class="printAnchor glyphicon glyphicon-print pull-right" data-title="print" rel="tooltip" style=""></a>
+                            <a href="#" class="export pull-right glyphicon glyphicon-download-alt" data-title="download csv" rel="tooltip"></a>
+                        </span>
+                    </h1>
+                </div>
+            </div>
+            <div class="panel-body" style="margin:0px 0px">
+                <div class="row form-group field-margin">
+                    <div id="SearchResults">
+                        <table class="table sortable" id="ReadyToCloseReportTable">
+                            <thead>
+                                <tr>
+                                    <th>@Html.GetDisplayName(model => model.Header.Id)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.IncidentAt)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.GroupContact)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.Reasons)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.ResponseBy)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.ResponseVia)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.TicketStatus)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.AssignedTo)</th>
+                                    <th><input id="cb-all" type="checkbox" /> Close</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Result.Report.Items)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink(@item.Id.ToString(), "Update", "Ticket", new { id = item.Id },
+                                             new { id = "_" + @item.Id, target = "_self", data_toggle = "popover", data_content = @Html.GetCommentsString(item.Comments), data_title = "Ticket #" + @item.Id })
+                                        </td>
+                                        <td data-dateformat="M-D-YYYY">@(item.IncidentAt.HasValue ? item.IncidentAt.Value.ToString("M/d/yyyy") : "")</td>
+                                        <td>@item.GroupContact</td>
+                                        <td>@item.Reasons</td>
+                                        <td>@item.ResponseBy</td>
+                                        <td>@item.ResponseVia</td>
+                                        <td>@item.TicketStatus.PascalCaseToDescription()</td>
+                                        <td>@item.AssignedTo</td>
+                                        <td><input class="checkbox-inline table-checkbox" id="cb-@item.Id" type="checkbox" /></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Tables")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/jquery.exportCSV.js")
+
+    <script type="text/javascript">
+        @*var ReportParams = @Html.Raw(Json.Encode(Model.ReportParams));*@
+        var PostReportParams = @Html.Raw(Json.Encode(Model.PostReportParams));
+
+        function pageTop() {
+            return $(".navbar-fixed-top").height();
+        }
+
+        function EnableThead() {
+            $.bootstrapSortable(true);
+            return;
+            $("#ReadyToCloseReportTable").floatThead({
+                scrollingTop: pageTop,
+                useAbsolutePositioning: false
+            });
+            $(".table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td").css("padding", "1px 0px 5px 0px", "important");
+        }
+
+        EnableThead();
+        SetupHints();
+
+        function startPrint(tableName, titleName, assignValue) {
+            //$("#ReadyToCloseReportTable").floatThead('destroy');
+            $("#ReadyToCloseReportTable td").css("white-space", "normal");
+            print(tableName, titleName, assignValue);
+            EnableThead();
+            $("#ReadyToCloseReportTable td").css("white-space", "nowrap");
+        }
+
+        $("#cb-all").on('click', function() {
+            var checked = $(this).is(':checked');
+            $(".checkbox-inline").prop("checked", checked);
+        });
+
+        $("#submitChanges").on('click', function() {
+
+            var tickets = $(".checkbox-inline:checked");
+            if (tickets.length == 0) return;
+            PostReportParams.Items = [];
+            $.each(tickets, function(index) {
+                var id = parseInt(tickets[index].id.replace("cb-", ""));
+                var currentStatus = $(tickets[index]).parent().parent().find("td:nth-child(7)").data("value");
+                PostReportParams.Items.push({ Id: id, CurrentStatus: currentStatus});
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "ReadyToClose",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(PostReportParams),
+                success: function(result) {
+                    location.href = '@Url.Action("ReadyToClose", "Report")';
+                },
+                fail: function(e, data) {
+
+                }
+            });
+        });
+        // IF CSV, don't do event.preventDefault() or return false
+        // We actually need this to be a typical hyperlink
+        $(".export").on('click', function(event) {
+            // CSV
+            exportTableToCSV.apply(this, [$('#SearchResults > table'), 'ReadyToClose.csv']);
+        });
+    </script>
+}

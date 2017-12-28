@@ -1,0 +1,1921 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SchedulingContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Block">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="BlockNumber" />
+            <PropertyRef Name="OperatesSunday" />
+            <PropertyRef Name="OperatesMonday" />
+            <PropertyRef Name="OperatesTuesday" />
+            <PropertyRef Name="OperatesWednesday" />
+            <PropertyRef Name="OperatesThursday" />
+            <PropertyRef Name="OperatesFriday" />
+            <PropertyRef Name="OperatesSaturday" />
+            <PropertyRef Name="StatusCode" />
+          </Key>
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ScheduleType" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="Garage" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="BlockNumber" Type="int" Nullable="false" />
+          <Property Name="AllRoutes" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="RouteCount" Type="tinyint" Nullable="false" />
+          <Property Name="TimeStart" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="StartPrdTime" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="PlaceIdStartNoPull" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="PlaceIdEndNoPull" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="EndPrdTime" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="TimeEnd" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Duration" Type="smallint" Nullable="false" />
+          <Property Name="InServiceDuration" Type="smallint" Nullable="false" />
+          <Property Name="Layover" Type="smallint" Nullable="false" />
+          <Property Name="Distance" Type="decimal" Precision="6" Scale="3" Nullable="false" />
+          <Property Name="DistanceInService" Type="decimal" Precision="6" Scale="3" Nullable="false" />
+          <Property Name="TripCountInService" Type="smallint" Nullable="false" />
+          <Property Name="TripCount" Type="smallint" Nullable="false" />
+          <Property Name="OperatesSunday" Type="bit" Nullable="false" />
+          <Property Name="OperatesMonday" Type="bit" Nullable="false" />
+          <Property Name="OperatesTuesday" Type="bit" Nullable="false" />
+          <Property Name="OperatesWednesday" Type="bit" Nullable="false" />
+          <Property Name="OperatesThursday" Type="bit" Nullable="false" />
+          <Property Name="OperatesFriday" Type="bit" Nullable="false" />
+          <Property Name="OperatesSaturday" Type="bit" Nullable="false" />
+          <Property Name="HasOpException" Type="bit" Nullable="false" />
+          <Property Name="StatusCode" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="EvtStatDsp" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="VehicleGroup" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="VehicleType" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="ValidToDate" Type="datetime2" Precision="3" />
+          <Property Name="AddUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="UpdUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="SysRecNo" Type="bigint" Nullable="false" />
+          <Property Name="BlockCode" Type="char" MaxLength="6" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="AddUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="UpdUserId" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="3" />
+          <Property Name="SysRecNo" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="int" Nullable="false" />
+          <Property Name="DistrictDescription" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ValidToDate" Type="date" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SysRecNo" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="PlaceId" />
+          </Key>
+          <Property Name="PlaceId" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="PlaceReferenceId" Type="varchar" MaxLength="6" />
+          <Property Name="PlaceShortDescription" Type="char" MaxLength="8" />
+          <Property Name="PlaceDescription" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="Longitude" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="Latitude" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="ValidToDate" Type="date" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SysRecNo" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="RouteAlpha" />
+          </Key>
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="RouteAlpha" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="RouteDescription" Type="varchar" MaxLength="50" />
+          <Property Name="RouteTypeId" Type="int" Nullable="false" />
+          <Property Name="Color" Type="varchar" MaxLength="12" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" />
+          <Property Name="SysRecNo" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RouteList">
+          <Key>
+            <PropertyRef Name="RouteAlpha" />
+          </Key>
+          <Property Name="RouteAlpha" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RouteType">
+          <Key>
+            <PropertyRef Name="RouteTypeId" />
+          </Key>
+          <Property Name="RouteTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RouteTypeName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Stop">
+          <Key>
+            <PropertyRef Name="StopId" />
+          </Key>
+          <Property Name="StopId" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="StopDescription" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PlaceId" Type="varchar" MaxLength="6" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="Id511" Type="int" Nullable="false" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="Longitude" Type="decimal" Precision="10" Scale="7" Nullable="false" />
+          <Property Name="Latitude" Type="decimal" Precision="10" Scale="7" Nullable="false" />
+          <Property Name="AllowAlighting" Type="bit" Nullable="false" />
+          <Property Name="AllowBoarding" Type="bit" Nullable="false" />
+          <Property Name="Corner" Type="char" MaxLength="2" />
+          <Property Name="IsBart" Type="bit" Nullable="false" />
+          <Property Name="IsTransitCenter" Type="bit" Nullable="false" />
+          <Property Name="IsInService" Type="bit" Nullable="false" />
+          <Property Name="IsGPSValidated" Type="bit" Nullable="false" />
+          <Property Name="Site" Type="char" MaxLength="2" />
+          <Property Name="AvaStatus" Type="bit" Nullable="false" />
+          <Property Name="AvaDescription" Type="varchar" MaxLength="40" />
+          <Property Name="Comment" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="LastSchedulerUpdate" Type="date" Nullable="false" />
+          <Property Name="FlagRoute" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="ValidToDate" Type="date" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SysRecNo" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="TripNumber" />
+          </Key>
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ScheduleType" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="PermanentTripNumber" Type="int" Nullable="false" />
+          <Property Name="TripNumber" Type="int" Nullable="false" />
+          <Property Name="NextTripNumber" Type="int" />
+          <Property Name="RouteAlpha" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="PatternId" Type="smallint" Nullable="false" />
+          <Property Name="HasOpException" Type="bit" Nullable="false" />
+          <Property Name="StatusCode" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="EventAndStatus" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="TimeStart" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="TimeEnd" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="HeadwayStart" Type="smallint" />
+          <Property Name="HeadwayEnd" Type="smallint" />
+          <Property Name="BlockNumber" Type="int" Nullable="false" />
+          <Property Name="Rank" Type="tinyint" Nullable="false" />
+          <Property Name="OperatesSunday" Type="bit" Nullable="false" />
+          <Property Name="OperatesMonday" Type="bit" Nullable="false" />
+          <Property Name="OperatesTuesday" Type="bit" Nullable="false" />
+          <Property Name="OperatesWednesday" Type="bit" Nullable="false" />
+          <Property Name="OperatesThursday" Type="bit" Nullable="false" />
+          <Property Name="OperatesFriday" Type="bit" Nullable="false" />
+          <Property Name="OperatesSaturday" Type="bit" Nullable="false" />
+          <Property Name="ValidToDate" Type="datetime2" Precision="3" />
+          <Property Name="AddUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="UpdUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="SysRecNo" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TripPattern">
+          <Key>
+            <PropertyRef Name="RouteAlpha" />
+            <PropertyRef Name="PatternId" />
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="RouteAlpha" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="PatternId" Type="smallint" Nullable="false" />
+          <Property Name="VariantId" Type="varchar" MaxLength="4" />
+          <Property Name="Direction" Type="varchar" MaxLength="12" />
+          <Property Name="InService" Type="bit" Nullable="false" />
+          <Property Name="FirstTp" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="LastTp" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Distance" Type="decimal" Precision="6" Scale="3" Nullable="false" />
+          <Property Name="VehicleDisplayCode" Type="smallint" />
+          <Property Name="DrivingInstructions" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="AssignDate" Type="date" Nullable="false" />
+          <Property Name="TripsMatch" Type="smallint" Nullable="false" />
+          <Property Name="ValidToDate" Type="datetime2" Precision="3" />
+          <Property Name="AddUserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="UpdUserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="SysRecNo" Type="bigint" Nullable="false" />
+          <Property Name="BookingID" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TripStop">
+          <Key>
+            <PropertyRef Name="TripNumber" />
+            <PropertyRef Name="PositionNumber" />
+          </Key>
+          <Property Name="TripNumber" Type="int" Nullable="false" />
+          <Property Name="PositionNumber" Type="smallint" Nullable="false" />
+          <Property Name="PlaceId" Type="varchar" MaxLength="6" />
+          <Property Name="Distance" Type="decimal" Precision="5" Scale="3" Nullable="false" />
+          <Property Name="PassingTime" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="StopId" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="Id511" Type="int" Nullable="false" />
+          <Property Name="IsLast" Type="bit" Nullable="false" />
+          <Property Name="ValidToDate" Type="datetime2" Precision="3" />
+          <Property Name="AddUserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="UpdUserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TripTimingPoint">
+          <Key>
+            <PropertyRef Name="TripNumber" />
+            <PropertyRef Name="PositionNumber" />
+          </Key>
+          <Property Name="TripNumber" Type="int" Nullable="false" />
+          <Property Name="PositionNumber" Type="smallint" Nullable="false" />
+          <Property Name="TripTimingPointPlaceId" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="PassingTime" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Distance" Type="decimal" Precision="5" Scale="3" Nullable="false" />
+          <Property Name="IsArrival" Type="bit" Nullable="false" />
+          <Property Name="IsDeparture" Type="bit" Nullable="false" />
+          <Property Name="IsExported" Type="bit" Nullable="false" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="IsLast" Type="bit" Nullable="false" />
+          <Property Name="PreviousPlaceId" Type="varchar" MaxLength="6" />
+          <Property Name="PassingTimePrevious" Type="datetime2" Precision="0" />
+          <Property Name="NextPlaceId" Type="varchar" MaxLength="6" />
+          <Property Name="PassingTimeNext" Type="datetime2" Precision="0" />
+          <Property Name="ValidToDate" Type="datetime2" Precision="3" />
+          <Property Name="AddUserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="UpdUserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VehicleDisplayCode">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="SysRecNo" />
+          </Key>
+          <Property Name="BookingId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SysRecNo" Type="bigint" Nullable="false" />
+          <Property Name="VDCId" Type="varchar" MaxLength="56" />
+          <Property Name="VDCMessage1" Type="varchar" MaxLength="56" />
+          <Property Name="VDCMessage2" Type="varchar" MaxLength="56" />
+          <Property Name="VDCMessage3" Type="varchar" MaxLength="56" />
+          <Property Name="VDCMessage4" Type="varchar" MaxLength="56" />
+          <Property Name="ValidToDate" Type="date" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SchedulingDW.HASTUS.StopDistrict' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="StopDistrict">
+          <Key>
+            <PropertyRef Name="StopId" />
+            <PropertyRef Name="Id511" />
+            <PropertyRef Name="StopDescription" />
+            <PropertyRef Name="IsPublic" />
+            <PropertyRef Name="Longitude" />
+            <PropertyRef Name="Latitude" />
+            <PropertyRef Name="AllowAlighting" />
+            <PropertyRef Name="AllowBoarding" />
+            <PropertyRef Name="IsBart" />
+            <PropertyRef Name="IsTransitCenter" />
+            <PropertyRef Name="IsInService" />
+            <PropertyRef Name="UpdDateTime" />
+            <PropertyRef Name="UpdUserId" />
+            <PropertyRef Name="AddDateTime" />
+            <PropertyRef Name="AddUserId" />
+            <PropertyRef Name="FlagRoute" />
+            <PropertyRef Name="LastSchedulerUpdate" />
+            <PropertyRef Name="Comment" />
+            <PropertyRef Name="AvaStatus" />
+            <PropertyRef Name="IsGPSValidated" />
+          </Key>
+          <Property Name="StopId" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="Id511" Type="int" Nullable="false" />
+          <Property Name="district" Type="varchar" MaxLength="50" />
+          <Property Name="StopDescription" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PlaceId" Type="varchar" MaxLength="6" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="Longitude" Type="decimal" Precision="10" Scale="7" Nullable="false" />
+          <Property Name="Latitude" Type="decimal" Precision="10" Scale="7" Nullable="false" />
+          <Property Name="AllowAlighting" Type="bit" Nullable="false" />
+          <Property Name="AllowBoarding" Type="bit" Nullable="false" />
+          <Property Name="Corner" Type="char" MaxLength="2" />
+          <Property Name="IsBart" Type="bit" Nullable="false" />
+          <Property Name="IsTransitCenter" Type="bit" Nullable="false" />
+          <Property Name="IsInService" Type="bit" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FlagRoute" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="LastSchedulerUpdate" Type="date" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="AvaDescription" Type="varchar" MaxLength="40" />
+          <Property Name="AvaStatus" Type="bit" Nullable="false" />
+          <Property Name="Site" Type="char" MaxLength="2" />
+          <Property Name="IsGPSValidated" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Block_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Block" Type="Self.Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Block">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_District">
+          <End Role="District" Type="Self.District" Multiplicity="0..1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_RouteList">
+          <End Role="RouteList" Type="Self.RouteList" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RouteList">
+              <PropertyRef Name="RouteAlpha" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="RouteAlpha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_RouteType">
+          <End Role="RouteType" Type="Self.RouteType" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RouteType">
+              <PropertyRef Name="RouteTypeId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="RouteTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stop_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
+          <End Role="Stop" Type="Self.Stop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="Stop">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_Booking">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_NextTripNumber">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="0..1" />
+          <End Role="Trip1" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="TripNumber" />
+            </Principal>
+            <Dependent Role="Trip1">
+              <PropertyRef Name="NextTripNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_Route">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="RouteAlpha" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="RouteAlpha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_TripPattern">
+          <End Role="TripPattern" Type="Self.TripPattern" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TripPattern">
+              <PropertyRef Name="BookingID" />
+              <PropertyRef Name="RouteAlpha" />
+              <PropertyRef Name="PatternId" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="RouteAlpha" />
+              <PropertyRef Name="PatternId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripPattern_BookingID">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="TripPattern" Type="Self.TripPattern" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="TripPattern">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripPattern_RouteList">
+          <End Role="RouteList" Type="Self.RouteList" Multiplicity="1" />
+          <End Role="TripPattern" Type="Self.TripPattern" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RouteList">
+              <PropertyRef Name="RouteAlpha" />
+            </Principal>
+            <Dependent Role="TripPattern">
+              <PropertyRef Name="RouteAlpha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_TripStop_Stop_id511' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_TripStop_Stop_id511" />-->
+        <Association Name="FK_TripStop_Stopid">
+          <End Role="Stop" Type="Self.Stop" Multiplicity="1" />
+          <End Role="TripStop" Type="Self.TripStop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stop">
+              <PropertyRef Name="StopId" />
+            </Principal>
+            <Dependent Role="TripStop">
+              <PropertyRef Name="StopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripStop_Trip">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="TripStop" Type="Self.TripStop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="TripNumber" />
+            </Principal>
+            <Dependent Role="TripStop">
+              <PropertyRef Name="TripNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripTimingPoint_Place_next">
+          <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
+          <End Role="TripTimingPoint" Type="Self.TripTimingPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="TripTimingPoint">
+              <PropertyRef Name="NextPlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripTimingPoint_Place_place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="TripTimingPoint" Type="Self.TripTimingPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="TripTimingPoint">
+              <PropertyRef Name="TripTimingPointPlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripTimingPoint_Place_prev">
+          <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
+          <End Role="TripTimingPoint" Type="Self.TripTimingPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="TripTimingPoint">
+              <PropertyRef Name="PreviousPlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripTimingPoint_Trip">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="TripTimingPoint" Type="Self.TripTimingPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="TripNumber" />
+            </Principal>
+            <Dependent Role="TripTimingPoint">
+              <PropertyRef Name="TripNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VehicleDisplayCode_BookingId">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="VehicleDisplayCode" Type="Self.VehicleDisplayCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="VehicleDisplayCode">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetDistanceBetweenLatLongPoints" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="OriginatingLatitude" Type="float" Mode="In" />
+          <Parameter Name="OriginatingLongitude" Type="float" Mode="In" />
+          <Parameter Name="ComparisonLatitude" Type="float" Mode="In" />
+          <Parameter Name="ComparisonLongitude" Type="float" Mode="In" />
+          <Parameter Name="Units" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="AddBooking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HASTUS">
+          <Parameter Name="NewBookingId" Type="varchar" Mode="In" />
+          <Parameter Name="AddUserId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetRoutes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HASTUS" />
+        <Function Name="GetStopsWithinProximity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HASTUS">
+          <Parameter Name="OriginatingLatitude" Type="float" Mode="In" />
+          <Parameter Name="OriginatingLongitude" Type="float" Mode="In" />
+          <Parameter Name="UnitOfMeasure" Type="varchar" Mode="In" />
+          <Parameter Name="Distance" Type="float" Mode="In" />
+          <Parameter Name="RouteName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="IsBlockValid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="HASTUS" ReturnType="bit">
+          <Parameter Name="booking" Type="char" Mode="In" />
+          <Parameter Name="block" Type="int" Mode="In" />
+          <Parameter Name="operates_sun" Type="bit" Mode="In" />
+          <Parameter Name="operates_mon" Type="bit" Mode="In" />
+          <Parameter Name="operates_tue" Type="bit" Mode="In" />
+          <Parameter Name="operates_wed" Type="bit" Mode="In" />
+          <Parameter Name="operates_thu" Type="bit" Mode="In" />
+          <Parameter Name="operates_fri" Type="bit" Mode="In" />
+          <Parameter Name="operates_sat" Type="bit" Mode="In" />
+          <Parameter Name="status_code" Type="char" Mode="In" />
+        </Function>
+        <Function Name="NearestStop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HASTUS">
+          <Parameter Name="Lat" Type="decimal" Mode="In" />
+          <Parameter Name="Long" Type="decimal" Mode="In" />
+          <Parameter Name="Top" Type="int" Mode="In" />
+          <Parameter Name="IsPublic" Type="bit" Mode="In" />
+          <Parameter Name="AllowAlighting" Type="bit" Mode="In" />
+          <Parameter Name="AllowBoarding" Type="bit" Mode="In" />
+          <Parameter Name="Corner" Type="char" Mode="In" />
+          <Parameter Name="IsBart" Type="bit" Mode="In" />
+          <Parameter Name="IsTransitCenter" Type="bit" Mode="In" />
+          <Parameter Name="IsInService" Type="bit" Mode="In" />
+          <Parameter Name="IsGPSValidated" Type="bit" Mode="In" />
+          <Parameter Name="AvaStatus" Type="bit" Mode="In" />
+        </Function>
+        <EntityContainer Name="SchedulingContextStoreContainer">
+          <EntitySet Name="Block" EntityType="Self.Block" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="District" EntityType="Self.District" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="Place" EntityType="Self.Place" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="Route" EntityType="Self.Route" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="RouteList" EntityType="Self.RouteList" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="RouteType" EntityType="Self.RouteType" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="Stop" EntityType="Self.Stop" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="Trip" EntityType="Self.Trip" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="TripPattern" EntityType="Self.TripPattern" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="TripStop" EntityType="Self.TripStop" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="TripTimingPoint" EntityType="Self.TripTimingPoint" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="VehicleDisplayCode" EntityType="Self.VehicleDisplayCode" Schema="HASTUS" store:Type="Tables" />
+          <EntitySet Name="StopDistrict" EntityType="Self.StopDistrict" store:Type="Views" store:Schema="HASTUS">
+            <DefiningQuery>SELECT 
+    [StopDistrict].[StopId] AS [StopId], 
+    [StopDistrict].[Id511] AS [Id511], 
+    [StopDistrict].[district] AS [district], 
+    [StopDistrict].[StopDescription] AS [StopDescription], 
+    [StopDistrict].[PlaceId] AS [PlaceId], 
+    [StopDistrict].[IsPublic] AS [IsPublic], 
+    [StopDistrict].[Longitude] AS [Longitude], 
+    [StopDistrict].[Latitude] AS [Latitude], 
+    [StopDistrict].[AllowAlighting] AS [AllowAlighting], 
+    [StopDistrict].[AllowBoarding] AS [AllowBoarding], 
+    [StopDistrict].[Corner] AS [Corner], 
+    [StopDistrict].[IsBart] AS [IsBart], 
+    [StopDistrict].[IsTransitCenter] AS [IsTransitCenter], 
+    [StopDistrict].[IsInService] AS [IsInService], 
+    [StopDistrict].[UpdDateTime] AS [UpdDateTime], 
+    [StopDistrict].[UpdUserId] AS [UpdUserId], 
+    [StopDistrict].[AddDateTime] AS [AddDateTime], 
+    [StopDistrict].[AddUserId] AS [AddUserId], 
+    [StopDistrict].[FlagRoute] AS [FlagRoute], 
+    [StopDistrict].[LastSchedulerUpdate] AS [LastSchedulerUpdate], 
+    [StopDistrict].[Comment] AS [Comment], 
+    [StopDistrict].[AvaDescription] AS [AvaDescription], 
+    [StopDistrict].[AvaStatus] AS [AvaStatus], 
+    [StopDistrict].[Site] AS [Site], 
+    [StopDistrict].[IsGPSValidated] AS [IsGPSValidated]
+    FROM [HASTUS].[StopDistrict] AS [StopDistrict]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Block_Booking" Association="Self.FK_Block_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Block" EntitySet="Block" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_District" Association="Self.FK_Place_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_RouteList" Association="Self.FK_Route_RouteList">
+            <End Role="RouteList" EntitySet="RouteList" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_RouteType" Association="Self.FK_Route_RouteType">
+            <End Role="RouteType" EntitySet="RouteType" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stop_Place" Association="Self.FK_Stop_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="Stop" EntitySet="Stop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_Booking" Association="Self.FK_Trip_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Trip" EntitySet="Trip" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_NextTripNumber" Association="Self.FK_Trip_NextTripNumber">
+            <End Role="Trip" EntitySet="Trip" />
+            <End Role="Trip1" EntitySet="Trip" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_Route" Association="Self.FK_Trip_Route">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Trip" EntitySet="Trip" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_TripPattern" Association="Self.FK_Trip_TripPattern">
+            <End Role="TripPattern" EntitySet="TripPattern" />
+            <End Role="Trip" EntitySet="Trip" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripPattern_BookingID" Association="Self.FK_TripPattern_BookingID">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="TripPattern" EntitySet="TripPattern" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripPattern_RouteList" Association="Self.FK_TripPattern_RouteList">
+            <End Role="RouteList" EntitySet="RouteList" />
+            <End Role="TripPattern" EntitySet="TripPattern" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripStop_Stopid" Association="Self.FK_TripStop_Stopid">
+            <End Role="Stop" EntitySet="Stop" />
+            <End Role="TripStop" EntitySet="TripStop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripStop_Trip" Association="Self.FK_TripStop_Trip">
+            <End Role="Trip" EntitySet="Trip" />
+            <End Role="TripStop" EntitySet="TripStop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripTimingPoint_Place_next" Association="Self.FK_TripTimingPoint_Place_next">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="TripTimingPoint" EntitySet="TripTimingPoint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripTimingPoint_Place_place" Association="Self.FK_TripTimingPoint_Place_place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="TripTimingPoint" EntitySet="TripTimingPoint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripTimingPoint_Place_prev" Association="Self.FK_TripTimingPoint_Place_prev">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="TripTimingPoint" EntitySet="TripTimingPoint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripTimingPoint_Trip" Association="Self.FK_TripTimingPoint_Trip">
+            <End Role="Trip" EntitySet="Trip" />
+            <End Role="TripTimingPoint" EntitySet="TripTimingPoint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VehicleDisplayCode_BookingId" Association="Self.FK_VehicleDisplayCode_BookingId">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="VehicleDisplayCode" EntitySet="VehicleDisplayCode" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchedulingContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SchedulingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Blocks" EntityType="SchedulingContext.Block" />
+          <EntitySet Name="Bookings" EntityType="SchedulingContext.Booking" />
+          <EntitySet Name="Districts" EntityType="SchedulingContext.District" />
+          <EntitySet Name="Places" EntityType="SchedulingContext.Place" />
+          <EntitySet Name="Routes" EntityType="SchedulingContext.Route" />
+          <EntitySet Name="RouteLists" EntityType="SchedulingContext.RouteList" />
+          <EntitySet Name="RouteTypes" EntityType="SchedulingContext.RouteType" />
+          <EntitySet Name="Stops" EntityType="SchedulingContext.Stop" />
+          <EntitySet Name="Trips" EntityType="SchedulingContext.Trip" />
+          <EntitySet Name="TripPatterns" EntityType="SchedulingContext.TripPattern" />
+          <EntitySet Name="TripStops" EntityType="SchedulingContext.TripStop" />
+          <EntitySet Name="TripTimingPoints" EntityType="SchedulingContext.TripTimingPoint" />
+          <EntitySet Name="StopDistricts" EntityType="SchedulingContext.StopDistrict" />
+          <AssociationSet Name="FK_Block_Booking" Association="SchedulingContext.FK_Block_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Block" EntitySet="Blocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_Booking" Association="SchedulingContext.FK_Trip_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Trip" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripPattern_BookingID" Association="SchedulingContext.FK_TripPattern_BookingID">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="TripPattern" EntitySet="TripPatterns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_District" Association="SchedulingContext.FK_Place_District">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Place" EntitySet="Places" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripTimingPoint_Place_next" Association="SchedulingContext.FK_TripTimingPoint_Place_next">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="TripTimingPoint" EntitySet="TripTimingPoints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripTimingPoint_Place_place" Association="SchedulingContext.FK_TripTimingPoint_Place_place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="TripTimingPoint" EntitySet="TripTimingPoints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripTimingPoint_Place_prev" Association="SchedulingContext.FK_TripTimingPoint_Place_prev">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="TripTimingPoint" EntitySet="TripTimingPoints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_RouteList" Association="SchedulingContext.FK_Route_RouteList">
+            <End Role="RouteList" EntitySet="RouteLists" />
+            <End Role="Route" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_RouteType" Association="SchedulingContext.FK_Route_RouteType">
+            <End Role="RouteType" EntitySet="RouteTypes" />
+            <End Role="Route" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_Route" Association="SchedulingContext.FK_Trip_Route">
+            <End Role="Route" EntitySet="Routes" />
+            <End Role="Trip" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripPattern_RouteList" Association="SchedulingContext.FK_TripPattern_RouteList">
+            <End Role="RouteList" EntitySet="RouteLists" />
+            <End Role="TripPattern" EntitySet="TripPatterns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripStop_Stopid" Association="SchedulingContext.FK_TripStop_Stopid">
+            <End Role="Stop" EntitySet="Stops" />
+            <End Role="TripStop" EntitySet="TripStops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_NextTripNumber" Association="SchedulingContext.FK_Trip_NextTripNumber">
+            <End Role="Trip" EntitySet="Trips" />
+            <End Role="Trip1" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_TripPattern" Association="SchedulingContext.FK_Trip_TripPattern">
+            <End Role="TripPattern" EntitySet="TripPatterns" />
+            <End Role="Trip" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripStop_Trip" Association="SchedulingContext.FK_TripStop_Trip">
+            <End Role="Trip" EntitySet="Trips" />
+            <End Role="TripStop" EntitySet="TripStops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripTimingPoint_Trip" Association="SchedulingContext.FK_TripTimingPoint_Trip">
+            <End Role="Trip" EntitySet="Trips" />
+            <End Role="TripTimingPoint" EntitySet="TripTimingPoints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stop_Place" Association="SchedulingContext.FK_Stop_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="Stop" EntitySet="Stops" />
+          </AssociationSet>
+          <FunctionImport Name="NearestStop" ReturnType="Collection(SchedulingContext.NearestStop_Result)">
+            <Parameter Name="Lat" Mode="In" Type="Decimal" />
+            <Parameter Name="Long" Mode="In" Type="Decimal" />
+            <Parameter Name="Top" Mode="In" Type="Int32" />
+            <Parameter Name="IsPublic" Mode="In" Type="Boolean" />
+            <Parameter Name="AllowAlighting" Mode="In" Type="Boolean" />
+            <Parameter Name="AllowBoarding" Mode="In" Type="Boolean" />
+            <Parameter Name="Corner" Mode="In" Type="String" />
+            <Parameter Name="IsBart" Mode="In" Type="Boolean" />
+            <Parameter Name="IsTransitCenter" Mode="In" Type="Boolean" />
+            <Parameter Name="IsInService" Mode="In" Type="Boolean" />
+            <Parameter Name="IsGPSValidated" Mode="In" Type="Boolean" />
+            <Parameter Name="AvaStatus" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="GetStopsWithinProximity" ReturnType="Collection(SchedulingContext.GetStopsWithinProximity_Result)">
+            <Parameter Name="OriginatingLatitude" Mode="In" Type="Double" />
+            <Parameter Name="OriginatingLongitude" Mode="In" Type="Double" />
+            <Parameter Name="UnitOfMeasure" Mode="In" Type="String" />
+            <Parameter Name="Distance" Mode="In" Type="Double" />
+            <Parameter Name="RouteName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetRoutes" ReturnType="Collection(SchedulingContext.GetRoutes_Result)" />
+          <FunctionImport Name="AddBooking">
+            <Parameter Name="NewBookingId" Mode="In" Type="String" />
+            <Parameter Name="AddUserId" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="VehicleDisplayCodes" EntityType="SchedulingContext.VehicleDisplayCode" />
+          <AssociationSet Name="FK_VehicleDisplayCode_BookingId" Association="SchedulingContext.FK_VehicleDisplayCode_BookingId">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="VehicleDisplayCode" EntitySet="VehicleDisplayCodes" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Block">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="BlockNumber" />
+            <PropertyRef Name="OperatesSunday" />
+            <PropertyRef Name="OperatesMonday" />
+            <PropertyRef Name="OperatesTuesday" />
+            <PropertyRef Name="OperatesWednesday" />
+            <PropertyRef Name="OperatesThursday" />
+            <PropertyRef Name="OperatesFriday" />
+            <PropertyRef Name="OperatesSaturday" />
+            <PropertyRef Name="StatusCode" />
+          </Key>
+          <Property Name="BookingId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ScheduleType" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Garage" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="BlockNumber" Type="Int32" Nullable="false" />
+          <Property Name="AllRoutes" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="RouteCount" Type="Byte" Nullable="false" />
+          <Property Name="TimeStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StartPrdTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PlaceIdStartNoPull" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="PlaceIdEndNoPull" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="EndPrdTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TimeEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Duration" Type="Int16" Nullable="false" />
+          <Property Name="InServiceDuration" Type="Int16" Nullable="false" />
+          <Property Name="Layover" Type="Int16" Nullable="false" />
+          <Property Name="Distance" Type="Decimal" Nullable="false" Precision="6" Scale="3" />
+          <Property Name="DistanceInService" Type="Decimal" Nullable="false" Precision="6" Scale="3" />
+          <Property Name="TripCountInService" Type="Int16" Nullable="false" />
+          <Property Name="TripCount" Type="Int16" Nullable="false" />
+          <Property Name="OperatesSunday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesMonday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesTuesday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesWednesday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesThursday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesFriday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesSaturday" Type="Boolean" Nullable="false" />
+          <Property Name="HasOpException" Type="Boolean" Nullable="false" />
+          <Property Name="StatusCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="EvtStatDsp" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleGroup" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleType" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="ValidToDate" Type="DateTime" Precision="3" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SysRecNo" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Booking" Relationship="SchedulingContext.FK_Block_Booking" FromRole="Block" ToRole="Booking" />
+          <Property Name="BlockCode" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdDateTime" Type="DateTime" Precision="3" />
+          <Property Name="SysRecNo" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Blocks" Relationship="SchedulingContext.FK_Block_Booking" FromRole="Booking" ToRole="Block" />
+          <NavigationProperty Name="Trips" Relationship="SchedulingContext.FK_Trip_Booking" FromRole="Booking" ToRole="Trip" />
+          <NavigationProperty Name="TripPatterns" Relationship="SchedulingContext.FK_TripPattern_BookingID" FromRole="Booking" ToRole="TripPattern" />
+          <NavigationProperty Name="VehicleDisplayCodes" Relationship="SchedulingContext.FK_VehicleDisplayCode_BookingId" FromRole="Booking" ToRole="VehicleDisplayCode" />
+          </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="Int32" Nullable="false" />
+          <Property Name="DistrictDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ValidToDate" Type="DateTime" Precision="0" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SysRecNo" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Places" Relationship="SchedulingContext.FK_Place_District" FromRole="District" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="PlaceId" />
+          </Key>
+          <Property Name="PlaceId" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="PlaceReferenceId" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="PlaceShortDescription" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="PlaceDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="Longitude" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="Latitude" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="ValidToDate" Type="DateTime" Precision="0" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SysRecNo" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="District" Relationship="SchedulingContext.FK_Place_District" FromRole="Place" ToRole="District" />
+          <NavigationProperty Name="TripTimingPoints" Relationship="SchedulingContext.FK_TripTimingPoint_Place_next" FromRole="Place" ToRole="TripTimingPoint" />
+          <NavigationProperty Name="TripTimingPoints1" Relationship="SchedulingContext.FK_TripTimingPoint_Place_place" FromRole="Place" ToRole="TripTimingPoint" />
+          <NavigationProperty Name="TripTimingPoints2" Relationship="SchedulingContext.FK_TripTimingPoint_Place_prev" FromRole="Place" ToRole="TripTimingPoint" />
+          <NavigationProperty Name="Stops" Relationship="SchedulingContext.FK_Stop_Place" FromRole="Place" ToRole="Stop" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="RouteAlpha" />
+          </Key>
+          <Property Name="BookingId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RouteAlpha" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="RouteDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RouteTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Precision="7" />
+          <Property Name="SysRecNo" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="RouteList" Relationship="SchedulingContext.FK_Route_RouteList" FromRole="Route" ToRole="RouteList" />
+          <NavigationProperty Name="RouteType" Relationship="SchedulingContext.FK_Route_RouteType" FromRole="Route" ToRole="RouteType" />
+          <NavigationProperty Name="Trips" Relationship="SchedulingContext.FK_Trip_Route" FromRole="Route" ToRole="Trip" />
+        </EntityType>
+        <EntityType Name="RouteList">
+          <Key>
+            <PropertyRef Name="RouteAlpha" />
+          </Key>
+          <Property Name="RouteAlpha" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Routes" Relationship="SchedulingContext.FK_Route_RouteList" FromRole="RouteList" ToRole="Route" />
+          <NavigationProperty Name="TripPatterns" Relationship="SchedulingContext.FK_TripPattern_RouteList" FromRole="RouteList" ToRole="TripPattern" />
+        </EntityType>
+        <EntityType Name="RouteType">
+          <Key>
+            <PropertyRef Name="RouteTypeId" />
+          </Key>
+          <Property Name="RouteTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RouteTypeName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Routes" Relationship="SchedulingContext.FK_Route_RouteType" FromRole="RouteType" ToRole="Route" />
+        </EntityType>
+        <EntityType Name="Stop">
+          <Key>
+            <PropertyRef Name="StopId" />
+          </Key>
+          <Property Name="StopId" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
+          <Property Name="StopDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlaceId" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="Id511" Type="Int32" Nullable="false" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="Longitude" Type="Decimal" Nullable="false" Precision="10" Scale="7" />
+          <Property Name="Latitude" Type="Decimal" Nullable="false" Precision="10" Scale="7" />
+          <Property Name="AllowAlighting" Type="Boolean" Nullable="false" />
+          <Property Name="AllowBoarding" Type="Boolean" Nullable="false" />
+          <Property Name="Corner" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="IsBart" Type="Boolean" Nullable="false" />
+          <Property Name="IsTransitCenter" Type="Boolean" Nullable="false" />
+          <Property Name="IsInService" Type="Boolean" Nullable="false" />
+          <Property Name="IsGPSValidated" Type="Boolean" Nullable="false" />
+          <Property Name="Site" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="AvaStatus" Type="Boolean" Nullable="false" />
+          <Property Name="AvaDescription" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="LastSchedulerUpdate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FlagRoute" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ValidToDate" Type="DateTime" Precision="0" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SysRecNo" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="TripStops" Relationship="SchedulingContext.FK_TripStop_Stopid" FromRole="Stop" ToRole="TripStop" />
+          <NavigationProperty Name="Place" Relationship="SchedulingContext.FK_Stop_Place" FromRole="Stop" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="TripNumber" />
+          </Key>
+          <Property Name="BookingId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ScheduleType" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentTripNumber" Type="Int32" Nullable="false" />
+          <Property Name="TripNumber" Type="Int32" Nullable="false" />
+          <Property Name="NextTripNumber" Type="Int32" />
+          <Property Name="RouteAlpha" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PatternId" Type="Int16" Nullable="false" />
+          <Property Name="HasOpException" Type="Boolean" Nullable="false" />
+          <Property Name="StatusCode" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="EventAndStatus" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="TimeStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TimeEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HeadwayStart" Type="Int16" />
+          <Property Name="HeadwayEnd" Type="Int16" />
+          <Property Name="BlockNumber" Type="Int32" Nullable="false" />
+          <Property Name="Rank" Type="Byte" Nullable="false" />
+          <Property Name="OperatesSunday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesMonday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesTuesday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesWednesday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesThursday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesFriday" Type="Boolean" Nullable="false" />
+          <Property Name="OperatesSaturday" Type="Boolean" Nullable="false" />
+          <Property Name="ValidToDate" Type="DateTime" Precision="3" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SysRecNo" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Booking" Relationship="SchedulingContext.FK_Trip_Booking" FromRole="Trip" ToRole="Booking" />
+          <NavigationProperty Name="Route" Relationship="SchedulingContext.FK_Trip_Route" FromRole="Trip" ToRole="Route" />
+          <NavigationProperty Name="Trip1" Relationship="SchedulingContext.FK_Trip_NextTripNumber" FromRole="Trip" ToRole="Trip1" />
+          <NavigationProperty Name="Trip2" Relationship="SchedulingContext.FK_Trip_NextTripNumber" FromRole="Trip1" ToRole="Trip" />
+          <NavigationProperty Name="TripPattern" Relationship="SchedulingContext.FK_Trip_TripPattern" FromRole="Trip" ToRole="TripPattern" />
+          <NavigationProperty Name="TripStops" Relationship="SchedulingContext.FK_TripStop_Trip" FromRole="Trip" ToRole="TripStop" />
+          <NavigationProperty Name="TripTimingPoints" Relationship="SchedulingContext.FK_TripTimingPoint_Trip" FromRole="Trip" ToRole="TripTimingPoint" />
+        </EntityType>
+        <EntityType Name="TripPattern">
+          <Key>
+            <PropertyRef Name="RouteAlpha" />
+            <PropertyRef Name="PatternId" />
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="RouteAlpha" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PatternId" Type="Int16" Nullable="false" />
+          <Property Name="VariantId" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Direction" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="InService" Type="Boolean" Nullable="false" />
+          <Property Name="FirstTp" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="LastTp" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Distance" Type="Decimal" Nullable="false" Precision="6" Scale="3" />
+          <Property Name="VehicleDisplayCode" Type="Int16" />
+          <Property Name="DrivingInstructions" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="AssignDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TripsMatch" Type="Int16" Nullable="false" />
+          <Property Name="ValidToDate" Type="DateTime" Precision="3" />
+          <Property Name="AddUserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdUserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SysRecNo" Type="Int64" Nullable="false" />
+          <Property Name="BookingID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Booking" Relationship="SchedulingContext.FK_TripPattern_BookingID" FromRole="TripPattern" ToRole="Booking" />
+          <NavigationProperty Name="RouteList" Relationship="SchedulingContext.FK_TripPattern_RouteList" FromRole="TripPattern" ToRole="RouteList" />
+          <NavigationProperty Name="Trips" Relationship="SchedulingContext.FK_Trip_TripPattern" FromRole="TripPattern" ToRole="Trip" />
+        </EntityType>
+        <EntityType Name="TripStop">
+          <Key>
+            <PropertyRef Name="TripNumber" />
+            <PropertyRef Name="PositionNumber" />
+          </Key>
+          <Property Name="TripNumber" Type="Int32" Nullable="false" />
+          <Property Name="PositionNumber" Type="Int16" Nullable="false" />
+          <Property Name="PlaceId" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Distance" Type="Decimal" Nullable="false" Precision="5" Scale="3" />
+          <Property Name="PassingTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StopId" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
+          <Property Name="Id511" Type="Int32" Nullable="false" />
+          <Property Name="IsLast" Type="Boolean" Nullable="false" />
+          <Property Name="ValidToDate" Type="DateTime" Precision="3" />
+          <Property Name="AddUserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdUserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Stop" Relationship="SchedulingContext.FK_TripStop_Stopid" FromRole="TripStop" ToRole="Stop" />
+          <NavigationProperty Name="Trip" Relationship="SchedulingContext.FK_TripStop_Trip" FromRole="TripStop" ToRole="Trip" />
+        </EntityType>
+        <EntityType Name="TripTimingPoint">
+          <Key>
+            <PropertyRef Name="TripNumber" />
+            <PropertyRef Name="PositionNumber" />
+          </Key>
+          <Property Name="TripNumber" Type="Int32" Nullable="false" />
+          <Property Name="PositionNumber" Type="Int16" Nullable="false" />
+          <Property Name="TripTimingPointPlaceId" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="PassingTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Distance" Type="Decimal" Nullable="false" Precision="5" Scale="3" />
+          <Property Name="IsArrival" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeparture" Type="Boolean" Nullable="false" />
+          <Property Name="IsExported" Type="Boolean" Nullable="false" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="IsLast" Type="Boolean" Nullable="false" />
+          <Property Name="PreviousPlaceId" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="PassingTimePrevious" Type="DateTime" Precision="0" />
+          <Property Name="NextPlaceId" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="PassingTimeNext" Type="DateTime" Precision="0" />
+          <Property Name="ValidToDate" Type="DateTime" Precision="3" />
+          <Property Name="AddUserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdUserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Place" Relationship="SchedulingContext.FK_TripTimingPoint_Place_next" FromRole="TripTimingPoint" ToRole="Place" />
+          <NavigationProperty Name="Place1" Relationship="SchedulingContext.FK_TripTimingPoint_Place_place" FromRole="TripTimingPoint" ToRole="Place" />
+          <NavigationProperty Name="Place2" Relationship="SchedulingContext.FK_TripTimingPoint_Place_prev" FromRole="TripTimingPoint" ToRole="Place" />
+          <NavigationProperty Name="Trip" Relationship="SchedulingContext.FK_TripTimingPoint_Trip" FromRole="TripTimingPoint" ToRole="Trip" />
+        </EntityType>
+        <EntityType Name="StopDistrict">
+          <Key>
+            <PropertyRef Name="StopId" />
+            <PropertyRef Name="Id511" />
+            <PropertyRef Name="StopDescription" />
+            <PropertyRef Name="IsPublic" />
+            <PropertyRef Name="Longitude" />
+            <PropertyRef Name="Latitude" />
+            <PropertyRef Name="AllowAlighting" />
+            <PropertyRef Name="AllowBoarding" />
+            <PropertyRef Name="IsBart" />
+            <PropertyRef Name="IsTransitCenter" />
+            <PropertyRef Name="IsInService" />
+            <PropertyRef Name="UpdDateTime" />
+            <PropertyRef Name="UpdUserId" />
+            <PropertyRef Name="AddDateTime" />
+            <PropertyRef Name="AddUserId" />
+            <PropertyRef Name="FlagRoute" />
+            <PropertyRef Name="LastSchedulerUpdate" />
+            <PropertyRef Name="Comment" />
+            <PropertyRef Name="AvaStatus" />
+            <PropertyRef Name="IsGPSValidated" />
+          </Key>
+          <Property Name="StopId" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
+          <Property Name="Id511" Type="Int32" Nullable="false" />
+          <Property Name="district" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StopDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlaceId" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="Longitude" Type="Decimal" Nullable="false" Precision="10" Scale="7" />
+          <Property Name="Latitude" Type="Decimal" Nullable="false" Precision="10" Scale="7" />
+          <Property Name="AllowAlighting" Type="Boolean" Nullable="false" />
+          <Property Name="AllowBoarding" Type="Boolean" Nullable="false" />
+          <Property Name="Corner" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="IsBart" Type="Boolean" Nullable="false" />
+          <Property Name="IsTransitCenter" Type="Boolean" Nullable="false" />
+          <Property Name="IsInService" Type="Boolean" Nullable="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FlagRoute" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="LastSchedulerUpdate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="AvaDescription" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="AvaStatus" Type="Boolean" Nullable="false" />
+          <Property Name="Site" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="IsGPSValidated" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Block_Booking">
+          <End Type="SchedulingContext.Booking" Role="Booking" Multiplicity="1" />
+          <End Type="SchedulingContext.Block" Role="Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Block">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_Booking">
+          <End Type="SchedulingContext.Booking" Role="Booking" Multiplicity="1" />
+          <End Type="SchedulingContext.Trip" Role="Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripPattern_BookingID">
+          <End Type="SchedulingContext.Booking" Role="Booking" Multiplicity="1" />
+          <End Type="SchedulingContext.TripPattern" Role="TripPattern" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="TripPattern">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_District">
+          <End Type="SchedulingContext.District" Role="District" Multiplicity="0..1" />
+          <End Type="SchedulingContext.Place" Role="Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripTimingPoint_Place_next">
+          <End Type="SchedulingContext.Place" Role="Place" Multiplicity="0..1" />
+          <End Type="SchedulingContext.TripTimingPoint" Role="TripTimingPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="TripTimingPoint">
+              <PropertyRef Name="NextPlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripTimingPoint_Place_place">
+          <End Type="SchedulingContext.Place" Role="Place" Multiplicity="1" />
+          <End Type="SchedulingContext.TripTimingPoint" Role="TripTimingPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="TripTimingPoint">
+              <PropertyRef Name="TripTimingPointPlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripTimingPoint_Place_prev">
+          <End Type="SchedulingContext.Place" Role="Place" Multiplicity="0..1" />
+          <End Type="SchedulingContext.TripTimingPoint" Role="TripTimingPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="TripTimingPoint">
+              <PropertyRef Name="PreviousPlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_RouteList">
+          <End Type="SchedulingContext.RouteList" Role="RouteList" Multiplicity="1" />
+          <End Type="SchedulingContext.Route" Role="Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RouteList">
+              <PropertyRef Name="RouteAlpha" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="RouteAlpha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_RouteType">
+          <End Type="SchedulingContext.RouteType" Role="RouteType" Multiplicity="1" />
+          <End Type="SchedulingContext.Route" Role="Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RouteType">
+              <PropertyRef Name="RouteTypeId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="RouteTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_Route">
+          <End Type="SchedulingContext.Route" Role="Route" Multiplicity="1" />
+          <End Type="SchedulingContext.Trip" Role="Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="RouteAlpha" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="RouteAlpha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripPattern_RouteList">
+          <End Type="SchedulingContext.RouteList" Role="RouteList" Multiplicity="1" />
+          <End Type="SchedulingContext.TripPattern" Role="TripPattern" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RouteList">
+              <PropertyRef Name="RouteAlpha" />
+            </Principal>
+            <Dependent Role="TripPattern">
+              <PropertyRef Name="RouteAlpha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripStop_Stopid">
+          <End Type="SchedulingContext.Stop" Role="Stop" Multiplicity="1" />
+          <End Type="SchedulingContext.TripStop" Role="TripStop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stop">
+              <PropertyRef Name="StopId" />
+            </Principal>
+            <Dependent Role="TripStop">
+              <PropertyRef Name="StopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_NextTripNumber">
+          <End Type="SchedulingContext.Trip" Role="Trip" Multiplicity="0..1" />
+          <End Type="SchedulingContext.Trip" Role="Trip1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="TripNumber" />
+            </Principal>
+            <Dependent Role="Trip1">
+              <PropertyRef Name="NextTripNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_TripPattern">
+          <End Type="SchedulingContext.TripPattern" Role="TripPattern" Multiplicity="1" />
+          <End Type="SchedulingContext.Trip" Role="Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TripPattern">
+              <PropertyRef Name="BookingID" />
+              <PropertyRef Name="RouteAlpha" />
+              <PropertyRef Name="PatternId" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="BookingId" />
+              <PropertyRef Name="RouteAlpha" />
+              <PropertyRef Name="PatternId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripStop_Trip">
+          <End Type="SchedulingContext.Trip" Role="Trip" Multiplicity="1" />
+          <End Type="SchedulingContext.TripStop" Role="TripStop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="TripNumber" />
+            </Principal>
+            <Dependent Role="TripStop">
+              <PropertyRef Name="TripNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripTimingPoint_Trip">
+          <End Type="SchedulingContext.Trip" Role="Trip" Multiplicity="1" />
+          <End Type="SchedulingContext.TripTimingPoint" Role="TripTimingPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="TripNumber" />
+            </Principal>
+            <Dependent Role="TripTimingPoint">
+              <PropertyRef Name="TripNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stop_Place">
+          <End Type="SchedulingContext.Place" Role="Place" Multiplicity="0..1" />
+          <End Type="SchedulingContext.Stop" Role="Stop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="Stop">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="NearestStop_Result">
+          <Property Type="String" Name="StopId" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="StopDescription" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PlaceId" Nullable="true" MaxLength="6" />
+          <Property Type="Int32" Name="DistrictId" Nullable="true" />
+          <Property Type="Int32" Name="Id511" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="Decimal" Name="Longitude" Nullable="false" Precision="10" Scale="7" />
+          <Property Type="Decimal" Name="Latitude" Nullable="false" Precision="10" Scale="7" />
+          <Property Type="Boolean" Name="AllowAlighting" Nullable="false" />
+          <Property Type="Boolean" Name="AllowBoarding" Nullable="false" />
+          <Property Type="String" Name="Corner" Nullable="true" MaxLength="2" />
+          <Property Type="Boolean" Name="IsBart" Nullable="false" />
+          <Property Type="Boolean" Name="IsTransitCenter" Nullable="false" />
+          <Property Type="Boolean" Name="IsInService" Nullable="false" />
+          <Property Type="Boolean" Name="IsGPSValidated" Nullable="false" />
+          <Property Type="String" Name="Site" Nullable="true" MaxLength="2" />
+          <Property Type="Boolean" Name="AvaStatus" Nullable="false" />
+          <Property Type="String" Name="AvaDescription" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Comment" Nullable="false" MaxLength="80" />
+          <Property Type="DateTime" Name="LastSchedulerUpdate" Nullable="false" />
+          <Property Type="String" Name="FlagRoute" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="ValidToDate" Nullable="true" />
+          <Property Type="String" Name="AddUserId" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="AddDateTime" Nullable="false" />
+          <Property Type="String" Name="UpdUserId" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdDateTime" Nullable="false" />
+          <Property Type="Int64" Name="SysRecNo" Nullable="false" />
+          <Property Type="Double" Name="Distance" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetStopsWithinProximity_Result">
+          <Property Type="String" Name="StopId" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="StopDescription" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PlaceId" Nullable="true" MaxLength="6" />
+          <Property Type="Int32" Name="DistrictId" Nullable="true" />
+          <Property Type="Int32" Name="Id511" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="Decimal" Name="Longitude" Nullable="false" Precision="10" Scale="7" />
+          <Property Type="Decimal" Name="Latitude" Nullable="false" Precision="10" Scale="7" />
+          <Property Type="Boolean" Name="AllowAlighting" Nullable="false" />
+          <Property Type="Boolean" Name="AllowBoarding" Nullable="false" />
+          <Property Type="String" Name="Corner" Nullable="true" MaxLength="2" />
+          <Property Type="Boolean" Name="IsBart" Nullable="false" />
+          <Property Type="Boolean" Name="IsTransitCenter" Nullable="false" />
+          <Property Type="Boolean" Name="IsInService" Nullable="false" />
+          <Property Type="Boolean" Name="IsGPSValidated" Nullable="false" />
+          <Property Type="String" Name="Site" Nullable="true" MaxLength="2" />
+          <Property Type="Boolean" Name="AvaStatus" Nullable="false" />
+          <Property Type="String" Name="AvaDescription" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Comment" Nullable="false" MaxLength="80" />
+          <Property Type="DateTime" Name="LastSchedulerUpdate" Nullable="false" />
+          <Property Type="String" Name="FlagRoute" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="ValidToDate" Nullable="true" />
+          <Property Type="String" Name="AddUserId" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="AddDateTime" Nullable="false" />
+          <Property Type="String" Name="UpdUserId" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdDateTime" Nullable="false" />
+          <Property Type="Int64" Name="SysRecNo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetRoutes_Result">
+          <Property Type="Int32" Name="RouteTypeId" Nullable="false" />
+          <Property Type="String" Name="RouteAlpha" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="RouteDescription" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="VehicleDisplayCode">
+          <Key>
+            <PropertyRef Name="BookingId" />
+            <PropertyRef Name="SysRecNo" />
+          </Key>
+          <Property Name="BookingId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SysRecNo" Type="Int64" Nullable="false" />
+          <Property Name="VDCId" Type="String" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Name="VDCMessage1" Type="String" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Name="VDCMessage2" Type="String" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Name="VDCMessage3" Type="String" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Name="VDCMessage4" Type="String" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Name="ValidToDate" Type="DateTime" Precision="0" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Booking" Relationship="SchedulingContext.FK_VehicleDisplayCode_BookingId" FromRole="VehicleDisplayCode" ToRole="Booking" />
+        </EntityType>
+        <Association Name="FK_VehicleDisplayCode_BookingId">
+          <End Type="SchedulingContext.Booking" Role="Booking" Multiplicity="1" />
+          <End Type="SchedulingContext.VehicleDisplayCode" Role="VehicleDisplayCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="VehicleDisplayCode">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SchedulingContextStoreContainer" CdmEntityContainer="SchedulingEntities">
+          <EntitySetMapping Name="Blocks">
+            <EntityTypeMapping TypeName="SchedulingContext.Block">
+              <MappingFragment StoreEntitySet="Block">
+                <ScalarProperty Name="BlockCode" ColumnName="BlockCode" />
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="VehicleType" ColumnName="VehicleType" />
+                <ScalarProperty Name="VehicleGroup" ColumnName="VehicleGroup" />
+                <ScalarProperty Name="EvtStatDsp" ColumnName="EvtStatDsp" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="HasOpException" ColumnName="HasOpException" />
+                <ScalarProperty Name="OperatesSaturday" ColumnName="OperatesSaturday" />
+                <ScalarProperty Name="OperatesFriday" ColumnName="OperatesFriday" />
+                <ScalarProperty Name="OperatesThursday" ColumnName="OperatesThursday" />
+                <ScalarProperty Name="OperatesWednesday" ColumnName="OperatesWednesday" />
+                <ScalarProperty Name="OperatesTuesday" ColumnName="OperatesTuesday" />
+                <ScalarProperty Name="OperatesMonday" ColumnName="OperatesMonday" />
+                <ScalarProperty Name="OperatesSunday" ColumnName="OperatesSunday" />
+                <ScalarProperty Name="TripCount" ColumnName="TripCount" />
+                <ScalarProperty Name="TripCountInService" ColumnName="TripCountInService" />
+                <ScalarProperty Name="DistanceInService" ColumnName="DistanceInService" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="Layover" ColumnName="Layover" />
+                <ScalarProperty Name="InServiceDuration" ColumnName="InServiceDuration" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+                <ScalarProperty Name="EndPrdTime" ColumnName="EndPrdTime" />
+                <ScalarProperty Name="PlaceIdEndNoPull" ColumnName="PlaceIdEndNoPull" />
+                <ScalarProperty Name="PlaceIdStartNoPull" ColumnName="PlaceIdStartNoPull" />
+                <ScalarProperty Name="StartPrdTime" ColumnName="StartPrdTime" />
+                <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
+                <ScalarProperty Name="RouteCount" ColumnName="RouteCount" />
+                <ScalarProperty Name="AllRoutes" ColumnName="AllRoutes" />
+                <ScalarProperty Name="BlockNumber" ColumnName="BlockNumber" />
+                <ScalarProperty Name="Garage" ColumnName="Garage" />
+                <ScalarProperty Name="ScheduleType" ColumnName="ScheduleType" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="SchedulingContext.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Districts">
+            <EntityTypeMapping TypeName="SchedulingContext.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="DistrictDescription" ColumnName="DistrictDescription" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Places">
+            <EntityTypeMapping TypeName="SchedulingContext.Place">
+              <MappingFragment StoreEntitySet="Place">
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="PlaceDescription" ColumnName="PlaceDescription" />
+                <ScalarProperty Name="PlaceShortDescription" ColumnName="PlaceShortDescription" />
+                <ScalarProperty Name="PlaceReferenceId" ColumnName="PlaceReferenceId" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Routes">
+            <EntityTypeMapping TypeName="SchedulingContext.Route">
+              <MappingFragment StoreEntitySet="Route">
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="RouteTypeId" ColumnName="RouteTypeId" />
+                <ScalarProperty Name="RouteDescription" ColumnName="RouteDescription" />
+                <ScalarProperty Name="RouteAlpha" ColumnName="RouteAlpha" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RouteLists">
+            <EntityTypeMapping TypeName="SchedulingContext.RouteList">
+              <MappingFragment StoreEntitySet="RouteList">
+                <ScalarProperty Name="RouteAlpha" ColumnName="RouteAlpha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RouteTypes">
+            <EntityTypeMapping TypeName="SchedulingContext.RouteType">
+              <MappingFragment StoreEntitySet="RouteType">
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="RouteTypeName" ColumnName="RouteTypeName" />
+                <ScalarProperty Name="RouteTypeId" ColumnName="RouteTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stops">
+            <EntityTypeMapping TypeName="SchedulingContext.Stop">
+              <MappingFragment StoreEntitySet="Stop">
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="FlagRoute" ColumnName="FlagRoute" />
+                <ScalarProperty Name="LastSchedulerUpdate" ColumnName="LastSchedulerUpdate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="AvaDescription" ColumnName="AvaDescription" />
+                <ScalarProperty Name="AvaStatus" ColumnName="AvaStatus" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="IsGPSValidated" ColumnName="IsGPSValidated" />
+                <ScalarProperty Name="IsInService" ColumnName="IsInService" />
+                <ScalarProperty Name="IsTransitCenter" ColumnName="IsTransitCenter" />
+                <ScalarProperty Name="IsBart" ColumnName="IsBart" />
+                <ScalarProperty Name="Corner" ColumnName="Corner" />
+                <ScalarProperty Name="AllowBoarding" ColumnName="AllowBoarding" />
+                <ScalarProperty Name="AllowAlighting" ColumnName="AllowAlighting" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Id511" ColumnName="Id511" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="StopDescription" ColumnName="StopDescription" />
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trips">
+            <EntityTypeMapping TypeName="SchedulingContext.Trip">
+              <MappingFragment StoreEntitySet="Trip">
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="OperatesSaturday" ColumnName="OperatesSaturday" />
+                <ScalarProperty Name="OperatesFriday" ColumnName="OperatesFriday" />
+                <ScalarProperty Name="OperatesThursday" ColumnName="OperatesThursday" />
+                <ScalarProperty Name="OperatesWednesday" ColumnName="OperatesWednesday" />
+                <ScalarProperty Name="OperatesTuesday" ColumnName="OperatesTuesday" />
+                <ScalarProperty Name="OperatesMonday" ColumnName="OperatesMonday" />
+                <ScalarProperty Name="OperatesSunday" ColumnName="OperatesSunday" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="BlockNumber" ColumnName="BlockNumber" />
+                <ScalarProperty Name="HeadwayEnd" ColumnName="HeadwayEnd" />
+                <ScalarProperty Name="HeadwayStart" ColumnName="HeadwayStart" />
+                <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+                <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
+                <ScalarProperty Name="EventAndStatus" ColumnName="EventAndStatus" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="HasOpException" ColumnName="HasOpException" />
+                <ScalarProperty Name="PatternId" ColumnName="PatternId" />
+                <ScalarProperty Name="RouteAlpha" ColumnName="RouteAlpha" />
+                <ScalarProperty Name="NextTripNumber" ColumnName="NextTripNumber" />
+                <ScalarProperty Name="TripNumber" ColumnName="TripNumber" />
+                <ScalarProperty Name="PermanentTripNumber" ColumnName="PermanentTripNumber" />
+                <ScalarProperty Name="ScheduleType" ColumnName="ScheduleType" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripPatterns">
+            <EntityTypeMapping TypeName="SchedulingContext.TripPattern">
+              <MappingFragment StoreEntitySet="TripPattern">
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserID" ColumnName="UpdUserID" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserID" ColumnName="AddUserID" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="TripsMatch" ColumnName="TripsMatch" />
+                <ScalarProperty Name="AssignDate" ColumnName="AssignDate" />
+                <ScalarProperty Name="DrivingInstructions" ColumnName="DrivingInstructions" />
+                <ScalarProperty Name="VehicleDisplayCode" ColumnName="VehicleDisplayCode" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="LastTp" ColumnName="LastTp" />
+                <ScalarProperty Name="FirstTp" ColumnName="FirstTp" />
+                <ScalarProperty Name="InService" ColumnName="InService" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="VariantId" ColumnName="VariantId" />
+                <ScalarProperty Name="PatternId" ColumnName="PatternId" />
+                <ScalarProperty Name="RouteAlpha" ColumnName="RouteAlpha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripStops">
+            <EntityTypeMapping TypeName="SchedulingContext.TripStop">
+              <MappingFragment StoreEntitySet="TripStop">
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserID" ColumnName="UpdUserID" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserID" ColumnName="AddUserID" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="IsLast" ColumnName="IsLast" />
+                <ScalarProperty Name="Id511" ColumnName="Id511" />
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+                <ScalarProperty Name="PassingTime" ColumnName="PassingTime" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="PositionNumber" ColumnName="PositionNumber" />
+                <ScalarProperty Name="TripNumber" ColumnName="TripNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripTimingPoints">
+            <EntityTypeMapping TypeName="SchedulingContext.TripTimingPoint">
+              <MappingFragment StoreEntitySet="TripTimingPoint">
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserID" ColumnName="UpdUserID" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserID" ColumnName="AddUserID" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="PassingTimeNext" ColumnName="PassingTimeNext" />
+                <ScalarProperty Name="NextPlaceId" ColumnName="NextPlaceId" />
+                <ScalarProperty Name="PassingTimePrevious" ColumnName="PassingTimePrevious" />
+                <ScalarProperty Name="PreviousPlaceId" ColumnName="PreviousPlaceId" />
+                <ScalarProperty Name="IsLast" ColumnName="IsLast" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="IsExported" ColumnName="IsExported" />
+                <ScalarProperty Name="IsDeparture" ColumnName="IsDeparture" />
+                <ScalarProperty Name="IsArrival" ColumnName="IsArrival" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="PassingTime" ColumnName="PassingTime" />
+                <ScalarProperty Name="TripTimingPointPlaceId" ColumnName="TripTimingPointPlaceId" />
+                <ScalarProperty Name="PositionNumber" ColumnName="PositionNumber" />
+                <ScalarProperty Name="TripNumber" ColumnName="TripNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StopDistricts">
+            <EntityTypeMapping TypeName="SchedulingContext.StopDistrict">
+              <MappingFragment StoreEntitySet="StopDistrict">
+                <ScalarProperty Name="IsGPSValidated" ColumnName="IsGPSValidated" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="AvaStatus" ColumnName="AvaStatus" />
+                <ScalarProperty Name="AvaDescription" ColumnName="AvaDescription" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="LastSchedulerUpdate" ColumnName="LastSchedulerUpdate" />
+                <ScalarProperty Name="FlagRoute" ColumnName="FlagRoute" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="IsInService" ColumnName="IsInService" />
+                <ScalarProperty Name="IsTransitCenter" ColumnName="IsTransitCenter" />
+                <ScalarProperty Name="IsBart" ColumnName="IsBart" />
+                <ScalarProperty Name="Corner" ColumnName="Corner" />
+                <ScalarProperty Name="AllowBoarding" ColumnName="AllowBoarding" />
+                <ScalarProperty Name="AllowAlighting" ColumnName="AllowAlighting" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="StopDescription" ColumnName="StopDescription" />
+                <ScalarProperty Name="district" ColumnName="district" />
+                <ScalarProperty Name="Id511" ColumnName="Id511" />
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="NearestStop" FunctionName="SchedulingContext.Store.NearestStop">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchedulingContext.NearestStop_Result">
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+                <ScalarProperty Name="StopDescription" ColumnName="StopDescription" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="Id511" ColumnName="Id511" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="AllowAlighting" ColumnName="AllowAlighting" />
+                <ScalarProperty Name="AllowBoarding" ColumnName="AllowBoarding" />
+                <ScalarProperty Name="Corner" ColumnName="Corner" />
+                <ScalarProperty Name="IsBart" ColumnName="IsBart" />
+                <ScalarProperty Name="IsTransitCenter" ColumnName="IsTransitCenter" />
+                <ScalarProperty Name="IsInService" ColumnName="IsInService" />
+                <ScalarProperty Name="IsGPSValidated" ColumnName="IsGPSValidated" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="AvaStatus" ColumnName="AvaStatus" />
+                <ScalarProperty Name="AvaDescription" ColumnName="AvaDescription" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="LastSchedulerUpdate" ColumnName="LastSchedulerUpdate" />
+                <ScalarProperty Name="FlagRoute" ColumnName="FlagRoute" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStopsWithinProximity" FunctionName="SchedulingContext.Store.GetStopsWithinProximity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchedulingContext.GetStopsWithinProximity_Result">
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+                <ScalarProperty Name="StopDescription" ColumnName="StopDescription" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="Id511" ColumnName="Id511" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="AllowAlighting" ColumnName="AllowAlighting" />
+                <ScalarProperty Name="AllowBoarding" ColumnName="AllowBoarding" />
+                <ScalarProperty Name="Corner" ColumnName="Corner" />
+                <ScalarProperty Name="IsBart" ColumnName="IsBart" />
+                <ScalarProperty Name="IsTransitCenter" ColumnName="IsTransitCenter" />
+                <ScalarProperty Name="IsInService" ColumnName="IsInService" />
+                <ScalarProperty Name="IsGPSValidated" ColumnName="IsGPSValidated" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="AvaStatus" ColumnName="AvaStatus" />
+                <ScalarProperty Name="AvaDescription" ColumnName="AvaDescription" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="LastSchedulerUpdate" ColumnName="LastSchedulerUpdate" />
+                <ScalarProperty Name="FlagRoute" ColumnName="FlagRoute" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetRoutes" FunctionName="SchedulingContext.Store.GetRoutes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchedulingContext.GetRoutes_Result">
+                <ScalarProperty Name="RouteTypeId" ColumnName="RouteTypeId" />
+                <ScalarProperty Name="RouteAlpha" ColumnName="RouteAlpha" />
+                <ScalarProperty Name="RouteDescription" ColumnName="RouteDescription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddBooking" FunctionName="SchedulingContext.Store.AddBooking" />
+          <EntitySetMapping Name="VehicleDisplayCodes">
+            <EntityTypeMapping TypeName="SchedulingContext.VehicleDisplayCode">
+              <MappingFragment StoreEntitySet="VehicleDisplayCode">
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="ValidToDate" ColumnName="ValidToDate" />
+                <ScalarProperty Name="VDCMessage4" ColumnName="VDCMessage4" />
+                <ScalarProperty Name="VDCMessage3" ColumnName="VDCMessage3" />
+                <ScalarProperty Name="VDCMessage2" ColumnName="VDCMessage2" />
+                <ScalarProperty Name="VDCMessage1" ColumnName="VDCMessage1" />
+                <ScalarProperty Name="VDCId" ColumnName="VDCId" />
+                <ScalarProperty Name="SysRecNo" ColumnName="SysRecNo" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

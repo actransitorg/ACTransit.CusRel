@@ -1,0 +1,247 @@
+﻿@using ACTransit.CusRel.Models.Helpers
+@model ACTransit.CusRel.Models.LostFoundReportModel
+
+@{
+    ViewBag.Title = "Lost & Found";
+    ViewBag.Breadcrumb = "Reports > Lost & Found";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    @Styles.Render("~/Content/Tables")
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/jquery.datetimepicker-2.4.0.css")" rel="stylesheet" />    
+}
+@section Actions{
+    <button id="search" class="btn btn-primary btn-panel-title" type="button">Search</button>
+}
+
+<div class="row row-first">
+    <div class="col-md-12 normaltext">
+        <div class="row form-group field-margin">
+            @Html.LabelFor(model => model.ReportParams.RangeStart, "Start Dat", new { @class = "col-md-2 col-sm-2 smalltextright smalltext-bright text-right" })
+            <div class="col-md-1 col-sm-1">
+                @Html.TextBoxFor(model => model.ReportParams.RangeStart, new { @Value = Model.ReportParams.RangeStart.ToString("M/d/yyyy"), @class = "date-picker form-control field-height" })
+            </div>
+            @Html.LabelFor(model => model.ReportParams.RangeEnd, "End Date", new { @class = "col-md-2 col-sm-2 smalltextright smalltext-bright text-right" })
+            <div class="col-md-1 col-sm-1">
+                @Html.TextBoxFor(model => model.ReportParams.RangeEnd, new { @Value = Model.ReportParams.RangeEnd.ToString("M/d/yyyy"), @class = "date-picker form-control field-height" })
+            </div>
+            @Html.LabelFor(model => model.ReportParams.LostItemCategory, "Category", new { @class = "col-md-1 col-sm-1 smalltextright smalltext-bright" })
+            <div class="col-md-2 col-sm-2">
+                @Html.DropDownListFor(model => model.ReportParams.LostItemCategory, Model.EmptySelectList, "Select...", new { @class = "form-control field-height" })
+            </div>
+            @Html.LabelFor(model => model.ReportParams.LostItemType, "Type", new { @class = "col-md-1 col-sm-1 smalltextright smalltext-bright" })
+            <div class="col-md-2 col-sm-2">
+                @Html.DropDownListFor(model => model.ReportParams.LostItemType, Model.EmptySelectList, "Select...", new { @class = "form-control field-height" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 well normaltext">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <div class="row">
+                    <h1 class="panel-title text-center">
+                        <span style="padding-left: 4em">
+                            Tickets (<span id="TicketCount">@Model.Result.Report.Items.Count()</span>)
+                            <a href="javascript:startPrint('LostFoundReportTable','Lost Found')" data-tool="Print" class="printAnchor glyphicon glyphicon-print pull-right" data-title="print" rel="tooltip" style=""></a>
+                            <a href="#" class="export pull-right glyphicon glyphicon-download-alt" data-title="download csv" rel="tooltip"></a>
+                        </span>
+                    </h1>
+                </div>
+            </div>
+            <div class="panel-body" style="margin:0px 0px">
+                <div class="row form-group field-margin">
+                    <div id="SearchResults">
+                        <table class="table sortable" id="LostFoundReportTable">
+                            <thead>
+                                <tr>
+                                    <th>@Html.GetDisplayName(model => model.Header.Id)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.CustomerFirstName)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.CustomerLastName)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.CustomerPhoneNumber)</th>
+                                    @*<th>@Html.GetDisplayName(model => model.Header.CustomerEmail)</th>*@
+                                    <th>@Html.GetDisplayName(model => model.Header.IncidentAt)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.Route)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.LostItemCategory)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.LostItemType)</th>
+                                    <th data-defaultsort='disabled'>@Html.GetDisplayName(model => model.Header.Comments)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Result.Report.Items)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink(@item.Id.ToString(), "Update", "Ticket", new { id = item.Id },
+                                             new { id = "_" + @item.Id, target = "_self", data_toggle = "popover", data_content = @Html.GetCommentsString(item.Comments), data_title = "Ticket #" + @item.Id })
+                                        </td>
+                                        <td>@item.CustomerFirstName</td>
+                                        <td>@item.CustomerLastName</td>
+                                        <td>@item.CustomerPhoneNumber</td>
+                                        @*<td><a href="mailto:@item.CustomerEmail?subject=ACTransit Lost and Found Response (ID @item.Id)">@item.CustomerFirstName @item.CustomerLastName</a></td>*@
+                                        <td data-dateformat="M/D/YYYY">@(item.IncidentAt.HasValue ? item.IncidentAt.Value.ToString("M/d/yyyy") : "")</td>
+                                        <td>@item.Route</td>
+                                        <td>@(item.LostItemCategory ?? "")</td>
+                                        <td>@(item.LostItemType ?? "")</td>
+                                        <td>@Html.GetCommentsString(item.Comments)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Tables")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/jquery.exportCSV.js")
+    <script type="text/javascript">
+        var ReportParams = @Html.Raw(Json.Encode(Model.ReportParams));
+        var PostReportParams = @Html.Raw(Json.Encode(Model.PostReportParams));
+        var LostItemNodes = @Html.Raw(Json.Encode(Model.LostItemNodes));
+
+        function SetLostItemCategory(category) {
+            var nodes = Object.keys(LostItemNodes), options = "<option value='' " + (category == '' ? "selected" : "") + ">Select...</option>";
+            if (!nodes) return;
+            for (var i = 0; i < nodes.length; i++) {
+                options += "<option value='" + nodes[i] + "' " + (category == nodes[i] ? "selected" : "") + ">" + nodes[i] + "</option>";
+            }
+            $("#ReportParams_LostItemCategory").html("").append(options);
+        }
+
+        SetLostItemCategory("");
+
+        function SetCategoryTypes(category) {
+            var nodes = LostItemNodes[category], options = "<option value='' " + (category == '' ? "selected" : "") + ">Select...</option>";
+            if (!nodes) {
+                $("#ReportParams_LostItemType").html("").append(options);
+                return;
+            }
+            for (var i = 0; i < nodes.length; i++) {
+                options += "<option value='" + nodes[i] + "'>" + nodes[i] + "</option>";
+            }
+            $("#ReportParams_LostItemType").html("").append(options);
+        }
+
+        SetCategoryTypes("");
+
+        $("#ReportParams_LostItemCategory").on('change', function() {
+            PostReportParams.LostItemCategory = this.value;
+            SetCategoryTypes(this.value);
+            RefreshView();
+        });
+
+        $("#ReportParams_LostItemType").on('change', function() {
+            PostReportParams.LostItemType = this.value;
+            RefreshView();
+        });
+
+        $(".date-picker").each(function() {
+            var that = $(this);
+            setTimeout(function() {
+                that.datetimepicker({
+                    format: 'm/d/Y',
+                    timepicker: false,
+                });
+            }, 50);
+        });
+
+        function pageTop(){
+            return $(".navbar-fixed-top").height();
+        }
+
+        function EnableThead() {
+            $.bootstrapSortable(true);
+            return;
+            $("#LostFoundReportTable").floatThead({
+                scrollingTop: pageTop,
+                useAbsolutePositioning: false
+            });
+            $(".table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td").css("padding", "1px 0px 5px 0px", "important");
+        }
+
+        EnableThead();
+        SetupHints();
+
+        var lostItem;
+        function startPrint(tableName, titleName) {
+            var lostCategory = $("#ReportParams_LostItemCategory:selected").text();
+            var lostType = $("#ReportParams_LostItemType:selected").text();
+            lostItem = ', Category: ' + (lostCategory != '' ? lostCategory : 'All') + ', Type: ' + (lostType != '' ? lostType : 'All');
+
+            //$("#LostFoundReportTable").floatThead('destroy');
+            $("#LostFoundReportTable td").css("white-space", "normal");
+            print(tableName, titleName, lostItem);
+            EnableThead();
+            $("#LostFoundReportTable td").css("white-space", "nowrap");
+        }
+
+        $("#search").on('click', function() {
+            RefreshView();
+            //var rangeStart = $('#ReportParams_RangeStart').val();
+            //var rangeEnd = $('#ReportParams_RangeEnd').val();
+        });
+
+        RefreshView = function() {
+            var rangeStart = $("#ReportParams_RangeStart").val().length > 0 ? $("#ReportParams_RangeStart").val() + " 12:00 AM" : null;
+            var rangeEnd = $("#ReportParams_RangeEnd").val().length > 0 ? $("#ReportParams_RangeEnd").val() + " 11:59:59 PM" : null;
+            PostReportParams.RangeStart = rangeStart;
+            PostReportParams.RangeEnd = rangeEnd;
+            $.ajax({
+                type: "POST",
+                url: "LostFound",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(PostReportParams),
+                success: function (result) {
+                    var data = result.Report.Items;
+                    $(function () {
+                        var content = '';
+                        $("#TicketCount").text(data.length);
+                        for (var i = 0; i < data.length; i++) {
+                            content +=
+                                    '<tr>'+
+                                        '<td>'+
+                                            '<a id="_' + data[i].Id + '" href="@Url.Action("Update", "Ticket")/' + data[i].Id + '" target="_self" ' +
+                                    'data-toggle="popover" data-content="' + toCommentsString(data[i].Comments) + '" data-title="Ticket #' + data[i].Id + '">' + data[i].Id + '</a>' +
+                                '</td>' +
+                                '<td>' + data[i].CustomerFirstName + '</td>'+
+                                '<td>' + data[i].CustomerLastName + '</td>'+
+                                '<td>' + toNullString(data[i].CustomerPhoneNumber) + '</td>'+
+                                //'<td><a href="mailto:'+toNullString(data[i].CustomerEmail)+'?subject=ACTransit Lost and Found Response (ID '+data[i].Id+')">' + data[i].CustomerFirstName + ' ' + data[i].CustomerLastName + '</a></td>'+
+                                '<td data-dateformat="M/D/YYYY">' + toDateString(data[i].IncidentAt) + '</td>'+
+                                '<td>' + toNullString(data[i].Route) + '</td>'+
+                                '<td>' + toNullString(data[i].LostItemCategory) + '</td>'+
+                                '<td>' + toNullString(data[i].LostItemType) + '</td>'+
+                                '<td>' + toCommentsString(data[i].Comments) + '</td>' +
+                                //'<td>' + toDateString(data[i].IncidentAt) + '</td>'+
+                            '</tr>';
+                    }
+                    $('#LostFoundReportTable tbody').html(content);
+                    //$("#LostFoundReportTable").floatThead('reflow');
+                    SetupHints();
+                    $.bootstrapSortable(true);
+                });
+            },
+            fail: function(e, data) {
+
+            }
+        });
+    };
+    // IF CSV, don't do event.preventDefault() or return false
+    // We actually need this to be a typical hyperlink
+    $(".export").on('click', function (event) {
+        // CSV
+        exportTableToCSV.apply(this, [$('#SearchResults>table'), 'LostFound.csv']);
+    });
+    </script>
+}

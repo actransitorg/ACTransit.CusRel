@@ -1,0 +1,21 @@
+﻿@model Enum
+@{
+    var isRequired = this.ViewData.ModelMetadata.IsRequired;
+
+    var type = this.ViewData.ModelMetadata.ModelType;
+    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+    {
+        type = type.GenericTypeArguments[0];
+    }
+
+    var values = Enum.GetValues(type);
+    var items = (from object value in values
+                 select new SelectListItem
+                            {
+                                Selected = ((Model == null) ? false : Enum.GetName(type, Model) == Enum.GetName(type, value)),
+                                Text = Enum.GetName(type, value),
+                                Value = value.ToString()
+                                //Selected = Enum.GetName(type, Model) == Enum.GetName(type, value)
+                            });
+}
+@Html.DropDownListFor(m => m, items, isRequired ? "Select..." : "(None)", new { @class = "form-control field-height" })

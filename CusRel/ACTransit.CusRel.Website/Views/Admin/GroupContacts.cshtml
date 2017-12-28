@@ -1,0 +1,82 @@
+﻿@using ACTransit.CusRel.Models.Helpers
+@model ACTransit.CusRel.Models.GroupContactModel
+
+@{
+    ViewBag.Title = "Dept Contacts";
+    ViewBag.Breadcrumb = "Admin > Dept Contacts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    @Styles.Render("~/Content/Tables")
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+    <style>
+        #group-list thead tr th, #group-list tbody tr td {
+            white-space: nowrap;
+        }
+
+        #group-list tbody tr {
+            cursor: pointer;
+        }
+
+        #group-list tbody tr:nth-child(even) {
+            background-color: #adbdbc;
+        }
+    </style>
+}
+
+<br />
+<div class="row row-first">
+    <div class="col-md-13 well normaltext">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <div class="row">
+                    <h1 class="panel-title text-center">
+                        <span style="padding-left: 4em">
+                            Dept Contacts
+                        </span>
+                    </h1>
+                </div>
+            </div>
+            <div class="panel-body" style="margin:0px 0px">
+                <div class="row form-group field-margin">
+                    <div id="SearchResults">
+                        <table class="table sortable" id="group-list">
+                            <thead>
+                                <tr>
+                                    <th>Department</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.Email)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.Code)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.IsVisible)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.GroupContacts)
+                                {
+                                    <tr>
+                                        <td>@Html.ActionLink(@item.Description, "EditGroupContact", "Admin", new { id = item.Code }, new { id = "_" + @item.Code })</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.Code</td>
+                                        <td>@item.IsVisible</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Tables")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/jquery.exportCSV.js")
+
+}

@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Test</title>
+    <link href="/Content/css?v=0o-wA_GVUJIk01505uUCaZXzx8KyR5TKyfW4Eo0tkGU1" rel="stylesheet" />
+</head>
+<body>
+    <label for="Ticket_Incident_Route">Routes</label>
+    <div>
+        <input class="form-control field-height fieldwidth"
+               type="text"
+               id="Ticket_Incident_Route"
+               name="Ticket.Incident.Route"
+               value="21"
+               data-value="22"
+               />
+    </div>
+    <label for="Ticket_Incident_Route">Routes 1</label>
+    <div id="ms"></div>
+    <label for="Ticket_Incident_Route">Routes 2</label>
+    <div id="ms2"></div>
+    <label for="Ticket_Incident_Route">Routes 3</label>
+    <div id="ms3"></div>
+    <div>
+        
+
+    </div>
+    <script src="/Scripts/jquery-2.1.1.js"></script>
+    <script src="/bundles/bootstrap?v=1SvvO6dMgBLYCu7nhq3vIMdYhGrbhL8gcyRdOb9lffQ1"></script>
+    <script src="/Scripts/jquery.magicsuggest-2.1.2.js"></script>
+    <script type="text/javascript">
+       
+        var data = {
+            RouteInfo: {
+                Routes : ["21", "22", "23"]
+            }
+        }
+        var routes = typeof (data.RouteInfo.Routes) === "string" ? JSON.parse(data.RouteInfo.Routes) : data.RouteInfo.Routes;
+
+        ArrayToMagicArray = function (arr) {
+            var result = [];
+            var idx = 0;
+            arr.forEach(function (element) {
+                result.push({ id: idx, name: element });
+                idx++;
+            });
+            return result;
+        };
+
+        GetMagicArrayId = function (arr, name) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].name === name) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        CreateMagicControl = function (routes, elemId, defaultValue) {
+            
+            var routesArray = ArrayToMagicArray(routes);
+            var elem = document.getElementById(elemId);
+            //elem.setValue("21");
+            var val = elem.getAttribute("value");
+            
+            val = val || defaultValue;
+            elem.removeAttribute("value");
+            val = elem.getAttribute("value");
+
+
+            //elem.removeAttr('value');
+            //var testVal = false;
+
+            //elem.prop('value', null);
+            //testVal = elem.val();
+            //elem.removeAttr('value');
+            //testVal = elem.val();
+
+            var valIdx = GetMagicArrayId(routesArray, val);
+            setTimeout(function () {
+                var val = elem.getAttribute("value");
+                $("#" + elemId).magicSuggest({
+                    data: routesArray,
+                    value: [valIdx],
+                    placeholder: "Select...",
+                    resultAsString: true,
+                    maxSelection: 1,
+                    maxSelectionRenderer: function (v) { return null; }
+                });
+            }, 100);
+        }
+
+        CreateMagicControl(routes, "Ticket_Incident_Route", ["21"]);
+
+        var ms = $('#ms').magicSuggest({
+            data: data.RouteInfo.Routes,
+            dataUrlParams: {
+                init: true,
+                resultAsString: true,
+                placeholder: "Select...",
+                maxSelection: 1,
+                maxSelectionRenderer: function(envy) { return null; }
+            }
+        });
+        ms.setValue(["21"]);
+
+        var ms = $('#ms2').magicSuggest({
+            data: data.RouteInfo.Routes,
+            dataUrlParams: {
+                init: true,
+                resultAsString: true,
+                placeholder: "Select...",
+                maxSelection: 1,
+                maxSelectionRenderer: function (envy) { return null; }
+            }
+        });
+        ms.setValue(["22"]);
+
+        var ms = $('#ms3').magicSuggest({
+            data: data.RouteInfo.Routes,
+            dataUrlParams: {
+                init: true,
+                resultAsString: true,
+                placeholder: "Select...",
+                maxSelection: 1,
+                maxSelectionRenderer: function (envy) { return null; }
+            }
+        });
+        ms.setValue(["23"]);
+    </script>
+
+</body>
+</html>

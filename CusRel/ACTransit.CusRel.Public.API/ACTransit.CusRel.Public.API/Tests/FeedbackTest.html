@@ -1,0 +1,526 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Post Feedback Test</title>
+    <style>
+        div .col {
+            width: 150px;
+            display: block;
+        }
+        .req {
+            color: red;
+            float: left;
+        }
+        ul {
+            list-style: none;
+        }
+        li {
+            padding-bottom: 10px;
+        }
+        .row {
+            display: none;
+        }
+        .customMessage {
+            background-color: #ffd700;
+            font-size: small;
+        }
+        #ThankYou {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form id="FormDetails">
+        <p>
+            Whether you have a commendation or a complaint, a question or a suggestion, we want to hear from you. Your comments are important to us!
+        </p>
+        <p>
+            <strong>New:  Lost and Found Reporting.  You may now report items you’ve lost on an AC Transit bus.</strong>
+        </p>
+        <p>
+            For more immediate help with travel or trip planning, please visit 511.org. Or to speak with a representative, Monday-Friday 6 am – 7 pm, Saturday-Sunday 9 am – 5 pm, call 511 and say “AC Transit.”
+        </p>
+        <p>
+            <strong>Please Note</strong>: Input at this site does not constitute a claim for damages. For information regarding claims for damages, please go to Government Tort Claims.
+        </p>
+        <p>
+            <strong>Select the kind of input you wish to give:</strong>
+            <ul>
+                <li>
+                    <a id="incident" href="#">Report an Incident</a><br />
+                    For comments, commendations or concerns about a specific incident, bus line or operator.
+                </li>
+                <li>
+                    <a id="ask" href="#">Ask a Question</a><br />
+                    For general comments or questions not related to a specific incident.
+                </li>
+                <li>
+                    <a id="suggestion" href="#">Make a Suggestion</a><br />
+                    Give us your general comments on how to improve our service.
+                </li>
+                <li>
+                    <a id="lostfound" href="#">Report an Lost Item</a> on AC Transit Bus<br />
+                </li>
+            </ul>
+        </p>
+
+        <div id="contact" class="row" data-bind="visible: showForms">
+            <fieldset>
+                <legend>Your Contact Information (<label data-bind="value: viewModel.title"></label>)</legend>
+                <div class="row">
+                    <span class="req">*</span><label for="FirstName" class="col">First Name:</label><input id="FirstName" type='text' maxlength='40' data-bind="value: Model.Contact.FirstName" />
+                </div>
+                <div class="row">
+                    <span class="req">*</span><label for="LastName" class="col">Last Name:</label><input id="LastName" type='text' maxlength='40' data-bind="value: Model.Contact.LastName" />
+                </div>
+                <div class="row">
+                    <label for="Address" class="col">Address:</label> <input id="Address" type='text' maxlength='100' data-bind="value: Model.Contact.Address" />
+                </div>
+                <div class="row">
+                    <label for="City" class="col">City:</label> <input id="City" type='text' maxlength='60' data-bind="value: Model.Contact.City" />
+                </div>
+                <div class="row">
+                    <label for="State" class="col">State:</label><select id="State" data-bind="options: selectLists.States, optionsText: 'label', optionsValue: 'value', value: Model.Contact.State"></select>
+                </div>
+                <div class="row">
+                    <label for="ZipCode" class="col">Zip Code:</label><input id="ZipCode" type='text' maxlength='10' data-bind="value: Model.Contact.ZipCode" />
+                </div>
+                <div class="row">
+                    <label for="HomePhone" class="col">Home Phone:</label><input id="HomePhone" type='text' maxlength='10' data-bind="value: Model.Contact.HomePhone" />
+                </div>
+                <div class="row">
+                    <label for="WorkPhone" class="col">Work Phone:</label><input id="WorkPhone" type='text' maxlength='10' data-bind="value: Model.Contact.WorkPhone" />
+                </div>
+                <div class="row">
+                    <label for="MobilePhone" class="col">Mobile Phone:</label><input id="MobilePhone" type='text' maxlength='10' data-bind="value: Model.Contact.MobilePhone" />
+                </div>
+                <div class="row">
+                    <span class="req">*</span><label for="EmailAddress" class="col">Email:</label><input id="EmailAddress" type='email' maxlength='100' data-bind="value: Model.Contact.EmailAddress" required=required pattern="@" />
+                </div>
+            </fieldset>
+        </div>
+        <div id="incident" class="row" data-bind="visible: showIncident">
+            <fieldset>
+                <legend>Incident Details</legend>
+                <div class="row">
+                    <label class="col">Date:</label>
+                    <select data-bind="options: selectLists.Months, optionsText: 'label', optionsValue: 'value', value: viewBag.Month"></select>
+                    &#160;/&#160;
+                    <select data-bind="options: selectLists.Days, optionsText: 'label', optionsValue: 'value', value: viewBag.Day"></select>
+                    &#160;/&#160;
+                    <select data-bind="options: selectLists.Years, optionsText: 'label', optionsValue: 'value', value: viewBag.Year"></select>
+                </div>
+                <div class="row">
+                    <label class="col">Time:</label>
+                    <select data-bind="options: selectLists.Hours, optionsText: 'label', optionsValue: 'value', value: viewBag.Hour"></select>
+                    &#160;:&#160;
+                    <select data-bind="options: selectLists.Minutes, optionsText: 'label', optionsValue: 'value', value: viewBag.Minute"></select>
+                    &#160;
+                    <select data-bind="options: selectLists.AMPM, optionsText: 'label', optionsValue: 'value', value: viewBag.AMPM"></select>
+                </div>
+                <div class="row">
+                    <label for="Line" class="col">Route/Line #:</label> <input id="Line" type='text' maxlength='4' data-bind="value: Model.Incident.Line" /><small>(Located in front of bus, above the driver, or displayed on back of bus)</small>
+                </div>
+                <div class="row">
+                    <label for="Vehicle" class="col">Vehicle #:</label> <input id="Vehicle" type='text' maxlength='4' data-bind="value: Model.Incident.Vehicle" />
+                </div>
+                <div class="row">
+                    <label for="Destination" class="col">Destination:</label> <input id="Destination" type='text' maxlength='40' data-bind="value: Model.Incident.Destination" /><small>(Your destination stop, or end of the line)</small>
+                </div>
+                <div class="row">
+                    <label for="Location" class="col">Location:</label> <input id="Location" type='text' maxlength='60' data-bind="value: Model.Incident.Location" /><small>(Where the incident occurred)</small>
+                </div>
+            </fieldset>
+        </div>
+        <div id="employee" class="row" data-bind="visible: showEmployee">
+            <fieldset>
+                <legend>Employee Details</legend>
+                <div class="row">
+                    <label for="Badge" class="col">Employee Badge #:</label> <input id="Badge" type='text' maxlength='5' data-bind="value: Model.Employee.Badge" />
+                </div>
+                <div class="row">
+                    <label for="Description" class="col">Employee Description:</label> <input id="Description" type='text' maxlength='1024' data-bind="value: Model.Employee.Description" />
+                </div>
+            </fieldset>
+        </div>
+        <div id="ownWords" class="row" data-bind="visible: showForms">
+            <fieldset>
+                <legend>In Your Own Words</legend>
+                <div class="row">
+                    <span class="req">*</span><label for="Comments" class="col">Type Comments Here</label>
+                </div>
+                <div class="row">
+                    <textarea id="Comments" style='width:450px; height:100px' data-bind="value: Model.Comments"></textarea>
+                </div>
+                <div class="row">
+                    Request a Response?&nbsp;<input type="checkbox" name="RequestResponse" id="RequestResponse" data-bind="checked: Model.RequestResponse" />
+                </div>
+                <div class="row">
+                    We read and record all comments, however due to the volume of feedback
+                    that we receive, we will only contact you back if you request a reply.
+                </div>
+            </fieldset>
+        </div>
+        <br />
+        <span id="ErrorMessage"></span>
+        <div class="row" data-bind="visible: showForms">
+            <button type="button" data-bind='click: buttons.submit'>Submit</button>&nbsp;
+            <input type="reset" name="Reset" value="Reset" />&nbsp;
+        </div>
+        <p>
+            If you prefer, you may dial 511 and say “AC Transit”, for either Transit Information or Customer Relations.
+        </p>
+    </form>
+
+    <div id="ThankYou">
+        <p>
+            <strong>Thank you for completing our form.</strong>
+        </p>
+        <p>
+            If you prefer, you may dial 511 and say “AC Transit”, for either Transit Information or Customer Relations.
+        </p>
+    </div>
+    
+    <p>
+        <strong>Bus Shelters:</strong>
+    </p>
+    <p>
+        Note:  Please report maintenance or safety issues at bus shelters by calling Clear Channel toll free 24/7: 1-888-ADSHEL1 (237-4351)
+    </p>
+
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+    <script src="../Scripts/knockout.validation.js"></script>  <!-- always refresh from https://raw.githubusercontent.com/Knockout-Contrib/Knockout-Validation/master/Dist/knockout.validation.js -->
+    <script src="../Scripts/knockout.mapping.js"></script> <!-- always refresh from https://raw.githubusercontent.com/SteveSanderson/knockout.mapping/master/build/output/knockout.mapping-latest.js -->
+    <script id="customMessageTemplate" type="text/html">
+        <em class="customMessage" data-bind='validationMessage: field'></em>
+    </script>
+    <script>
+        var Option = function (label, value) {
+            this.label = label;
+            this.value = value;
+        }
+
+        act = { feedback: {} }
+        act.feedback.obj = function () {
+
+            var bindingHandler = function (data) {
+                (function () {
+                    ko.validation.configure({
+                        registerExtenders: true,
+                        decorateElement: true,
+                        messagesOnModified: true,
+                        insertMessages: true,
+                        parseInputAttributes: true,
+                        messageTemplate: 'customMessageTemplate',
+                        grouping: { deep: true }
+                    });
+                })();
+
+                viewModel = {
+                    model: ko.mapping.fromJS(data),
+                    viewBag: {
+                        Month: ko.observable(new Date().getMonth()),
+                        Day: ko.observable(new Date().getDate()),
+                        Year: ko.observable(new Date().getFullYear()),
+                        Hour: ko.observable(new Date().getHours() == 0 ? 12 : new Date().getHours() % 12),
+                        Minute: ko.observable(Math.round(new Date().getMinutes() / 5) * 5), // round nearest 5 minutes
+                        AMPM: ko.observable(new Date().getHours() < 12),
+                    },
+                    showForms: ko.observable(false),
+                    showEmployee: ko.observable(false),
+                    showIncident: ko.observable(false),
+                    buttons: {
+                        preparePost: function () {
+                            viewModel.model.Incident.DateTime(new Date(
+                                viewModel.viewBag.Year(),
+                                viewModel.viewBag.Month(),
+                                viewModel.viewBag.Day(),
+                                viewModel.viewBag.AMPM() == "pm" ? viewModel.viewBag.Hour() + 12 : viewModel.viewBag.Hour(),
+                                viewModel.viewBag.Minute(),
+                                0));
+                        },
+                        submit: function () {
+                            if (viewModel.errors() == 0) {
+                                buttons.preparePost();
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: 'http://your.company Website/cusrel-feedback-form' + viewModel.feedbackType(),
+                                    async: false,
+                                    data: ko.mapping.toJSON(viewModel.model),
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function (result) {
+                                        complete();
+                                    },
+                                    error: function (e) {
+                                        $("#ErrorMessage").val("Error: " + e.statusText);
+                                    }
+                                });
+                            } else {
+                                viewModel.errors.showAllMessages();
+                            }
+                        }
+                    }
+                };
+
+                Model = viewModel.model;
+                buttons = viewModel.buttons;
+
+                extendedValidators = (function() {
+                    var model = viewModel.model;
+                    model.Contact.FirstName.extend({ required: true, minLength: 2, maxLength: 30 });
+                    model.Contact.LastName.extend({ required: true, minLength: 2, maxLength: 30 });
+                    model.Contact.Address.extend({ maxLength: 30 });
+                    model.Contact.City.extend({ maxLength: 30 });
+                    model.Contact.State.extend({ maxLength: 2 });
+                    model.Contact.ZipCode.extend({ maxLength: 10, digit: true });
+                    model.Contact.HomePhone.extend({ digit: true, minLength: { params: 10, message: "Must be 10 digits in length." } });
+                    model.Contact.WorkPhone.extend({ digit: true, minLength: { params: 10, message: "Must be 10 digits in length." } });
+                    model.Contact.MobilePhone.extend({ digit: true, minLength: { params: 10, message: "Must be 10 digits in length." } });
+                    model.Contact.EmailAddress.extend({ required: true, email: true, minLength: 6, maxLength: 50 });
+                    model.Incident.Vehicle.extend({ required: false, pattern: { params: "^\\d{1,4}$", message: 'Must only contain numbers 4 or less in length.' } });
+                    model.Incident.Line.extend({ required: false, pattern: { params: "^[a-zA-Z0-9]{1,4}$", message: 'Must only letters and numbers 4 or less in length.' } });
+                    model.Incident.Destination.extend({ maxLength: 40 });
+                    model.Incident.Location.extend({ maxLength: 60 });
+                    model.Employee.Badge.extend({ required: { onlyIf: function () { return false; }, message: "Employee badge field must only contain numbers and 5 or less in length." } });
+                    model.Employee.Description.extend({ maxLength: 1024 });
+                    model.Comments.extend({ required: true, minLength: 10, maxLength: 8000 });
+                })();
+
+                $.extend(viewModel, {
+                    errors : ko.validation.group(viewModel),
+                    title: ko.computed({
+                        read: function() {
+                            switch (viewModel.model.ActionEnum()) {
+                                case 0:
+                                    return "Report an Incident";
+                                case 1:
+                                    return "Ask a Question";
+                                case 2:
+                                    return "Make a Suggestion";
+                                case 3:
+                                    return "Report an Item Lost";
+                                default:
+                                    return "";
+                            }
+                        }
+                    }, this),
+                    feedbackType: ko.computed({
+                        read: function() {
+                            switch (viewModel.model.ActionEnum()) {
+                                case 0:
+                                    return "incident";
+                                case 1:
+                                    return "ask";
+                                case 2:
+                                    return "suggestion";
+                                case 3:
+                                    return "lostfound";
+                                default:
+                                    return "";
+                            }
+                        },
+                        write: function(value) {
+                            switch (value) {
+                                case "incident":
+                                    viewModel.model.ActionEnum(0);
+                                    break;
+                                case "ask":
+                                    viewModel.model.ActionEnum(1);
+                                    break;
+                                case "suggestion":
+                                    viewModel.model.ActionEnum(2);
+                                    break;
+                                case "lostfound":
+                                    viewModel.model.ActionEnum(3);
+                                    break;
+                            }
+                            viewModel.showEmployee(value == "incident" || value == "lostfound");
+                            viewModel.showIncident(value == "incident" || value == "lostfound");
+                        },
+                        owner: self
+                    })
+                });
+
+                // ---[ Supplimentary functionality ]------------------------------
+
+                var rangeOptions = function(start, stop, step) {
+                    var result = [];
+                    _.range(start, stop, step).forEach(function(ele) {
+                        result.push(new Option(ele, ele));
+                    });
+                    return result;
+                }
+
+                $.extend(viewModel, {
+                    selectLists: {
+                        States: ko.observableArray([
+                            new Option("Alabama", "AL"),
+                            new Option("Alaska", "AK"),
+                            new Option("Arizona", "AZ"),
+                            new Option("Arkansas", "AR"),
+                            new Option("California", "CA", true),
+                            new Option("Colorado", "CO"),
+                            new Option("Connecticut", "CT"),
+                            new Option("Delaware", "DE"),
+                            new Option("District", "DC"),
+                            new Option("Florida", "FL"),
+                            new Option("Georgia", "GA"),
+                            new Option("Hawaii", "HI"),
+                            new Option("Idaho", "ID"),
+                            new Option("Illinois", "IL"),
+                            new Option("Indiana", "IN"),
+                            new Option("Iowa", "IA"),
+                            new Option("Kansas", "KS"),
+                            new Option("Kentucky", "KY"),
+                            new Option("Louisiana", "LA"),
+                            new Option("Maine", "ME"),
+                            new Option("Maryland", "MD"),
+                            new Option("Massachusetts", "MA"),
+                            new Option("Michigan", "MI"),
+                            new Option("Minnesota", "MN"),
+                            new Option("Mississippi", "MS"),
+                            new Option("Missouri", "MO"),
+                            new Option("Montana", "MT"),
+                            new Option("Nebraska", "NE"),
+                            new Option("Nevada", "NV"),
+                            new Option("New", "NH"),
+                            new Option("New", "NJ"),
+                            new Option("New", "NM"),
+                            new Option("New", "NY"),
+                            new Option("North", "NC"),
+                            new Option("North", "ND"),
+                            new Option("Ohio", "OH"),
+                            new Option("Oklahoma", "OK"),
+                            new Option("Oregon", "OR"),
+                            new Option("Pennsylvania", "PA"),
+                            new Option("Rhode", "RI"),
+                            new Option("South", "SC"),
+                            new Option("South", "SD"),
+                            new Option("Tennessee", "TN"),
+                            new Option("Texas", "TX"),
+                            new Option("Utah", "UT"),
+                            new Option("Vermont", "VT"),
+                            new Option("Virginia", "VA"),
+                            new Option("Washington", "WA"),
+                            new Option("West", "WV"),
+                            new Option("Wisconsin", "WI"),
+                            new Option("Wyoming", "WY")
+                        ]),
+                        Months: ko.observableArray(rangeOptions(1, 13)),
+                        Days: ko.observableArray(rangeOptions(1, 32)),
+                        Years: ko.observableArray(rangeOptions(new Date().getFullYear() - 5, new Date().getFullYear() + 1)),
+                        Hours: ko.observableArray(rangeOptions(1, 13)),
+                        Minutes: ko.observableArray(rangeOptions(0, 60, 5)),
+                        AMPM: ko.observableArray([
+                            new Option("am", "am"),
+                            new Option("pm", "pm")
+                        ])
+                    }
+                });
+
+                selectLists = viewModel.selectLists;
+
+                (function () {
+                    ko.applyBindings(viewModel);
+                })();
+
+                return {
+                    viewModel: this.viewModel,
+                    selectLists: this.selectLists
+                }
+            }
+            return {
+                Initialize: function(model) {
+                    bindingHandler(model);
+                }
+            };
+        };
+
+
+        $(document).ready(function () {
+
+            var defaultModel = {
+                ActionEnum: -1,
+                Contact: {
+                    FirstName: "",
+                    LastName: "",
+                    Address: "",
+                    City: "",
+                    State: "CA",
+                    ZipCode: "",
+                    HomePhone: "",
+                    WorkPhone: "",
+                    MobilePhone: "",
+                    EmailAddress: ""
+                },
+                Incident: {
+                    DateTime: new Date().toISOString(),
+                    Vehicle: "",
+                    Line: "",
+                    Destination: "",
+                    Location: "",
+                },
+                Employee: {
+                    Badge: "",
+                    Description: "",
+                },
+                Comments: "",
+                RequestResponse: false
+            };
+
+            act.feedback.obj().Initialize(defaultModel);
+
+            complete = function () {
+                $("#ThankYou").toggle();
+                $("#FormDetails").toggle();
+            }
+
+            resetForm = function() {
+                viewModel.showForms(false);
+                viewModel.showEmployee(false);
+                viewModel.showIncident(false);
+                viewModel.feedbackType(-1);
+                $(".row").toggle();
+                $(":reset").trigger("click");
+                $("#ErrorMessage").val("");
+                start();
+            }
+
+            $("a").click(function (evt) {
+                evt.preventDefault();
+                viewModel.showForms(true);
+                viewModel.feedbackType(evt.currentTarget.id);
+                $(".row").toggle();
+                $("#FirstName").focus().select();
+            });
+
+            $(":reset").click(function(evt) {
+                $("body").find(':input').each(function () {
+                    switch (this.type) {
+                        case 'text':
+                        case 'textarea':
+                        case 'email':
+                            $(this).val('');
+                            break;
+                    }
+                });
+
+            });
+
+        });
+
+        $(window).load(function () {
+            $('body').scrollTop(0);
+        });
+
+    </script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,214 @@
+﻿@model ACTransit.CusRel.Models.EditUserModel
+
+@{
+    ViewBag.Title = (string.IsNullOrEmpty(Model.User.Id) ? "Add" : "Edit") + " User";
+    ViewBag.Breadcrumb = "Admin > " + ViewBag.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+
+    @Styles.Render("~/content/jqueryUI")
+
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+    <style>
+
+        .spinnertxt
+        {
+            width:30px;
+        }
+
+        #user-list thead tr th, #user-list tbody tr td {
+            white-space: nowrap;
+        }
+
+        #user-list tbody tr {
+            cursor: pointer;
+        }
+
+        #user-list tbody tr:nth-child(even) {
+            background-color: #adbdbc;
+        }
+
+    </style>
+}
+
+<br />
+<div class="content">
+    @using (@Html.BeginForm("EditUser", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1 class="panel-title text-center">@ViewBag.Title</h1>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.Id, "Username", new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.User.Id, new { @class = " form-control field-height", maxlength = 16, size = 16 })
+                                @Html.ValidationMessageFor(model => model.User.Id, string.Empty, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.Username, "First/Last Name", new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.User.Username, new { @class = " form-control field-height", maxlength = 30, size = 30 })
+                                @Html.ValidationMessageFor(model => model.User.Username, string.Empty, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.Email, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.User.Email, new { @class = " form-control field-height", maxlength = 50, size = 50 })
+                                @Html.ValidationMessageFor(model => model.User.Email, string.Empty, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.Division, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.DropDownListFor(model => model.User.Division, Model.Divisions, "Select...", new { @class = "form-control"})
+                                @Html.ValidationMessageFor(model => model.User.Division, null, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.GroupContact.Code, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.DropDownListFor(model => model.User.GroupContact.Code, Model.GroupContacts, "Select...", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.User.GroupContact.Code, null, new { @class = "field-validation-error" })
+                            </div>
+                        </div>    
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.DaysReminderNotification, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.User.DaysReminderNotification, new { @class = "spinnertxt", @readonly="readonly"  })
+                                @Html.ValidationMessageFor(model => model.User.DaysReminderNotification, string.Empty, new { @class = "field-validation-error" })
+                            </div>
+                        </div>                                            
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.CanAddTicketComments, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.CheckBoxFor(model => model.User.CanAddTicketComments, new { @class = "checkbox-fix" })
+                                @Html.ValidationMessageFor(model => model.User.CanAddTicketComments, null, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.CanAssignTicket, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.CheckBoxFor(model => model.User.CanAssignTicket, new { @class = "checkbox-fix" })
+                                @Html.ValidationMessageFor(model => model.User.CanAssignTicket, null, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.CanCloseTicket, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.CheckBoxFor(model => model.User.CanCloseTicket, new { @class = "checkbox-fix" })
+                                @Html.ValidationMessageFor(model => model.User.CanCloseTicket, null, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.CanAccessAdmin, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.CheckBoxFor(model => model.User.CanAccessAdmin, new { @class = "checkbox-fix" })
+                                @Html.ValidationMessageFor(model => model.User.CanAccessAdmin, null, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.CanSearchTickets, new {@class = "col-md-2 col-sm-2 control-label"})
+                            <div class="col-md-6 col-sm-6">
+                                @Html.CheckBoxFor(model => model.User.CanSearchTickets, new {@class = "checkbox-fix"})
+                                @Html.ValidationMessageFor(model => model.User.CanSearchTickets, null, new {@class = "field-validation-error"})
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.CanViewUnassigned, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.CheckBoxFor(model => model.User.CanViewUnassigned, new { @class = "checkbox-fix" })
+                                @Html.ValidationMessageFor(model => model.User.CanViewUnassigned, null, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.CanViewOnlyDeptTickets, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.CheckBoxFor(model => model.User.CanViewOnlyDeptTickets, new { @class = "checkbox-fix" })
+                                @Html.ValidationMessageFor(model => model.User.CanViewOnlyDeptTickets, null, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            @Html.LabelFor(model => model.User.GetsNotificationOnAssignment, new { @class = "col-md-2 col-sm-2 control-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.CheckBoxFor(model => model.User.GetsNotificationOnAssignment, new { @class = "checkbox-fix" })
+                                @Html.ValidationMessageFor(model => model.User.GetsNotificationOnAssignment, null, new { @class = "field-validation-error" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.User.Id)
+
+    <button class="btn btn-primary" id="save">Save</button>   
+    @Html.ActionLink("Cancel", "UserAccess", "Admin", new { }, new { @class = "btn btn-warning" })
+    <button type="button" class="btn btn-danger" id="delete-button">Delete</button>
+    }
+    
+    <!-- Modal Dialog -->
+    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Delete Parmanently</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure about this?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirm">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryUI")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/jquery.exportCSV.js")
+    
+    <!-- Dialog show event handler -->
+    <script type="text/javascript">
+
+        $(".spinnertxt").spinner();
+        $(".spinnertxt").spinner({ min: 0 });
+
+        $("#delete-button").click(function (e) {
+            e.preventDefault();
+            $('#confirmDelete').modal();
+        });
+
+        $('#confirmDelete').on('show.bs.modal', function (e) {
+            $message = $(e.relatedTarget).attr('data-message');
+            $(this).find('.modal-body p').text($message);
+            $title = $(e.relatedTarget).attr('data-title');
+            $(this).find('.modal-title').text($title);
+
+            // Pass form reference to modal for submission on yes/ok
+            var form = $(e.relatedTarget).closest('form');
+            $(this).find('.modal-footer #confirm').data('form', form);
+        });
+
+        $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
+            $('form[role="form"]').attr('action', "@Url.Action("DeleteUser", "Admin")").submit();
+        });
+    </script>
+
+}

@@ -1,0 +1,1582 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CusRelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuthorizedUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ClerkId" Type="varchar" MaxLength="16" />
+          <Property Name="AddComments" Type="char" MaxLength="1" />
+          <Property Name="AllowAssignTo" Type="char" MaxLength="1" />
+          <Property Name="AllowSecurity" Type="char" MaxLength="1" />
+          <Property Name="Division" Type="char" MaxLength="2" />
+          <Property Name="ReferTo" Type="varchar" MaxLength="5" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="AllowCloseTicket" Type="char" MaxLength="1" />
+          <Property Name="AllowSearchTickets" Type="char" MaxLength="1" />
+          <Property Name="AllowViewUnassigned" Type="char" MaxLength="1" />
+          <Property Name="NotifyWhenAssigned" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ReminderDelayDays" Type="tinyint" Nullable="false" />
+          <Property Name="AllowOnlyDeptTickets" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="SettingId" />
+          </Key>
+          <Property Name="SettingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupId" Type="uniqueidentifier" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblAttachments">
+          <Key>
+            <PropertyRef Name="AttachmentNum" />
+          </Key>
+          <Property Name="FileNum" Type="int" Nullable="false" />
+          <Property Name="AttachmentNum" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="128" />
+          <Property Name="FileSize" Type="int" />
+          <Property Name="ContentType" Type="varchar" MaxLength="128" />
+          <Property Name="BinaryData" Type="image" />
+          <Property Name="DateUploaded" Type="datetime" />
+          <Property Name="UploadedBy" Type="varchar" MaxLength="16" />
+          <Property Name="Description" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="tblAttachmentsTemp">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttachmentNum" Type="int" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="128" />
+          <Property Name="FileSize" Type="int" />
+          <Property Name="ContentType" Type="varchar" MaxLength="128" />
+          <Property Name="Base64Data" Type="varchar(max)" />
+          <Property Name="DateUploaded" Type="datetime" />
+          <Property Name="DateScanStart" Type="datetime" />
+          <Property Name="ScanId" Type="varchar" MaxLength="300" />
+          <Property Name="Sha256" Type="varchar" MaxLength="256" />
+          <Property Name="ScanResult" Type="varchar(max)" />
+          <Property Name="FileNum" Type="int" Nullable="false" />
+          <Property Name="ForceClose" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblContactHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="FileNum" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="char" MaxLength="16" />
+          <Property Name="ContactDateTime" Type="datetime" />
+          <Property Name="Via" Type="char" MaxLength="50" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblContacts">
+          <Key>
+            <PropertyRef Name="FileNum" />
+          </Key>
+          <Property Name="FileNum" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FeedbackId" Type="int" />
+          <Property Name="ClerkId" Type="varchar" MaxLength="16" />
+          <Property Name="UserId" Type="varchar" MaxLength="16" />
+          <Property Name="ADAComplaint" Type="char" MaxLength="1" />
+          <Property Name="SeniorComplaint" Type="char" MaxLength="1" />
+          <Property Name="ContactSource" Type="varchar" MaxLength="16" />
+          <Property Name="ReceivedDateTime" Type="datetime" />
+          <Property Name="Priority" Type="char" MaxLength="6" />
+          <Property Name="ResolvedDateTime" Type="datetime" />
+          <Property Name="FirstName" Type="varchar" MaxLength="30" />
+          <Property Name="LastName" Type="varchar" MaxLength="30" />
+          <Property Name="Addr1" Type="varchar" MaxLength="30" />
+          <Property Name="Addr2" Type="varchar" MaxLength="30" />
+          <Property Name="CustCity" Type="varchar" MaxLength="50" />
+          <Property Name="CustState" Type="char" MaxLength="2" />
+          <Property Name="CustZip" Type="char" MaxLength="10" />
+          <Property Name="HomePhone" Type="varchar" MaxLength="16" />
+          <Property Name="WorkPhone" Type="varchar" MaxLength="16" />
+          <Property Name="CellPhone" Type="varchar" MaxLength="16" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="RespondVia" Type="char" MaxLength="12" />
+          <Property Name="IncidentDateTime" Type="datetime" />
+          <Property Name="VehNo" Type="char" MaxLength="4" />
+          <Property Name="Route" Type="varchar" MaxLength="50" />
+          <Property Name="Destination" Type="varchar" MaxLength="40" />
+          <Property Name="Location" Type="varchar" MaxLength="100" />
+          <Property Name="IncidentCity" Type="varchar" MaxLength="30" />
+          <Property Name="Badge" Type="char" MaxLength="6" />
+          <Property Name="EmployeeDesc" Type="varchar" MaxLength="1024" />
+          <Property Name="ResponseRequested" Type="char" MaxLength="1" />
+          <Property Name="Division" Type="char" MaxLength="2" />
+          <Property Name="CustComments" Type="varchar" MaxLength="8000" />
+          <Property Name="AssignedTo" Type="char" MaxLength="16" />
+          <Property Name="ForAction" Type="varchar" MaxLength="34" />
+          <Property Name="ForInfos" Type="varchar" MaxLength="256" />
+          <Property Name="ContactStatus" Type="varchar" MaxLength="32" />
+          <Property Name="TicketStatus" Type="varchar" MaxLength="32" />
+          <Property Name="Resolution" Type="varchar" MaxLength="2" />
+          <Property Name="ResolutionComment" Type="varchar" MaxLength="1024" />
+          <Property Name="updatedBy" Type="varchar" MaxLength="16" />
+          <Property Name="updatedOn" Type="datetime" />
+          <Property Name="Reasons" Type="varchar" MaxLength="256" />
+          <Property Name="TitleVI" Type="char" MaxLength="1" />
+          <Property Name="LostItemCategory" Type="varchar" MaxLength="50" />
+          <Property Name="LostItemType" Type="varchar" MaxLength="50" />
+          <Property Name="OperatorName" Type="varchar" MaxLength="130" />
+        </EntityType>
+        <EntityType Name="tblCustomerComplaintCodes">
+          <Key>
+            <PropertyRef Name="ComplaintCode" />
+          </Key>
+          <Property Name="ComplaintCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ComplaintGroup" Type="char" MaxLength="12" />
+          <Property Name="ComplaintCategory" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="char" MaxLength="40" />
+          <Property Name="PastDueDays" Type="int" />
+          <Property Name="Order" Type="int" />
+          <Property Name="IsVisible" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblCustomerReferenceCodes">
+          <Key>
+            <PropertyRef Name="REFER_CODE" />
+          </Key>
+          <Property Name="REFER_CODE" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="REFER_DESC" Type="varchar" MaxLength="30" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Order" Type="int" />
+          <Property Name="IsVisible" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblIncidentUpdateHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="FileNum" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="16" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="LastIncidentDateTime" Type="datetime" />
+          <Property Name="LastVehNo" Type="char" MaxLength="4" />
+          <Property Name="LastRoute" Type="char" MaxLength="4" />
+          <Property Name="LastBadge" Type="char" MaxLength="6" />
+          <Property Name="NewIncidentDateTime" Type="datetime" />
+          <Property Name="NewVehNo" Type="char" MaxLength="4" />
+          <Property Name="NewRoute" Type="char" MaxLength="4" />
+          <Property Name="NewBadge" Type="char" MaxLength="6" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblLinkedContacts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileNum" Type="int" Nullable="false" />
+          <Property Name="LinkedFileNum" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblResearchHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="FileNum" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="16" />
+          <Property Name="EnteredDateTime" Type="datetime" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUpdateLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="16" />
+          <Property Name="FileNum" Type="int" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="24" />
+          <Property Name="UpdateAction" Type="varchar" MaxLength="128" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ColumnName" Type="varchar" MaxLength="128" />
+          <Property Name="OldValue" Type="nvarchar(max)" />
+          <Property Name="NewValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblViewHistory">
+          <Key>
+            <PropertyRef Name="ViewHistoryId" />
+          </Key>
+          <Property Name="ViewHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileNum" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="DateFirstView" Type="datetime" Nullable="false" />
+          <Property Name="DateLastView" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CusRel.dbo.EmplDW_Department' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EmplDW_Department">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="AddUserId" />
+            <PropertyRef Name="AddDateTime" />
+            <PropertyRef Name="UpdUserId" />
+            <PropertyRef Name="UpdDateTime" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="DeptId" Type="varchar" MaxLength="10" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DeptName" Type="varchar" MaxLength="30" />
+          <Property Name="Location" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CusRel.dbo.EmplDW_Employees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EmplDW_Employees">
+          <Key>
+            <PropertyRef Name="Emp_Id" />
+            <PropertyRef Name="Badge" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Empl_Status" />
+            <PropertyRef Name="DeptId" />
+            <PropertyRef Name="DeptName" />
+            <PropertyRef Name="Company" />
+            <PropertyRef Name="JobCode" />
+            <PropertyRef Name="PayGroup" />
+            <PropertyRef Name="JobTitle" />
+            <PropertyRef Name="Empl_Type" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="Emp_Id" Type="int" Nullable="false" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" />
+          <Property Name="AddDateTime" Type="datetime" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="Badge" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="30" />
+          <Property Name="Suffix" Type="varchar" MaxLength="10" />
+          <Property Name="Pref_Name" Type="varchar" MaxLength="30" />
+          <Property Name="NTLogin" Type="varchar" MaxLength="50" />
+          <Property Name="Hire_Dt" Type="datetime" />
+          <Property Name="HireTime" Type="time" Precision="7" />
+          <Property Name="Rehire_Dt" Type="datetime" />
+          <Property Name="BusDriverQualDate" Type="datetime" />
+          <Property Name="BusDriverQualTime" Type="time" Precision="7" />
+          <Property Name="LastWorkDate" Type="datetime" />
+          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="Address01" Type="varchar" MaxLength="35" />
+          <Property Name="Address02" Type="varchar" MaxLength="35" />
+          <Property Name="City" Type="varchar" MaxLength="30" />
+          <Property Name="State" Type="varchar" MaxLength="6" />
+          <Property Name="ZIP" Type="varchar" MaxLength="10" />
+          <Property Name="HomePhone" Type="varchar" MaxLength="24" />
+          <Property Name="WorkPhone" Type="varchar" MaxLength="24" />
+          <Property Name="CellPhone" Type="varchar" MaxLength="26" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="50" />
+          <Property Name="Empl_Status" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="DeptId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DeptName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="10" />
+          <Property Name="Company" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="JobCode" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="PayGroup" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="JobTitle" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="BusinessTitle" Type="varchar" MaxLength="30" />
+          <Property Name="Empl_Type" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="RegTempFlag" Type="varchar" MaxLength="1" />
+          <Property Name="FT_PT_Flag" Type="varchar" MaxLength="1" />
+          <Property Name="Per_Org" Type="varchar" MaxLength="5" />
+          <Property Name="SupervisorId" Type="varchar" MaxLength="11" />
+          <Property Name="SupervisorName" Type="varchar" MaxLength="55" />
+          <Property Name="Action" Type="varchar" MaxLength="3" />
+          <Property Name="ActionDate" Type="datetime" />
+          <Property Name="ActionReason" Type="varchar" MaxLength="3" />
+          <Property Name="TermDate" Type="datetime" />
+          <Property Name="UnionCode" Type="varchar" MaxLength="3" />
+          <Property Name="EEO4Code" Type="varchar" MaxLength="1" />
+          <Property Name="EEOJobGroup" Type="varchar" MaxLength="2" />
+          <Property Name="CompFrequency" Type="varchar" MaxLength="1" />
+          <Property Name="CompRate" Type="varchar" MaxLength="12" />
+          <Property Name="AnnualRate" Type="varchar" MaxLength="15" />
+          <Property Name="MonthlyRate" Type="varchar" MaxLength="15" />
+          <Property Name="HourlyRate" Type="varchar" MaxLength="12" />
+          <Property Name="Grade" Type="varchar" MaxLength="3" />
+          <Property Name="Step" Type="varchar" MaxLength="2" />
+          <Property Name="PositionNumber" Type="varchar" MaxLength="8" />
+          <Property Name="PositionEntryDate" Type="datetime" />
+          <Property Name="Sex" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="EthnicGroup" Type="varchar" MaxLength="1" />
+          <Property Name="Veteran" Type="varchar" MaxLength="1" />
+          <Property Name="Citizen" Type="varchar" MaxLength="1" />
+          <Property Name="Disabled" Type="varchar" MaxLength="2" />
+          <Property Name="Marital" Type="varchar" MaxLength="1" />
+          <Property Name="AsOfDate" Type="datetime" />
+          <Property Name="EffectiveDate" Type="datetime" />
+          <Property Name="FullName_with_LastName_First" Type="char" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK_tblAttachments_tblContacts">
+          <End Role="tblContacts" Type="Self.tblContacts" Multiplicity="1" />
+          <End Role="tblAttachments" Type="Self.tblAttachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblAttachments">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAttachmentsTemp_tblContacts">
+          <End Role="tblContacts" Type="Self.tblContacts" Multiplicity="1" />
+          <End Role="tblAttachmentsTemp" Type="Self.tblAttachmentsTemp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblAttachmentsTemp">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblContactHistory_tblContacts">
+          <End Role="tblContacts" Type="Self.tblContacts" Multiplicity="1" />
+          <End Role="tblContactHistory" Type="Self.tblContactHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblContactHistory">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblIncidentUpdateHistory_tblContacts">
+          <End Role="tblContacts" Type="Self.tblContacts" Multiplicity="1" />
+          <End Role="tblIncidentUpdateHistory" Type="Self.tblIncidentUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblIncidentUpdateHistory">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblLinkedContacts_tblContacts">
+          <End Role="tblContacts" Type="Self.tblContacts" Multiplicity="1" />
+          <End Role="tblLinkedContacts" Type="Self.tblLinkedContacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblLinkedContacts">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblLinkedContacts_tblContacts1">
+          <End Role="tblContacts" Type="Self.tblContacts" Multiplicity="1" />
+          <End Role="tblLinkedContacts" Type="Self.tblLinkedContacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblLinkedContacts">
+              <PropertyRef Name="LinkedFileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblResearchHistory_tblContacts">
+          <End Role="tblContacts" Type="Self.tblContacts" Multiplicity="1" />
+          <End Role="tblResearchHistory" Type="Self.tblResearchHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblResearchHistory">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUpdateLog_tblContacts">
+          <End Role="tblContacts" Type="Self.tblContacts" Multiplicity="1" />
+          <End Role="tblUpdateLog" Type="Self.tblUpdateLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblUpdateLog">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblViewHistory_tblContacts">
+          <End Role="tblContacts" Type="Self.tblContacts" Multiplicity="1" />
+          <End Role="tblViewHistory" Type="Self.tblViewHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblViewHistory">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="addCustomerContact" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FeedbackId" Type="int" Mode="In" />
+          <Parameter Name="ClerkId" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="varchar" Mode="In" />
+          <Parameter Name="ADAComplaint" Type="char" Mode="In" />
+          <Parameter Name="TitleVI" Type="char" Mode="In" />
+          <Parameter Name="ContactSource" Type="varchar" Mode="In" />
+          <Parameter Name="ReceivedDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="Priority" Type="char" Mode="In" />
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Addr1" Type="varchar" Mode="In" />
+          <Parameter Name="Addr2" Type="varchar" Mode="In" />
+          <Parameter Name="CustCity" Type="varchar" Mode="In" />
+          <Parameter Name="CustState" Type="char" Mode="In" />
+          <Parameter Name="CustZip" Type="char" Mode="In" />
+          <Parameter Name="HomePhone" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPhone" Type="varchar" Mode="In" />
+          <Parameter Name="FaxPhone" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="RespondVia" Type="char" Mode="In" />
+          <Parameter Name="IncidentDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="VehNo" Type="char" Mode="In" />
+          <Parameter Name="Route" Type="varchar" Mode="In" />
+          <Parameter Name="Destination" Type="varchar" Mode="In" />
+          <Parameter Name="Location" Type="varchar" Mode="In" />
+          <Parameter Name="Badge" Type="char" Mode="In" />
+          <Parameter Name="EmployeeDesc" Type="varchar" Mode="In" />
+          <Parameter Name="ResponseRequested" Type="char" Mode="In" />
+          <Parameter Name="Division" Type="char" Mode="In" />
+          <Parameter Name="Reasons" Type="varchar" Mode="In" />
+          <Parameter Name="ForAction" Type="varchar" Mode="In" />
+          <Parameter Name="ForInfos" Type="varchar" Mode="In" />
+          <Parameter Name="AssignedTo" Type="char" Mode="In" />
+          <Parameter Name="ContactStatus" Type="char" Mode="In" />
+          <Parameter Name="TicketStatus" Type="char" Mode="In" />
+          <Parameter Name="CustComments" Type="varchar" Mode="In" />
+          <Parameter Name="UpdatedBy" Type="char" Mode="In" />
+          <Parameter Name="LostItemCategory" Type="varchar" Mode="In" />
+          <Parameter Name="LostItemType" Type="varchar" Mode="In" />
+          <Parameter Name="FileBase64Data" Type="varchar(max)" Mode="In" />
+          <Parameter Name="FileName" Type="varchar" Mode="In" />
+          <Parameter Name="FileSize" Type="int" Mode="In" />
+          <Parameter Name="FileContentType" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="addCustomerInternal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FeedBackId" Type="int" Mode="In" />
+          <Parameter Name="ClerkId" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="varchar" Mode="In" />
+          <Parameter Name="ADAComplaint" Type="varchar" Mode="In" />
+          <Parameter Name="TitleVI" Type="char" Mode="In" />
+          <Parameter Name="ContactSource" Type="varchar" Mode="In" />
+          <Parameter Name="Priority" Type="char" Mode="In" />
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Addr1" Type="varchar" Mode="In" />
+          <Parameter Name="Addr2" Type="varchar" Mode="In" />
+          <Parameter Name="CustCity" Type="varchar" Mode="In" />
+          <Parameter Name="CustState" Type="char" Mode="In" />
+          <Parameter Name="CustZip" Type="char" Mode="In" />
+          <Parameter Name="HomePhone" Type="varchar" Mode="In" />
+          <Parameter Name="WorkPhone" Type="varchar" Mode="In" />
+          <Parameter Name="CellPhone" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="RespondVia" Type="char" Mode="In" />
+          <Parameter Name="IncidentDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="VehNo" Type="char" Mode="In" />
+          <Parameter Name="Route" Type="varchar" Mode="In" />
+          <Parameter Name="Destination" Type="varchar" Mode="In" />
+          <Parameter Name="Location" Type="varchar" Mode="In" />
+          <Parameter Name="IncidentCity" Type="varchar" Mode="In" />
+          <Parameter Name="Badge" Type="char" Mode="In" />
+          <Parameter Name="EmployeeDesc" Type="varchar" Mode="In" />
+          <Parameter Name="ResponseRequested" Type="char" Mode="In" />
+          <Parameter Name="Division" Type="char" Mode="In" />
+          <Parameter Name="Reasons" Type="varchar" Mode="In" />
+          <Parameter Name="ForAction" Type="varchar" Mode="In" />
+          <Parameter Name="ForInfos" Type="varchar" Mode="In" />
+          <Parameter Name="AssignedTo" Type="char" Mode="In" />
+          <Parameter Name="ContactStatus" Type="varchar" Mode="In" />
+          <Parameter Name="TicketStatus" Type="varchar" Mode="In" />
+          <Parameter Name="CustComments" Type="varchar" Mode="In" />
+          <Parameter Name="UpdatedBy" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CusrelOpenStats" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="InitCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="InputString" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="TrackFileView" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FileNum" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="varchar" Mode="In" />
+          <Parameter Name="DateView" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="CusRelModelStoreContainer">
+          <EntitySet Name="AuthorizedUsers" EntityType="Self.AuthorizedUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAttachments" EntityType="Self.tblAttachments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAttachmentsTemp" EntityType="Self.tblAttachmentsTemp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblContactHistory" EntityType="Self.tblContactHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblContacts" EntityType="Self.tblContacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCustomerComplaintCodes" EntityType="Self.tblCustomerComplaintCodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCustomerReferenceCodes" EntityType="Self.tblCustomerReferenceCodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblIncidentUpdateHistory" EntityType="Self.tblIncidentUpdateHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLinkedContacts" EntityType="Self.tblLinkedContacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblResearchHistory" EntityType="Self.tblResearchHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUpdateLog" EntityType="Self.tblUpdateLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblViewHistory" EntityType="Self.tblViewHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmplDW_Department" EntityType="Self.EmplDW_Department" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EmplDW_Department].[Id] AS [Id], 
+    [EmplDW_Department].[DeptId] AS [DeptId], 
+    [EmplDW_Department].[AddUserId] AS [AddUserId], 
+    [EmplDW_Department].[AddDateTime] AS [AddDateTime], 
+    [EmplDW_Department].[UpdUserId] AS [UpdUserId], 
+    [EmplDW_Department].[UpdDateTime] AS [UpdDateTime], 
+    [EmplDW_Department].[DeptName] AS [DeptName], 
+    [EmplDW_Department].[Location] AS [Location]
+    FROM [dbo].[EmplDW_Department] AS [EmplDW_Department]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EmplDW_Employees" EntityType="Self.EmplDW_Employees" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EmplDW_Employees].[Emp_Id] AS [Emp_Id], 
+    [EmplDW_Employees].[AddUserId] AS [AddUserId], 
+    [EmplDW_Employees].[AddDateTime] AS [AddDateTime], 
+    [EmplDW_Employees].[UpdatedBy] AS [UpdatedBy], 
+    [EmplDW_Employees].[UpdatedOn] AS [UpdatedOn], 
+    [EmplDW_Employees].[Badge] AS [Badge], 
+    [EmplDW_Employees].[Name] AS [Name], 
+    [EmplDW_Employees].[FirstName] AS [FirstName], 
+    [EmplDW_Employees].[LastName] AS [LastName], 
+    [EmplDW_Employees].[MiddleName] AS [MiddleName], 
+    [EmplDW_Employees].[Suffix] AS [Suffix], 
+    [EmplDW_Employees].[Pref_Name] AS [Pref_Name], 
+    [EmplDW_Employees].[NTLogin] AS [NTLogin], 
+    [EmplDW_Employees].[Hire_Dt] AS [Hire_Dt], 
+    [EmplDW_Employees].[HireTime] AS [HireTime], 
+    [EmplDW_Employees].[Rehire_Dt] AS [Rehire_Dt], 
+    [EmplDW_Employees].[BusDriverQualDate] AS [BusDriverQualDate], 
+    [EmplDW_Employees].[BusDriverQualTime] AS [BusDriverQualTime], 
+    [EmplDW_Employees].[LastWorkDate] AS [LastWorkDate], 
+    [EmplDW_Employees].[BirthDate] AS [BirthDate], 
+    [EmplDW_Employees].[Address01] AS [Address01], 
+    [EmplDW_Employees].[Address02] AS [Address02], 
+    [EmplDW_Employees].[City] AS [City], 
+    [EmplDW_Employees].[State] AS [State], 
+    [EmplDW_Employees].[ZIP] AS [ZIP], 
+    [EmplDW_Employees].[HomePhone] AS [HomePhone], 
+    [EmplDW_Employees].[WorkPhone] AS [WorkPhone], 
+    [EmplDW_Employees].[CellPhone] AS [CellPhone], 
+    [EmplDW_Employees].[EmailAddress] AS [EmailAddress], 
+    [EmplDW_Employees].[Empl_Status] AS [Empl_Status], 
+    [EmplDW_Employees].[DeptId] AS [DeptId], 
+    [EmplDW_Employees].[DeptName] AS [DeptName], 
+    [EmplDW_Employees].[Location] AS [Location], 
+    [EmplDW_Employees].[Company] AS [Company], 
+    [EmplDW_Employees].[JobCode] AS [JobCode], 
+    [EmplDW_Employees].[PayGroup] AS [PayGroup], 
+    [EmplDW_Employees].[JobTitle] AS [JobTitle], 
+    [EmplDW_Employees].[BusinessTitle] AS [BusinessTitle], 
+    [EmplDW_Employees].[Empl_Type] AS [Empl_Type], 
+    [EmplDW_Employees].[RegTempFlag] AS [RegTempFlag], 
+    [EmplDW_Employees].[FT_PT_Flag] AS [FT_PT_Flag], 
+    [EmplDW_Employees].[Per_Org] AS [Per_Org], 
+    [EmplDW_Employees].[SupervisorId] AS [SupervisorId], 
+    [EmplDW_Employees].[SupervisorName] AS [SupervisorName], 
+    [EmplDW_Employees].[Action] AS [Action], 
+    [EmplDW_Employees].[ActionDate] AS [ActionDate], 
+    [EmplDW_Employees].[ActionReason] AS [ActionReason], 
+    [EmplDW_Employees].[TermDate] AS [TermDate], 
+    [EmplDW_Employees].[UnionCode] AS [UnionCode], 
+    [EmplDW_Employees].[EEO4Code] AS [EEO4Code], 
+    [EmplDW_Employees].[EEOJobGroup] AS [EEOJobGroup], 
+    [EmplDW_Employees].[CompFrequency] AS [CompFrequency], 
+    [EmplDW_Employees].[CompRate] AS [CompRate], 
+    [EmplDW_Employees].[AnnualRate] AS [AnnualRate], 
+    [EmplDW_Employees].[MonthlyRate] AS [MonthlyRate], 
+    [EmplDW_Employees].[HourlyRate] AS [HourlyRate], 
+    [EmplDW_Employees].[Grade] AS [Grade], 
+    [EmplDW_Employees].[Step] AS [Step], 
+    [EmplDW_Employees].[PositionNumber] AS [PositionNumber], 
+    [EmplDW_Employees].[PositionEntryDate] AS [PositionEntryDate], 
+    [EmplDW_Employees].[Sex] AS [Sex], 
+    [EmplDW_Employees].[EthnicGroup] AS [EthnicGroup], 
+    [EmplDW_Employees].[Veteran] AS [Veteran], 
+    [EmplDW_Employees].[Citizen] AS [Citizen], 
+    [EmplDW_Employees].[Disabled] AS [Disabled], 
+    [EmplDW_Employees].[Marital] AS [Marital], 
+    [EmplDW_Employees].[AsOfDate] AS [AsOfDate], 
+    [EmplDW_Employees].[EffectiveDate] AS [EffectiveDate], 
+    [EmplDW_Employees].[FullName_with_LastName_First] AS [FullName_with_LastName_First]
+    FROM [dbo].[EmplDW_Employees] AS [EmplDW_Employees]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tblAttachments_tblContacts" Association="Self.FK_tblAttachments_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblAttachments" EntitySet="tblAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAttachmentsTemp_tblContacts" Association="Self.FK_tblAttachmentsTemp_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblAttachmentsTemp" EntitySet="tblAttachmentsTemp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblContactHistory_tblContacts" Association="Self.FK_tblContactHistory_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblContactHistory" EntitySet="tblContactHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblIncidentUpdateHistory_tblContacts" Association="Self.FK_tblIncidentUpdateHistory_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblIncidentUpdateHistory" EntitySet="tblIncidentUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblLinkedContacts_tblContacts" Association="Self.FK_tblLinkedContacts_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblLinkedContacts" EntitySet="tblLinkedContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblLinkedContacts_tblContacts1" Association="Self.FK_tblLinkedContacts_tblContacts1">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblLinkedContacts" EntitySet="tblLinkedContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblResearchHistory_tblContacts" Association="Self.FK_tblResearchHistory_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblResearchHistory" EntitySet="tblResearchHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUpdateLog_tblContacts" Association="Self.FK_tblUpdateLog_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblUpdateLog" EntitySet="tblUpdateLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblViewHistory_tblContacts" Association="Self.FK_tblViewHistory_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblViewHistory" EntitySet="tblViewHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CusRelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CusRelEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="addCustomerInternal">
+            <Parameter Name="FeedBackId" Mode="In" Type="Int32" />
+            <Parameter Name="ClerkId" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="String" />
+            <Parameter Name="ADAComplaint" Mode="In" Type="String" />
+            <Parameter Name="TitleVI" Mode="In" Type="String" />
+            <Parameter Name="ContactSource" Mode="In" Type="String" />
+            <Parameter Name="Priority" Mode="In" Type="String" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Addr1" Mode="In" Type="String" />
+            <Parameter Name="Addr2" Mode="In" Type="String" />
+            <Parameter Name="CustCity" Mode="In" Type="String" />
+            <Parameter Name="CustState" Mode="In" Type="String" />
+            <Parameter Name="CustZip" Mode="In" Type="String" />
+            <Parameter Name="HomePhone" Mode="In" Type="String" />
+            <Parameter Name="WorkPhone" Mode="In" Type="String" />
+            <Parameter Name="CellPhone" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="RespondVia" Mode="In" Type="String" />
+            <Parameter Name="IncidentDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="VehNo" Mode="In" Type="String" />
+            <Parameter Name="Route" Mode="In" Type="String" />
+            <Parameter Name="Destination" Mode="In" Type="String" />
+            <Parameter Name="Location" Mode="In" Type="String" />
+            <Parameter Name="IncidentCity" Mode="In" Type="String" />
+            <Parameter Name="Badge" Mode="In" Type="String" />
+            <Parameter Name="EmployeeDesc" Mode="In" Type="String" />
+            <Parameter Name="ResponseRequested" Mode="In" Type="String" />
+            <Parameter Name="Division" Mode="In" Type="String" />
+            <Parameter Name="Reasons" Mode="In" Type="String" />
+            <Parameter Name="ForAction" Mode="In" Type="String" />
+            <Parameter Name="ForInfos" Mode="In" Type="String" />
+            <Parameter Name="AssignedTo" Mode="In" Type="String" />
+            <Parameter Name="ContactStatus" Mode="In" Type="String" />
+            <Parameter Name="TicketStatus" Mode="In" Type="String" />
+            <Parameter Name="CustComments" Mode="In" Type="String" />
+            <Parameter Name="UpdatedBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="addCustomerContact">
+            <Parameter Name="FeedbackId" Mode="In" Type="Int32" />
+            <Parameter Name="ClerkId" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="String" />
+            <Parameter Name="ADAComplaint" Mode="In" Type="String" />
+            <Parameter Name="TitleVI" Mode="In" Type="String" />
+            <Parameter Name="ContactSource" Mode="In" Type="String" />
+            <Parameter Name="ReceivedDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="Priority" Mode="In" Type="String" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Addr1" Mode="In" Type="String" />
+            <Parameter Name="Addr2" Mode="In" Type="String" />
+            <Parameter Name="CustCity" Mode="In" Type="String" />
+            <Parameter Name="CustState" Mode="In" Type="String" />
+            <Parameter Name="CustZip" Mode="In" Type="String" />
+            <Parameter Name="HomePhone" Mode="In" Type="String" />
+            <Parameter Name="WorkPhone" Mode="In" Type="String" />
+            <Parameter Name="FaxPhone" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="RespondVia" Mode="In" Type="String" />
+            <Parameter Name="IncidentDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="VehNo" Mode="In" Type="String" />
+            <Parameter Name="Route" Mode="In" Type="String" />
+            <Parameter Name="Destination" Mode="In" Type="String" />
+            <Parameter Name="Location" Mode="In" Type="String" />
+            <Parameter Name="Badge" Mode="In" Type="String" />
+            <Parameter Name="EmployeeDesc" Mode="In" Type="String" />
+            <Parameter Name="ResponseRequested" Mode="In" Type="String" />
+            <Parameter Name="Division" Mode="In" Type="String" />
+            <Parameter Name="Reasons" Mode="In" Type="String" />
+            <Parameter Name="ForAction" Mode="In" Type="String" />
+            <Parameter Name="ForInfos" Mode="In" Type="String" />
+            <Parameter Name="AssignedTo" Mode="In" Type="String" />
+            <Parameter Name="ContactStatus" Mode="In" Type="String" />
+            <Parameter Name="TicketStatus" Mode="In" Type="String" />
+            <Parameter Name="CustComments" Mode="In" Type="String" />
+            <Parameter Name="UpdatedBy" Mode="In" Type="String" />
+            <Parameter Name="LostItemCategory" Mode="In" Type="String" />
+            <Parameter Name="LostItemType" Mode="In" Type="String" />
+            <Parameter Name="FileBase64Data" Mode="In" Type="String" />
+            <Parameter Name="FileName" Mode="In" Type="String" />
+            <Parameter Name="FileSize" Mode="In" Type="Int32" />
+            <Parameter Name="FileContentType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CusrelOpenStats" />
+          <EntitySet Name="AuthorizedUsers" EntityType="CusRelModel.AuthorizedUsers" />
+          <EntitySet Name="tblAttachments" EntityType="CusRelModel.tblAttachments" />
+          <EntitySet Name="tblContactHistory" EntityType="CusRelModel.tblContactHistory" />
+          <EntitySet Name="tblContacts" EntityType="CusRelModel.tblContacts" />
+          <EntitySet Name="tblCustomerComplaintCodes" EntityType="CusRelModel.tblCustomerComplaintCodes" />
+          <EntitySet Name="tblCustomerReferenceCodes" EntityType="CusRelModel.tblCustomerReferenceCodes" />
+          <EntitySet Name="tblIncidentUpdateHistory" EntityType="CusRelModel.tblIncidentUpdateHistory" />
+          <EntitySet Name="tblResearchHistory" EntityType="CusRelModel.tblResearchHistory" />
+          <EntitySet Name="tblUpdateLog" EntityType="CusRelModel.tblUpdateLog" />
+          <EntitySet Name="EmplDW_Department" EntityType="CusRelModel.EmplDW_Department" />
+          <EntitySet Name="EmplDW_Employees" EntityType="CusRelModel.EmplDW_Employees" />
+          <EntitySet Name="tblLinkedContacts" EntityType="CusRelModel.tblLinkedContacts" />
+          <EntitySet Name="Settings" EntityType="CusRelModel.Settings" />
+          <AssociationSet Name="FK_tblAttachments_tblContacts" Association="CusRelModel.FK_tblAttachments_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblAttachments" EntitySet="tblAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblContactHistory_tblContacts" Association="CusRelModel.FK_tblContactHistory_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblContactHistory" EntitySet="tblContactHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblIncidentUpdateHistory_tblContacts" Association="CusRelModel.FK_tblIncidentUpdateHistory_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblIncidentUpdateHistory" EntitySet="tblIncidentUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblLinkedContacts_tblContacts" Association="CusRelModel.FK_tblLinkedContacts_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblLinkedContacts" EntitySet="tblLinkedContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblLinkedContacts_tblContacts1" Association="CusRelModel.FK_tblLinkedContacts_tblContacts1">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblLinkedContacts" EntitySet="tblLinkedContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblResearchHistory_tblContacts" Association="CusRelModel.FK_tblResearchHistory_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblResearchHistory" EntitySet="tblResearchHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUpdateLog_tblContacts" Association="CusRelModel.FK_tblUpdateLog_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblUpdateLog" EntitySet="tblUpdateLog" />
+          </AssociationSet>
+          <EntitySet Name="tblAttachmentsTemp" EntityType="CusRelModel.tblAttachmentsTemp" />
+          <AssociationSet Name="FK_tblAttachmentsTemp_tblContacts" Association="CusRelModel.FK_tblAttachmentsTemp_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblAttachmentsTemp" EntitySet="tblAttachmentsTemp" />
+          </AssociationSet>
+          <EntitySet Name="tblViewHistory" EntityType="CusRelModel.tblViewHistory" />
+          <AssociationSet Name="FK_tblViewHistory_tblContacts" Association="CusRelModel.FK_tblViewHistory_tblContacts">
+            <End Role="tblContacts" EntitySet="tblContacts" />
+            <End Role="tblViewHistory" EntitySet="tblViewHistory" />
+          </AssociationSet>
+          <FunctionImport Name="AddViewFile">
+            <Parameter Name="FileNum" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="String" />
+            <Parameter Name="DateView" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="TrackFileView">
+            <Parameter Name="FileNum" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="String" />
+            <Parameter Name="DateView" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="AuthorizedUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ClerkId" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="AddComments" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AllowAssignTo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AllowSecurity" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Division" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ReferTo" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AllowCloseTicket" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AllowSearchTickets" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AllowViewUnassigned" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NotifyWhenAssigned" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ReminderDelayDays" Type="Byte" Nullable="false" />
+          <Property Name="AllowOnlyDeptTickets" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblAttachments">
+          <Key>
+            <PropertyRef Name="AttachmentNum" />
+          </Key>
+          <Property Name="FileNum" Type="Int32" Nullable="false" />
+          <Property Name="AttachmentNum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FileSize" Type="Int32" />
+          <Property Name="ContentType" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="BinaryData" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="UploadedBy" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblContacts" Relationship="CusRelModel.FK_tblAttachments_tblContacts" FromRole="tblAttachments" ToRole="tblContacts" />
+        </EntityType>
+        <EntityType Name="tblContactHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="FileNum" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="16" FixedLength="true" Unicode="false" />
+          <Property Name="ContactDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Via" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="tblContacts" Relationship="CusRelModel.FK_tblContactHistory_tblContacts" FromRole="tblContactHistory" ToRole="tblContacts" />
+        </EntityType>
+        <EntityType Name="tblContacts">
+          <Key>
+            <PropertyRef Name="FileNum" />
+          </Key>
+          <Property Name="FileNum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FeedbackId" Type="Int32" />
+          <Property Name="ClerkId" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ADAComplaint" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="SeniorComplaint" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ContactSource" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ReceivedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Priority" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="ResolvedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Addr1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Addr2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CustCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CustState" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="CustZip" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="HomePhone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="WorkPhone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="CellPhone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RespondVia" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="IncidentDateTime" Type="DateTime" Precision="3" />
+          <Property Name="VehNo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="Route" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Destination" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncidentCity" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Badge" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="EmployeeDesc" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="ResponseRequested" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Division" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="CustComments" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="AssignedTo" Type="String" MaxLength="16" FixedLength="true" Unicode="false" />
+          <Property Name="ForAction" Type="String" MaxLength="34" FixedLength="false" Unicode="false" />
+          <Property Name="ForInfos" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="ContactStatus" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="TicketStatus" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Resolution" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="ResolutionComment" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="updatedBy" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <Property Name="Reasons" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="TitleVI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LostItemCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LostItemType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAttachments" Relationship="CusRelModel.FK_tblAttachments_tblContacts" FromRole="tblContacts" ToRole="tblAttachments" />
+          <NavigationProperty Name="tblContactHistory" Relationship="CusRelModel.FK_tblContactHistory_tblContacts" FromRole="tblContacts" ToRole="tblContactHistory" />
+          <NavigationProperty Name="tblIncidentUpdateHistory" Relationship="CusRelModel.FK_tblIncidentUpdateHistory_tblContacts" FromRole="tblContacts" ToRole="tblIncidentUpdateHistory" />
+          <NavigationProperty Name="tblLinkedContacts" Relationship="CusRelModel.FK_tblLinkedContacts_tblContacts" FromRole="tblContacts" ToRole="tblLinkedContacts" />
+          <NavigationProperty Name="tblLinkedContacts1" Relationship="CusRelModel.FK_tblLinkedContacts_tblContacts1" FromRole="tblContacts" ToRole="tblLinkedContacts" />
+          <NavigationProperty Name="tblResearchHistory" Relationship="CusRelModel.FK_tblResearchHistory_tblContacts" FromRole="tblContacts" ToRole="tblResearchHistory" />
+          <NavigationProperty Name="tblUpdateLog" Relationship="CusRelModel.FK_tblUpdateLog_tblContacts" FromRole="tblContacts" ToRole="tblUpdateLog" />
+          <Property Name="OperatorName" Type="String" MaxLength="130" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAttachmentsTemp" Relationship="CusRelModel.FK_tblAttachmentsTemp_tblContacts" FromRole="tblContacts" ToRole="tblAttachmentsTemp" />
+          <NavigationProperty Name="tblViewHistory" Relationship="CusRelModel.FK_tblViewHistory_tblContacts" FromRole="tblContacts" ToRole="tblViewHistory" />
+        </EntityType>
+        <EntityType Name="tblCustomerComplaintCodes">
+          <Key>
+            <PropertyRef Name="ComplaintCode" />
+          </Key>
+          <Property Name="ComplaintCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ComplaintGroup" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="ComplaintCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="40" FixedLength="true" Unicode="false" />
+          <Property Name="PastDueDays" Type="Int32" />
+          <Property Name="Order" Type="Int32" />
+          <Property Name="IsVisible" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblCustomerReferenceCodes">
+          <Key>
+            <PropertyRef Name="REFER_CODE" />
+          </Key>
+          <Property Name="REFER_CODE" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="REFER_DESC" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Order" Type="Int32" />
+          <Property Name="IsVisible" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblIncidentUpdateHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="FileNum" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="LastIncidentDateTime" Type="DateTime" Precision="3" />
+          <Property Name="LastVehNo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="LastRoute" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="LastBadge" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="NewIncidentDateTime" Type="DateTime" Precision="3" />
+          <Property Name="NewVehNo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="NewRoute" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="NewBadge" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="tblContacts" Relationship="CusRelModel.FK_tblIncidentUpdateHistory_tblContacts" FromRole="tblIncidentUpdateHistory" ToRole="tblContacts" />
+        </EntityType>
+        <EntityType Name="tblResearchHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="FileNum" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="EnteredDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="tblContacts" Relationship="CusRelModel.FK_tblResearchHistory_tblContacts" FromRole="tblResearchHistory" ToRole="tblContacts" />
+        </EntityType>
+        <EntityType Name="tblUpdateLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserId" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="FileNum" Type="Int32" Nullable="false" />
+          <Property Name="TableName" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateAction" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ColumnName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblContacts" Relationship="CusRelModel.FK_tblUpdateLog_tblContacts" FromRole="tblUpdateLog" ToRole="tblContacts" />
+        </EntityType>
+        <EntityType Name="EmplDW_Department">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="AddUserId" />
+            <PropertyRef Name="AddDateTime" />
+            <PropertyRef Name="UpdUserId" />
+            <PropertyRef Name="UpdDateTime" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="DeptId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DeptName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EmplDW_Employees">
+          <Key>
+            <PropertyRef Name="Emp_Id" />
+            <PropertyRef Name="Badge" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Empl_Status" />
+            <PropertyRef Name="DeptId" />
+            <PropertyRef Name="DeptName" />
+            <PropertyRef Name="Company" />
+            <PropertyRef Name="JobCode" />
+            <PropertyRef Name="PayGroup" />
+            <PropertyRef Name="JobTitle" />
+            <PropertyRef Name="Empl_Type" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="Emp_Id" Type="Int32" Nullable="false" />
+          <Property Name="AddUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="Badge" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Suffix" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Pref_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NTLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Hire_Dt" Type="DateTime" Precision="3" />
+          <Property Name="HireTime" Type="Time" Precision="7" />
+          <Property Name="Rehire_Dt" Type="DateTime" Precision="3" />
+          <Property Name="BusDriverQualDate" Type="DateTime" Precision="3" />
+          <Property Name="BusDriverQualTime" Type="Time" Precision="7" />
+          <Property Name="LastWorkDate" Type="DateTime" Precision="3" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="Address01" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Address02" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="ZIP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="HomePhone" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="WorkPhone" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="CellPhone" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Empl_Status" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DeptId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DeptName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Company" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="JobCode" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="PayGroup" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="JobTitle" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="BusinessTitle" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Empl_Type" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="RegTempFlag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="FT_PT_Flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Per_Org" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SupervisorId" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SupervisorName" Type="String" MaxLength="55" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="ActionReason" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="TermDate" Type="DateTime" Precision="3" />
+          <Property Name="UnionCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="EEO4Code" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="EEOJobGroup" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CompFrequency" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CompRate" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="AnnualRate" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="MonthlyRate" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="HourlyRate" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Grade" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Step" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="PositionNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="PositionEntryDate" Type="DateTime" Precision="3" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="EthnicGroup" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Veteran" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Citizen" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Disabled" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Marital" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="AsOfDate" Type="DateTime" Precision="3" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="FullName_with_LastName_First" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblLinkedContacts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileNum" Type="Int32" Nullable="false" />
+          <Property Name="LinkedFileNum" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblContacts" Relationship="CusRelModel.FK_tblLinkedContacts_tblContacts" FromRole="tblLinkedContacts" ToRole="tblContacts" />
+          <NavigationProperty Name="tblContacts1" Relationship="CusRelModel.FK_tblLinkedContacts_tblContacts1" FromRole="tblLinkedContacts" ToRole="tblContacts" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="SettingId" />
+          </Key>
+          <Property Name="SettingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="Guid" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_tblAttachments_tblContacts">
+          <End Type="CusRelModel.tblContacts" Role="tblContacts" Multiplicity="1" />
+          <End Type="CusRelModel.tblAttachments" Role="tblAttachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblAttachments">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblContactHistory_tblContacts">
+          <End Type="CusRelModel.tblContacts" Role="tblContacts" Multiplicity="1" />
+          <End Type="CusRelModel.tblContactHistory" Role="tblContactHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblContactHistory">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblIncidentUpdateHistory_tblContacts">
+          <End Type="CusRelModel.tblContacts" Role="tblContacts" Multiplicity="1" />
+          <End Type="CusRelModel.tblIncidentUpdateHistory" Role="tblIncidentUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblIncidentUpdateHistory">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblLinkedContacts_tblContacts">
+          <End Type="CusRelModel.tblContacts" Role="tblContacts" Multiplicity="1" />
+          <End Type="CusRelModel.tblLinkedContacts" Role="tblLinkedContacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblLinkedContacts">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblLinkedContacts_tblContacts1">
+          <End Type="CusRelModel.tblContacts" Role="tblContacts" Multiplicity="1" />
+          <End Type="CusRelModel.tblLinkedContacts" Role="tblLinkedContacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblLinkedContacts">
+              <PropertyRef Name="LinkedFileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblResearchHistory_tblContacts">
+          <End Type="CusRelModel.tblContacts" Role="tblContacts" Multiplicity="1" />
+          <End Type="CusRelModel.tblResearchHistory" Role="tblResearchHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblResearchHistory">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUpdateLog_tblContacts">
+          <End Type="CusRelModel.tblContacts" Role="tblContacts" Multiplicity="1" />
+          <End Type="CusRelModel.tblUpdateLog" Role="tblUpdateLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblUpdateLog">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblAttachmentsTemp">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="AttachmentNum" Type="Int32" Nullable="false" />
+          <Property Name="FileName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FileSize" Type="Int32" />
+          <Property Name="ContentType" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Base64Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="DateScanStart" Type="DateTime" Precision="3" />
+          <Property Name="ScanId" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Sha256" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="ScanResult" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FileNum" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblContacts" Relationship="CusRelModel.FK_tblAttachmentsTemp_tblContacts" FromRole="tblAttachmentsTemp" ToRole="tblContacts" />
+          <Property Name="ForceClose" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_tblAttachmentsTemp_tblContacts">
+          <End Type="CusRelModel.tblContacts" Role="tblContacts" Multiplicity="1" />
+          <End Type="CusRelModel.tblAttachmentsTemp" Role="tblAttachmentsTemp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblContacts">
+              <PropertyRef Name="FileNum" />
+            </Principal>
+            <Dependent Role="tblAttachmentsTemp">
+              <PropertyRef Name="FileNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblViewHistory">
+          <Key>
+            <PropertyRef Name="ViewHistoryId" />
+          </Key>
+          <Property Name="ViewHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="DateFirstView" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateLastView" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblContacts" Relationship="CusRelModel.FK_tblViewHistory_tblContacts" FromRole="tblViewHistory" ToRole="tblContacts" />
+        </EntityType>
+        <Association Name="FK_tblViewHistory_tblContacts">
+          <End Type="CusRelModel.tblContacts" Role="tblContacts" Multiplicity="1" />
+          <End Type="CusRelModel.tblViewHistory" Role="tblViewHistory" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CusRelModelStoreContainer" CdmEntityContainer="CusRelEntities">
+          <FunctionImportMapping FunctionImportName="addCustomerInternal" FunctionName="CusRelModel.Store.addCustomerInternal" />
+          <FunctionImportMapping FunctionImportName="addCustomerContact" FunctionName="CusRelModel.Store.addCustomerContact" />
+          <FunctionImportMapping FunctionImportName="CusrelOpenStats" FunctionName="CusRelModel.Store.CusrelOpenStats" />
+          <EntitySetMapping Name="AuthorizedUsers">
+            <EntityTypeMapping TypeName="CusRelModel.AuthorizedUsers">
+              <MappingFragment StoreEntitySet="AuthorizedUsers">
+                <ScalarProperty Name="AllowOnlyDeptTickets" ColumnName="AllowOnlyDeptTickets" />
+                <ScalarProperty Name="ReminderDelayDays" ColumnName="ReminderDelayDays" />
+                <ScalarProperty Name="NotifyWhenAssigned" ColumnName="NotifyWhenAssigned" />
+                <ScalarProperty Name="AllowViewUnassigned" ColumnName="AllowViewUnassigned" />
+                <ScalarProperty Name="AllowCloseTicket" ColumnName="AllowCloseTicket" />
+                <ScalarProperty Name="AllowSearchTickets" ColumnName="AllowSearchTickets" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ReferTo" ColumnName="ReferTo" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="AllowSecurity" ColumnName="AllowSecurity" />
+                <ScalarProperty Name="AllowAssignTo" ColumnName="AllowAssignTo" />
+                <ScalarProperty Name="AddComments" ColumnName="AddComments" />
+                <ScalarProperty Name="ClerkId" ColumnName="ClerkId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAttachments">
+            <EntityTypeMapping TypeName="CusRelModel.tblAttachments">
+              <MappingFragment StoreEntitySet="tblAttachments">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="BinaryData" ColumnName="BinaryData" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="AttachmentNum" ColumnName="AttachmentNum" />
+                <ScalarProperty Name="FileNum" ColumnName="FileNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblContactHistory">
+            <EntityTypeMapping TypeName="CusRelModel.tblContactHistory">
+              <MappingFragment StoreEntitySet="tblContactHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Via" ColumnName="Via" />
+                <ScalarProperty Name="ContactDateTime" ColumnName="ContactDateTime" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FileNum" ColumnName="FileNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblContacts">
+            <EntityTypeMapping TypeName="CusRelModel.tblContacts">
+              <MappingFragment StoreEntitySet="tblContacts">
+                <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />
+                <ScalarProperty Name="LostItemType" ColumnName="LostItemType" />
+                <ScalarProperty Name="LostItemCategory" ColumnName="LostItemCategory" />
+                <ScalarProperty Name="TitleVI" ColumnName="TitleVI" />
+                <ScalarProperty Name="Reasons" ColumnName="Reasons" />
+                <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+                <ScalarProperty Name="updatedBy" ColumnName="updatedBy" />
+                <ScalarProperty Name="ResolutionComment" ColumnName="ResolutionComment" />
+                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
+                <ScalarProperty Name="TicketStatus" ColumnName="TicketStatus" />
+                <ScalarProperty Name="ContactStatus" ColumnName="ContactStatus" />
+                <ScalarProperty Name="ForInfos" ColumnName="ForInfos" />
+                <ScalarProperty Name="ForAction" ColumnName="ForAction" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="CustComments" ColumnName="CustComments" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="ResponseRequested" ColumnName="ResponseRequested" />
+                <ScalarProperty Name="EmployeeDesc" ColumnName="EmployeeDesc" />
+                <ScalarProperty Name="Badge" ColumnName="Badge" />
+                <ScalarProperty Name="IncidentCity" ColumnName="IncidentCity" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Route" ColumnName="Route" />
+                <ScalarProperty Name="VehNo" ColumnName="VehNo" />
+                <ScalarProperty Name="IncidentDateTime" ColumnName="IncidentDateTime" />
+                <ScalarProperty Name="RespondVia" ColumnName="RespondVia" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="WorkPhone" ColumnName="WorkPhone" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="CustZip" ColumnName="CustZip" />
+                <ScalarProperty Name="CustState" ColumnName="CustState" />
+                <ScalarProperty Name="CustCity" ColumnName="CustCity" />
+                <ScalarProperty Name="Addr2" ColumnName="Addr2" />
+                <ScalarProperty Name="Addr1" ColumnName="Addr1" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ResolvedDateTime" ColumnName="ResolvedDateTime" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="ReceivedDateTime" ColumnName="ReceivedDateTime" />
+                <ScalarProperty Name="ContactSource" ColumnName="ContactSource" />
+                <ScalarProperty Name="SeniorComplaint" ColumnName="SeniorComplaint" />
+                <ScalarProperty Name="ADAComplaint" ColumnName="ADAComplaint" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClerkId" ColumnName="ClerkId" />
+                <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+                <ScalarProperty Name="FileNum" ColumnName="FileNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCustomerComplaintCodes">
+            <EntityTypeMapping TypeName="CusRelModel.tblCustomerComplaintCodes">
+              <MappingFragment StoreEntitySet="tblCustomerComplaintCodes">
+                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="PastDueDays" ColumnName="PastDueDays" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ComplaintCategory" ColumnName="ComplaintCategory" />
+                <ScalarProperty Name="ComplaintGroup" ColumnName="ComplaintGroup" />
+                <ScalarProperty Name="ComplaintCode" ColumnName="ComplaintCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCustomerReferenceCodes">
+            <EntityTypeMapping TypeName="CusRelModel.tblCustomerReferenceCodes">
+              <MappingFragment StoreEntitySet="tblCustomerReferenceCodes">
+                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="REFER_DESC" ColumnName="REFER_DESC" />
+                <ScalarProperty Name="REFER_CODE" ColumnName="REFER_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblIncidentUpdateHistory">
+            <EntityTypeMapping TypeName="CusRelModel.tblIncidentUpdateHistory">
+              <MappingFragment StoreEntitySet="tblIncidentUpdateHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NewBadge" ColumnName="NewBadge" />
+                <ScalarProperty Name="NewRoute" ColumnName="NewRoute" />
+                <ScalarProperty Name="NewVehNo" ColumnName="NewVehNo" />
+                <ScalarProperty Name="NewIncidentDateTime" ColumnName="NewIncidentDateTime" />
+                <ScalarProperty Name="LastBadge" ColumnName="LastBadge" />
+                <ScalarProperty Name="LastRoute" ColumnName="LastRoute" />
+                <ScalarProperty Name="LastVehNo" ColumnName="LastVehNo" />
+                <ScalarProperty Name="LastIncidentDateTime" ColumnName="LastIncidentDateTime" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FileNum" ColumnName="FileNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblResearchHistory">
+            <EntityTypeMapping TypeName="CusRelModel.tblResearchHistory">
+              <MappingFragment StoreEntitySet="tblResearchHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="EnteredDateTime" ColumnName="EnteredDateTime" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FileNum" ColumnName="FileNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUpdateLog">
+            <EntityTypeMapping TypeName="CusRelModel.tblUpdateLog">
+              <MappingFragment StoreEntitySet="tblUpdateLog">
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdateAction" ColumnName="UpdateAction" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="FileNum" ColumnName="FileNum" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmplDW_Department">
+            <EntityTypeMapping TypeName="CusRelModel.EmplDW_Department">
+              <MappingFragment StoreEntitySet="EmplDW_Department">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmplDW_Employees">
+            <EntityTypeMapping TypeName="CusRelModel.EmplDW_Employees">
+              <MappingFragment StoreEntitySet="EmplDW_Employees">
+                <ScalarProperty Name="FullName_with_LastName_First" ColumnName="FullName_with_LastName_First" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="AsOfDate" ColumnName="AsOfDate" />
+                <ScalarProperty Name="Marital" ColumnName="Marital" />
+                <ScalarProperty Name="Disabled" ColumnName="Disabled" />
+                <ScalarProperty Name="Citizen" ColumnName="Citizen" />
+                <ScalarProperty Name="Veteran" ColumnName="Veteran" />
+                <ScalarProperty Name="EthnicGroup" ColumnName="EthnicGroup" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="PositionEntryDate" ColumnName="PositionEntryDate" />
+                <ScalarProperty Name="PositionNumber" ColumnName="PositionNumber" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="HourlyRate" ColumnName="HourlyRate" />
+                <ScalarProperty Name="MonthlyRate" ColumnName="MonthlyRate" />
+                <ScalarProperty Name="AnnualRate" ColumnName="AnnualRate" />
+                <ScalarProperty Name="CompRate" ColumnName="CompRate" />
+                <ScalarProperty Name="CompFrequency" ColumnName="CompFrequency" />
+                <ScalarProperty Name="EEOJobGroup" ColumnName="EEOJobGroup" />
+                <ScalarProperty Name="EEO4Code" ColumnName="EEO4Code" />
+                <ScalarProperty Name="UnionCode" ColumnName="UnionCode" />
+                <ScalarProperty Name="TermDate" ColumnName="TermDate" />
+                <ScalarProperty Name="ActionReason" ColumnName="ActionReason" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="SupervisorName" ColumnName="SupervisorName" />
+                <ScalarProperty Name="SupervisorId" ColumnName="SupervisorId" />
+                <ScalarProperty Name="Per_Org" ColumnName="Per_Org" />
+                <ScalarProperty Name="FT_PT_Flag" ColumnName="FT_PT_Flag" />
+                <ScalarProperty Name="RegTempFlag" ColumnName="RegTempFlag" />
+                <ScalarProperty Name="Empl_Type" ColumnName="Empl_Type" />
+                <ScalarProperty Name="BusinessTitle" ColumnName="BusinessTitle" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="PayGroup" ColumnName="PayGroup" />
+                <ScalarProperty Name="JobCode" ColumnName="JobCode" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="Empl_Status" ColumnName="Empl_Status" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="WorkPhone" ColumnName="WorkPhone" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="ZIP" ColumnName="ZIP" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address02" ColumnName="Address02" />
+                <ScalarProperty Name="Address01" ColumnName="Address01" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="LastWorkDate" ColumnName="LastWorkDate" />
+                <ScalarProperty Name="BusDriverQualTime" ColumnName="BusDriverQualTime" />
+                <ScalarProperty Name="BusDriverQualDate" ColumnName="BusDriverQualDate" />
+                <ScalarProperty Name="Rehire_Dt" ColumnName="Rehire_Dt" />
+                <ScalarProperty Name="HireTime" ColumnName="HireTime" />
+                <ScalarProperty Name="Hire_Dt" ColumnName="Hire_Dt" />
+                <ScalarProperty Name="NTLogin" ColumnName="NTLogin" />
+                <ScalarProperty Name="Pref_Name" ColumnName="Pref_Name" />
+                <ScalarProperty Name="Suffix" ColumnName="Suffix" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Badge" ColumnName="Badge" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLinkedContacts">
+            <EntityTypeMapping TypeName="CusRelModel.tblLinkedContacts">
+              <MappingFragment StoreEntitySet="tblLinkedContacts">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="LinkedFileNum" ColumnName="LinkedFileNum" />
+                <ScalarProperty Name="FileNum" ColumnName="FileNum" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="CusRelModel.Settings">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="SettingId" ColumnName="SettingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAttachmentsTemp">
+            <EntityTypeMapping TypeName="CusRelModel.tblAttachmentsTemp">
+              <MappingFragment StoreEntitySet="tblAttachmentsTemp">
+                <ScalarProperty Name="ForceClose" ColumnName="ForceClose" />
+                <ScalarProperty Name="FileNum" ColumnName="FileNum" />
+                <ScalarProperty Name="ScanResult" ColumnName="ScanResult" />
+                <ScalarProperty Name="Sha256" ColumnName="Sha256" />
+                <ScalarProperty Name="ScanId" ColumnName="ScanId" />
+                <ScalarProperty Name="DateScanStart" ColumnName="DateScanStart" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="Base64Data" ColumnName="Base64Data" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="AttachmentNum" ColumnName="AttachmentNum" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblViewHistory">
+            <EntityTypeMapping TypeName="CusRelModel.tblViewHistory">
+              <MappingFragment StoreEntitySet="tblViewHistory">
+                <ScalarProperty Name="DateLastView" ColumnName="DateLastView" />
+                <ScalarProperty Name="DateFirstView" ColumnName="DateFirstView" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ViewHistoryId" ColumnName="ViewHistoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_tblViewHistory_tblContacts" TypeName="CusRelModel.FK_tblViewHistory_tblContacts" StoreEntitySet="tblViewHistory">
+            <EndProperty Name="tblViewHistory">
+              <ScalarProperty Name="ViewHistoryId" ColumnName="ViewHistoryId" />
+            </EndProperty>
+            <EndProperty Name="tblContacts">
+              <ScalarProperty Name="FileNum" ColumnName="FileNum" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="TrackFileView" FunctionName="CusRelModel.Store.TrackFileView" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

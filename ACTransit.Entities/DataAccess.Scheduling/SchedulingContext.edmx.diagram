@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ea92b56c53834c1bab5d796997247d0b" Name="Diagram1">
+        <EntityTypeShape EntityType="SchedulingContext.Block" Width="1.5" PointX="11.5" PointY="20.375" />
+        <EntityTypeShape EntityType="SchedulingContext.Booking" Width="1.5" PointX="0.75" PointY="13.625" />
+        <EntityTypeShape EntityType="SchedulingContext.District" Width="1.5" PointX="6" PointY="20.875" />
+        <EntityTypeShape EntityType="SchedulingContext.Place" Width="1.5" PointX="8.25" PointY="20.25" />
+        <EntityTypeShape EntityType="SchedulingContext.Route" Width="1.5" PointX="3" PointY="7.5" />
+        <EntityTypeShape EntityType="SchedulingContext.RouteList" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="SchedulingContext.RouteType" Width="1.5" PointX="0.75" PointY="7" />
+        <EntityTypeShape EntityType="SchedulingContext.Stop" Width="1.5" PointX="5.25" PointY="5.25" />
+        <EntityTypeShape EntityType="SchedulingContext.Trip" Width="1.5" PointX="5.25" PointY="11.625" />
+        <EntityTypeShape EntityType="SchedulingContext.TripPattern" Width="1.5" PointX="3" PointY="12.75" />
+        <EntityTypeShape EntityType="SchedulingContext.TripStop" Width="1.5" PointX="7.5" PointY="13.375" />
+        <EntityTypeShape EntityType="SchedulingContext.TripTimingPoint" Width="1.5" PointX="10.5" PointY="12.75" />
+        <EntityTypeShape EntityType="SchedulingContext.StopDistrict" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="SchedulingContext.FK_Block_Booking" />
+        <AssociationConnector Association="SchedulingContext.FK_Trip_Booking" />
+        <AssociationConnector Association="SchedulingContext.FK_TripPattern_BookingID" />
+        <AssociationConnector Association="SchedulingContext.FK_Place_District" />
+        <AssociationConnector Association="SchedulingContext.FK_TripTimingPoint_Place_next" />
+        <AssociationConnector Association="SchedulingContext.FK_TripTimingPoint_Place_place" />
+        <AssociationConnector Association="SchedulingContext.FK_TripTimingPoint_Place_prev" />
+        <AssociationConnector Association="SchedulingContext.FK_Route_RouteList" />
+        <AssociationConnector Association="SchedulingContext.FK_Route_RouteType" />
+        <AssociationConnector Association="SchedulingContext.FK_Trip_Route" />
+        <AssociationConnector Association="SchedulingContext.FK_TripPattern_RouteList" />
+        <AssociationConnector Association="SchedulingContext.FK_TripStop_Stopid" />
+        <AssociationConnector Association="SchedulingContext.FK_Trip_NextTripNumber" />
+        <AssociationConnector Association="SchedulingContext.FK_Trip_TripPattern" />
+        <AssociationConnector Association="SchedulingContext.FK_TripStop_Trip" />
+        <AssociationConnector Association="SchedulingContext.FK_TripTimingPoint_Trip" />
+        <AssociationConnector Association="SchedulingContext.FK_Stop_Place" />
+        <EntityTypeShape EntityType="SchedulingContext.VehicleDisplayCode" Width="1.5" PointX="3" PointY="19.5" />
+        <AssociationConnector Association="SchedulingContext.FK_VehicleDisplayCode_BookingId" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

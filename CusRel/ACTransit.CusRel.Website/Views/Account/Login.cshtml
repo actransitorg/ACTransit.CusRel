@@ -1,0 +1,99 @@
+﻿@model ACTransit.CusRel.Models.LoginModel
+@{
+    Layout = null;
+    AntiForgeryConfig.SuppressIdentityHeuristicChecks = true;
+}
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />        
+        <title>AC Transit Customer Relations Login</title>
+        @Styles.Render("~/Content/css")
+        <style>
+            .center-panel {
+                width: 300px;
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+        </style>
+    </head>
+<body>
+    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                <div class="panel panel-default center-panel">
+                    <div class="panel-heading text-center" style="background-color: #fff; color: #000">
+                        <img src="../Content/Image/logo-small.png" height="46" width="171" class="img-responsive center-block" />
+                        <h3>AC Transit Customer Relations</h3>
+                        <h3 class="panel-title">Please sign in</h3>                        
+                    </div>
+                    <div class="panel-body" style="background-color: #c4cdc1;">
+                        <fieldset>
+                            <div class="">
+                                Username
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "" })
+                            </div>
+                            <div class="">
+                                Password
+                            </div>
+                            <div class="form-group">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "" })
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(m => m.RememberMe) Remember Me?
+                                </label>
+                            </div>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                        </fieldset>
+                        <div style="color: red">
+                            @Html.ValidationSummary(true)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!--[if lt IE 9]>
+    @Scripts.Render("~/bundles/jquery-old")
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    @Scripts.Render("~/bundles/jquery")
+    <!--<![endif]-->
+    @Scripts.Render("~/bundles/bootstrap")
+    
+    <!--[if lte IE 9]>
+    @Scripts.Render("~/Scripts/placeholders.min.js")
+    <![endif]-->
+    
+    <script>
+        $("input:text").first().focus();
+        $(function() {
+            $("form")
+                .submit(function () {
+                    deleteAllCookies();
+                });
+        });
+
+        function deleteAllCookies() {
+            var cookies = document.cookie.split(";");
+
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+﻿@using ACTransit.CusRel.Models.Helpers
+@using ACTransit.Framework.Extensions
+@model ACTransit.CusRel.Models.UserAccessModel
+
+@{
+    ViewBag.Title = "User Access";
+    ViewBag.Breadcrumb = "Admin > User Access";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    @Styles.Render("~/Content/Tables")
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+    <style>
+        #user-list thead tr th, #user-list tbody tr td {
+            white-space: nowrap;
+        }
+
+        #user-list tbody tr {
+            cursor: pointer;
+        }
+
+        #user-list tbody tr:nth-child(even) {
+            background-color: #adbdbc;
+        }
+    </style>
+}
+
+<br />
+<div class="row row-first">
+    <div class="col-md-13 well normaltext">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <div class="row">
+                    <div style="text-align: center">
+                        <div style="float: left">
+                        </div>
+                        <div style="float: right; padding-right: 1em">
+                            <a href='@Url.Action("EditUser", "Admin")' class="btn btn-info">Add New</a>
+                        </div>
+                        <div style="margin: 0 auto; display: inline-block">
+                            <span style="font-size: 32px;">Users</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body " style="margin:0px 0px">
+                <div class="row form-group field-margin">
+                    <div id="SearchResults">
+                        <table class="table sortable" id="user-list">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>First/Last Name</th>
+                                    <th>Email</th>
+                                    <th>Division</th>
+                                    <th>Dept. Contact</th>
+                                    <th>Add Comments</th>
+                                    <th>Assign Tickets</th>
+                                    <th>Admin Access</th>
+                                    <th>Close Tickets</th>
+                                    <th>Search Tickets</th>
+                                    <th>View Unassigned</th>
+                                    <th>View Only Dept Tickets</th>
+                                    <th>Notify When Assigned</th>
+                                    <th>Reminder Delay Days</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Users)
+                                {
+                                    <tr>
+                                        <td>@Html.ActionLink(@item.Id, "EditUser", "Admin", new { id = item.Id }, new { id = "_" + @item.Id })</td>
+                                        <td>@item.Username</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.Division</td>
+                                        <td>@(item.GroupContact != null ? item.GroupContact.Description : "")</td>
+                                        <td>@(item.CanAddTicketComments ? "Y" : "N")</td>
+                                        <td>@(item.CanAssignTicket ? "Y" : "N")</td>
+                                        <td>@(item.CanAccessAdmin ? "Y" : "N")</td>
+                                        <td>@(item.CanCloseTicket ? "Y" : "N")</td>
+                                        <td>@(item.CanSearchTickets ? "Y" : "N")</td>
+                                        <td>@(item.CanViewUnassigned ? "Y" : "N")</td>
+                                        <td>@(item.CanViewOnlyDeptTickets ? "Y" : "N")</td>
+                                        <td>@(item.GetsNotificationOnAssignment ? "Y" : "N")</td>
+                                        <td>@(item.DaysReminderNotification == 0 ? "No Reminder" : item.DaysReminderNotification.ToString())</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Tables")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/jquery.exportCSV.js")
+
+}

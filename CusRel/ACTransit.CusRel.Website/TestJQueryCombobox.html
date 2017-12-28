@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Test</title>
+    <link href="/Content/css?v=0o-wA_GVUJIk01505uUCaZXzx8KyR5TKyfW4Eo0tkGU1" rel="stylesheet" />
+    <link href="/Content/jquery.combobox/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-12 " id="accordion">
+            <div class="panel panel-default">
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="row form-group row-margin">
+                            <div class="custom-md-control col-md-2 col-sm-7">
+                                <input class="form-control field-height fieldwidth field-margin valid"
+                                       type="text"
+                                       id="Ticket_Incident_Route"
+                                       name="Ticket.Incident.Route"
+                                       value="21" />
+                            </div>
+                        </div>
+                        <div class="row form-group row-margin">
+                            <div class="custom-md-control col-md-2 col-sm-7">
+                                WOW
+                            </div>
+                        </div>
+                        <div class="row form-group row-margin">
+                            <div class="custom-md-control col-md-2 col-sm-7">
+                                WOW
+                            </div>
+                        </div>
+                        <div class="row form-group row-margin">
+                            <div class="custom-md-control col-md-2 col-sm-7">
+                                WOW
+                            </div>
+                        </div>
+                        <div class="row form-group row-margin">
+                            <div class="custom-md-control col-md-2 col-sm-7">
+                                WOW
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/Scripts/jquery-2.1.1.js"></script>
+    <script src="/bundles/bootstrap?v=1SvvO6dMgBLYCu7nhq3vIMdYhGrbhL8gcyRdOb9lffQ1"></script>
+    <script src="/Scripts/jquery.combobox.js"></script>
+    <script type="text/javascript">
+
+        var id = "Ticket_Incident_Route";
+
+
+        GetCombobox = function (id) {
+            var result = $.grep(jQuery.combobox.instances, function (item) {
+                return item.textInputElement.context.id === id;
+            });
+            return result[0];
+        }
+
+        var arr1 = [];
+        for (var i = 0, l = 10; i < l; i++) {
+            arr1.push((i + 1).toString());
+        }
+        var cb = $("#" + id).combobox(arr1);
+
+        var arr2 = [];
+        for (var i = 11, l = 20; i < l; i++) {
+            arr2.push((i + 1).toString());
+        }
+
+        GetCombobox(id).setSelectOptions(arr2);
+
+    </script>
+
+</body>
+</html>

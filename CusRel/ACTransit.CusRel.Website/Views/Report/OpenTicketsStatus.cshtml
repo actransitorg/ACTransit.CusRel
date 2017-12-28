@@ -1,0 +1,184 @@
+﻿@using ACTransit.CusRel.Models.Helpers
+@model ACTransit.CusRel.Models.OpenTicketsStatusReportModel
+
+@{
+    ViewBag.Title = "Status Report";
+    ViewBag.Breadcrumb = "Reports > Status Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    @Styles.Render("~/Content/Tables")
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/jquery.datetimepicker-2.4.0.css")" rel="stylesheet" />
+}
+
+}
+@section Actions{
+    <button id="search" class="btn btn-primary btn-panel-title" type="button">Search</button>
+}
+<div class="row row-first">
+    <div class="col-md-offset-6">
+        <div class="row form-group field-margin">
+            @*@Html.LabelFor(model => model.ReportParams.RangeStart, "Start Date", new { @class = "col-md-2 col-sm-2 smalltextright smalltext-bright text-right" })            
+            <div class="col-md-2 col-sm-2">
+                @Html.TextBoxFor(model => model.ReportParams.RangeStart, new { @Value = Model.ReportParams.RangeStart.ToString("M/d/yyyy"), @class = "date-picker form-control field-height" })
+            </div>
+            @Html.LabelFor(model => model.ReportParams.RangeEnd, "End Date", new { @class = "col-md-2 col-sm-2 smalltextright smalltext-bright text-right" })
+            <div class="col-md-2 col-sm-2">
+                @Html.TextBoxFor(model => model.ReportParams.RangeEnd, new { @Value = Model.ReportParams.RangeEnd.ToString("M/d/yyyy"), @class = "date-picker form-control field-height" })
+            </div>
+            @Html.LabelFor(model => model.ReportParams.IsAda, new { @class = "col-md-2 col-sm-2 smalltextright smalltext-bright text-right" })
+            <span style="padding-left: 10px">
+                @Html.DropDownListFor(model => model.ReportParams.IsAda, Model.AdaSelectList, new { @class = "field-height text-right", @style = "margin: 0" })
+            </span>*@
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 well normaltext">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <div class="row">
+                    <h1 class="panel-title text-center">
+                        <span style="padding-left: 4em">
+                            <a href="javascript:startPrint('OpenTicketsStatusReportTable','Open Tickets Status',rangeDate)" data-tool="Print" class="printAnchor glyphicon glyphicon-print pull-right" data-title="print" rel="tooltip" style=""></a>
+                            <a href="#" class="export pull-right glyphicon glyphicon-download-alt" data-title="download csv" rel="tooltip"></a>
+                        </span>
+                    </h1>
+                </div>
+            </div>
+            <div class="panel-body" style="margin:0px 0px">
+                <div class="row form-group field-margin">
+                    <div id="SearchResults">
+                        <table class="table sortable" id="OpenTicketsStatusReportTable">
+                            <thead>
+                                <tr>
+                                    <th>Department</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.NewCount)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.AssignedCount)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.PendingContactCount)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.RejectedCount)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.ReadyToCloseCount)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Result.Report.Items)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (item.Code != null)
+                                            {
+                                                @Html.ActionLink(item.Description.Trim(), "ForAction", new { id = item.Code })
+                                            }
+                                            else
+                                            { @item.Description }
+                                        </td>
+                                        <td>@item.NewCount</td>
+                                        <td>@item.AssignedCount</td>
+                                        <td>@item.PendingContactCount</td>
+                                        <td>@item.RejectedCount</td>
+                                        <td>@item.ReadyToCloseCount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Tables")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/jquery.exportCSV.js")
+    <script type="text/javascript">
+        var ReportParams = @Html.Raw(Json.Encode(Model.ReportParams));
+        var PostReportParams = @Html.Raw(Json.Encode(Model.PostReportParams));
+        var rangeDate = ' - ' + 'Start Date: ' + $('#ReportParams_RangeStart').val() + '   ' + '   End Date: ' + $('#ReportParams_RangeEnd').val() + ' - ADA? ' + isAda();
+
+        $(".date-picker").each(function() {
+            var that = $(this);
+            setTimeout(function() {
+                that.datetimepicker({
+                    format: 'm/d/Y',
+                    timepicker: false,
+                });
+            }, 50);
+        });
+
+        function isAda() {
+            return $('#ReportParams_IsAda').val();
+        }
+
+        function pageTop() {
+            return $(".navbar-fixed-top").height();
+        }
+
+        function EnableThead() {
+            $.bootstrapSortable(true);
+            return;
+        }
+
+        EnableThead();
+
+        function startPrint(tableName, titleName, assignValue) {
+            print(tableName, titleName, assignValue);
+            EnableThead();
+        }
+
+        $("#search").on('click', function() {
+            RefreshView();
+            var rangeStart = $('#ReportParams_RangeStart').val();
+            var rangeEnd = $('#ReportParams_RangeEnd').val();
+            rangeDate = ' - ' + 'StartDate :' + rangeStart + '   ' + '   EndDate :' + rangeEnd + ' - ADA? ' + isAda();
+        });
+
+        RefreshView = function() {
+            var rangeStart = $("#ReportParams_RangeStart").val().length > 0 ? $("#ReportParams_RangeStart").val() + " 12:00 AM" : null;
+            var rangeEnd = $("#ReportParams_RangeEnd").val().length > 0 ? $("#ReportParams_RangeEnd").val() + " 11:59:59 PM" : null;
+            PostReportParams.RangeStart = rangeStart;
+            PostReportParams.RangeEnd = rangeEnd;
+            PostReportParams.IsAda = isAda();
+            $.ajax({
+                type: "POST",
+                url: "OpenTicketsStatus",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(PostReportParams),
+                success: function(result) {
+                    var data = result.Report.Items;
+                    var content = '';
+                    for (var i = 0; i < data.length; i++) {
+                        content +=
+                            '<tr>\
+                                    <td><a href="@Url.Action("ForAction")/' + data[i].Code + '">' + toNullString(data[i].Description) + '</a></td>\
+                                    <td>' + data[i].NewCount + '</td>\
+                                    <td>' + data[i].AssignedCount + '</td>\
+                                    <td>' + data[i].PendingContactCount + '</td>\
+                                    <td>' + data[i].RejectedCount + '</td>\
+                                    <td>' + data[i].ReadyToCloseCount + '</td>\
+                                </tr>';
+                    }
+                    $('#OpenTicketsStatusReportTable tbody').html(content);
+                    $("#OpenTicketsStatusReportTable").floatThead('reflow');
+
+                    $.bootstrapSortable(true);
+                },
+                fail: function(e, data) {
+
+                }
+            });
+        };
+        // IF CSV, don't do event.preventDefault() or return false
+        // We actually need this to be a typical hyperlink
+        $(".export").on('click', function(event) {
+            // CSV
+            exportTableToCSV.apply(this, [$('#SearchResults > table'), 'OpenTicketsStatus.csv']);
+        });
+    </script>
+}

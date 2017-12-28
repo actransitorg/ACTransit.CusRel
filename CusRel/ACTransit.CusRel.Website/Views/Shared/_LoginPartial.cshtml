@@ -1,0 +1,16 @@
+﻿@using System.Security.Principal
+@using ACTransit.CusRel.Security
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    <div style="float: right; padding-right: 20px; color">
+        @Html.ActionLink("Hello " + HttpContext.Current.User.Identity.Name + "", "Index", "Home", routeValues: null, htmlAttributes: new { title = "Home", @class = "dark-fc" })
+        | @Html.ActionLink("Log off", "Logout", "Account", routeValues: null, htmlAttributes: new { title = "Home", @class = "dark-fc" })
+    </div>
+}
+else
+{
+    <div style="float: right; padding-right: 20px; color">
+        @Html.ActionLink("Log in", "Index", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "dark-fc" })
+    </div>
+}

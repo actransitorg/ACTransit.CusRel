@@ -1,0 +1,866 @@
+﻿body {
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-top: 80px;
+    padding-left: 5px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 100%;
+}
+
+hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+footer {
+    text-align: center;
+}
+
+
+td > a {
+    text-decoration: underline;
+}
+
+.dark-fc {
+    color: black;
+}
+
+#navbar-wrapper  {
+    margin-right: 30px;
+}
+
+.navbar {
+    margin-bottom: 0 !important;
+}
+
+.navbar-header {
+    /*padding-top: 3px*/
+    /*padding-left: -5px;*/
+}
+
+.navbar-after {
+    /*margin-top: 5px;*/
+}
+
+.navbar-nav {
+    max-height: 46px;
+    float: right;
+    font-weight: bold;
+}
+
+.nav-tabs {
+    background-color: #6D9197;
+}
+
+.nav-tabs a:hover {
+    background-color: #85a3a8;
+}
+
+.nav > li > a:hover {
+    background-color: #85a3a8;
+}
+
+.nav-tabs > li.active > a, 
+.nav-tabs > li.active > a:hover, 
+.nav-tabs > li.active > a:focus {
+    border: 1px solid #85a3a8;
+    background-color: #85a3a8;
+    color: #000 !important;
+}
+
+.dropdown-menu > li > a {
+    color: #000;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus 
+{
+    color: #000;
+    background-color: #D4D0C8;
+}
+
+.dropdown-menu {
+    background-color: #eee;
+}
+
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;    
+}
+
+.popover {
+    min-width: 50%
+}
+
+.button-add {
+    max-width: 38px;
+    width: 38px !important;
+    text-align: center;
+}
+
+.popover-title {
+    text-align: center;
+    color: #000;
+    background-color: #808080;
+}
+
+.popover-content {
+    color: #000;
+    font-size: 10pt;
+}
+
+#tinymce {
+    font-size: 10pt;
+}
+
+/*CSS used for Flexbox on Pages*/
+.equal, .equal > div[class*='col-'] {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex: 1 1 auto;
+}
+
+/*.panel {
+    padding-left: -5px !important;
+    padding-right: -5px !important;
+}*/
+
+.panel-body {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+.smalltext {
+    font-weight:bold;
+    color: #000;
+    font-size: 12px;
+    text-align: left;
+    margin-top: 6px;
+}
+
+.smalltext-bright {
+    color: #fff;
+
+}
+
+.smalltextright {
+    font-weight:bold;
+    color: #FFF;
+    font-size: 12px;
+    text-align: right;
+    margin-top: 6px;
+}
+
+
+.row-first {
+    /*margin-top: 18px;*/
+}
+
+.normaltext {
+    /*font-weight:bold;*/
+    font-size: 12px;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.row-margin {
+    margin-bottom: 0px;
+}
+
+.field-margin {
+    margin-bottom: 4px;
+}
+
+.field-height {
+    font-size: 12px;
+    text-align: left;
+    height: 28px;
+}
+
+.field-search {
+    height: 50px;
+}
+
+.field-search-label {
+    
+}
+
+.field-search-value {
+    padding-top: 12px;   
+}
+
+.combobox-width {
+    width: 155px;
+    margin-left: 40px;
+}
+
+.filter-col {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.errorMessagetext {
+    /*font-weight:bold;*/
+    font-size: 12px;
+    text-align: left;
+    margin-top: 7px;
+    color: red;
+}
+
+.container-breadcrumb {
+    overflow: hidden;
+    background-color: #28363d;
+    /*margin-top: -3px;*/
+    height: 32px;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
+}
+
+.container-breadcrumb-right {
+    float: right;
+    padding: 4px 20px 0 0;
+}
+
+.container-breadcrumb-left {
+    float: left;
+    width: auto;
+    overflow: hidden;
+    line-height: 1;
+    padding: 0 2px 0 0;
+}
+
+.container-breadcrumb-left > a {
+    text-decoration: underline;
+    text-decoration-color: #808080;
+    -moz-text-decoration-color: #808080;
+}
+
+#search-ticket-text {
+    width: 82px; 
+    margin: 0 5px 0 5px; 
+    height: 22px;
+    padding: 0 0 0 10px;
+}
+
+.btn-breadcrumb {
+    height: 22px;
+    padding: 0 5px 0 5px;
+}
+
+​​ .breadcrumb-style {
+    font-size: 13px;
+    margin: 3px auto;
+    padding: 1em 1em 3px 2em;
+    background-color: #f5f5f5;
+}
+
+.breadcrumb > li + li:before {
+    content: "\3E";
+    /*color: orange;*/
+}
+
+.btn-panel-title {
+    height: 22px;
+    padding: 0 6px !important;
+}
+
+.padding5 {
+    padding: 2px 2px;
+}
+
+.labeltxt {
+    width: 13.66666667%;
+}
+
+.fieldwidth {
+    width: 100%;
+}
+
+/*.search-checkbox {
+   m argin-top: 34px !important;
+}
+
+.checkbox-fix {
+    margin-top: 10px !important;
+}
+*/
+
+.btn-primary {
+    color: #fff;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+
+#files-container {
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+
+table {
+    color: #000;
+
+}
+
+table.floatThead-table {
+    border-top: none;
+    border-bottom: none;
+    background-color: #C4CDC1;
+}
+
+
+.form-group.required label:after, label.required:after {
+    padding-left: 5px;
+    content: "*";
+    color: red;
+}
+
+/* For Ticket Expand/Collapse */
+.panel-heading .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings'; /* essential for enabling glyphicon */
+    content: "\e114"; /* adjust as needed */ /* use \e113 for down arrow */
+    float: right; /* adjust as needed */
+    color: grey; /* adjust as needed */
+}
+
+.panel-heading .accordion-toggle.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\e080"; /* adjust as needed */ /*\e114 chevron up by default*/
+}
+/*MagicSuggest css class*/
+.ms-ctn {
+    height: 28px;
+    font-size: 12px;
+}
+
+.ms-res-ctn .ms-res-item {
+    font-size: 12px;
+}
+
+.ms-sel-ctn .ms-sel-text {
+    font-size: 12px;
+}
+
+#TicketSearchResultTable th:nth-child(1), #TicketSearchResultTable td:nth-child(1) {
+    min-width: 75px;
+    width: 75px;
+    max-width: 75px;
+}
+
+#TicketSearchResultTable th:nth-child(2), #TicketSearchResultTable td:nth-child(2) {
+    min-width: 120px;
+    width: 120px;
+    max-width: 120px;
+}
+
+#TicketSearchResultTable th:nth-child(3), #TicketSearchResultTable td:nth-child(3) {
+    min-width: 120px;
+    width: 120px;
+    max-width: 120px;
+}
+
+#TicketSearchResultTable th:nth-child(4), #TicketSearchResultTable td:nth-child(4) {
+    min-width: 95px;
+    width: 95px;
+    max-width: 95px;
+}
+
+#TicketSearchResultTable th:nth-child(5), #TicketSearchResultTable td:nth-child(5) {
+    min-width: 75px;
+    width: 75px;
+    max-width: 75px;
+}
+
+#TicketSearchResultTable th:nth-child(6), #TicketSearchResultTable td:nth-child(6) {
+    min-width: 200px;
+    width: 200px;
+    max-width: 200px;
+}
+
+#TicketSearchResultTable th:nth-child(7), #TicketSearchResultTable td:nth-child(7) {
+    min-width: 100px;
+    width: 100px;
+    max-width: 100px;
+}
+
+#TicketSearchResultTable th:nth-child(8), #TicketSearchResultTable td:nth-child(8) {
+    min-width: 200px;
+    width: 200px;
+    max-width: 200px;
+}
+
+#TicketSearchResultTable th:nth-child(9), #TicketSearchResultTable td:nth-child(9) {
+    min-width: 30px;
+    width: 30px;
+    max-width: 30px;
+}
+
+#TicketSearchResultTable th:nth-child(10), #TicketSearchResultTable td:nth-child(10) {
+    min-width: 60px;
+    width: 60px;
+    max-width: 60px;
+}
+
+#TicketSearchResultTable th:nth-child(11), #TicketSearchResultTable td:nth-child(11) {
+    min-width: 75px;
+    width: 75px;
+    max-width: 75px;
+}
+
+#TicketSearchResultTable {
+    padding: 0px 10px 10px 0px;
+    overflow-x: hidden;
+}
+
+#TicketSearchResultTable tr:nth-child(even) {
+    background: #adbdbc
+}
+
+#TicketSearchResultTable td {
+    padding: 1px;
+    cursor: default;
+}
+
+
+
+#ReadyToCloseReportTable th:nth-child(1), #ReadyToCloseReportTable td:nth-child(1) {
+    min-width: 70px;
+}
+
+#ReadyToCloseReportTable th:nth-child(2), #ReadyToCloseReportTable td:nth-child(2) {
+    min-width: 75px;
+}
+
+#ReadyToCloseReportTable th:nth-child(3), #ReadyToCloseReportTable td:nth-child(3) {
+    min-width: 175px;
+}
+
+#ReadyToCloseReportTable th:nth-child(4), #ReadyToCloseReportTable td:nth-child(4) {
+    min-width: 300px;
+}
+
+#ReadyToCloseReportTable th:nth-child(5), #ReadyToCloseReportTable td:nth-child(5) {
+    min-width: 100px;
+}
+
+#ReadyToCloseReportTable th:nth-child(6), #ReadyToCloseReportTable td:nth-child(6) {
+    min-width: 135px;
+}
+
+#ReadyToCloseReportTable th:nth-child(7), #ReadyToCloseReportTable td:nth-child(7) {
+    min-width: 100px;
+}
+
+#ReadyToCloseReportTable th:nth-child(8), #ReadyToCloseReportTable td:nth-child(8) {
+    min-width: 100px;
+}
+
+#ReadyToCloseReportTable {
+    padding: 0px 10px 10px 0px;
+    overflow-x: hidden;
+}
+
+#ReadyToCloseReportTable tr:nth-child(even) {
+    background: #adbdbc
+}
+
+#ReadyToCloseReportTable td {
+    padding: 1px;
+    cursor: default;
+}
+
+
+#AssignedToReportTable th:nth-child(1), #AssignedToReportTable td:nth-child(1) {
+    min-width: 85px;
+    width: 85px;
+    max-width: 85px;
+}
+
+#AssignedToReportTable th:nth-child(2), #AssignedToReportTable td:nth-child(2) {
+    min-width: 120px;
+    width: 120px;
+    max-width: 120px;
+}
+
+#AssignedToReportTable th:nth-child(3), #AssignedToReportTable td:nth-child(3) {
+    min-width: 95px;
+    width: 95px;
+    max-width: 95px;
+}
+
+#AssignedToReportTable th:nth-child(4), #AssignedToReportTable td:nth-child(4) {
+    min-width: 150px;
+    width: 250px;
+}
+
+#AssignedToReportTable th:nth-child(5), #AssignedToReportTable td:nth-child(5) {
+    min-width: 30px;
+    width: 30px;
+    max-width: 30px;
+}
+
+#AssignedToReportTable th:nth-child(6), #AssignedToReportTable td:nth-child(6) {
+    min-width: 60px;
+    width: 60px;
+    max-width: 60px;
+}
+
+#AssignedToReportTable th:nth-child(7), #AssignedToReportTable td:nth-child(7) {
+    width: 70px;
+}
+
+#AssignedToReportTable th:nth-child(8), #AssignedToReportTable td:nth-child(8) {
+    width: 150px;
+}
+
+#AssignedToReportTable th:nth-child(9), #AssignedToReportTable td:nth-child(9) {
+    width: 80px;
+}
+
+#AssignedToReportTable th:nth-child(10), #AssignedToReportTable td:nth-child(10) {
+    min-width: 150px;
+    width: 150px;
+}
+
+#AssignedToReportTable th:nth-child(11), #AssignedToReportTable td:nth-child(11) {
+    min-width: 100px;
+    max-width: 1em;
+}
+
+#AssignedToReportTable {
+    overflow-x: hidden;
+}
+
+#AssignedToReportTable tr:nth-child(even) {
+    background: #adbdbc
+}
+
+#AssignedToReportTable th td, #AssignedToReportTable td {
+    padding: 1px;
+    cursor: default;
+}
+
+
+
+#ForActionReportTable th:nth-child(1), #ForActionReportTable td:nth-child(1) {
+    min-width: 85px;
+    width: 85px;
+    max-width: 85px;
+}
+
+#ForActionReportTable th:nth-child(2), #ForActionReportTable td:nth-child(2) {
+    min-width: 120px;
+    width: 120px;
+    max-width: 120px;
+}
+
+#ForActionReportTable th:nth-child(3), #ForActionReportTable td:nth-child(3) {
+    min-width: 95px;
+    width: 95px;
+    max-width: 95px;
+}
+
+#ForActionReportTable th:nth-child(4), #ForActionReportTable td:nth-child(4) {
+    min-width: 150px;
+    width: 250px;
+}
+
+#ForActionReportTable th:nth-child(5), #ForActionReportTable td:nth-child(5) {
+    min-width: 30px;
+    width: 30px;
+    max-width: 30px;
+}
+
+#ForActionReportTable th:nth-child(6), #ForActionReportTable td:nth-child(6) {
+    min-width: 60px;
+    width: 60px;
+    max-width: 60px;
+}
+
+#ForActionReportTable th:nth-child(7), #ForActionReportTable td:nth-child(7) {
+    width: 70px;
+}
+
+#ForActionReportTable th:nth-child(8), #ForActionReportTable td:nth-child(8) {
+    width: 150px;
+}
+
+#ForActionReportTable th:nth-child(9), #ForActionReportTable td:nth-child(9) {
+    width: 80px;
+}
+
+#ForActionReportTable th:nth-child(10), #ForActionReportTable td:nth-child(10) {
+    width: 80px;
+}
+
+#ForActionReportTable th:nth-child(11), #ForActionReportTable td:nth-child(11) {
+    width: 100px;
+    max-width: 100px;
+}
+
+#ForActionReportTable th:nth-child(12), #ForActionReportTable td:nth-child(12) {
+    min-width: 100px;
+    max-width: 1em;
+}
+
+#ForActionReportTable {
+    overflow-x: hidden;
+}
+
+#ForActionReportTable tr:nth-child(even) {
+    background: #adbdbc
+}
+
+#ForActionReportTable th td, #ForActionReportTable td {
+    padding: 1px;
+    cursor: default;
+}
+
+
+
+#RejectedReportTable th:nth-child(1), #RejectedReportTable td:nth-child(1) {
+    min-width: 75px;
+    max-width: 75px;
+}
+
+#RejectedReportTable th:nth-child(2), #RejectedReportTable td:nth-child(2) {
+    width: 120px;
+    min-width: 120px;
+}
+
+#RejectedReportTable th:nth-child(3), #RejectedReportTable td:nth-child(3) {
+    min-width: 100px;
+}
+
+#RejectedReportTable th:nth-child(4), #RejectedReportTable td:nth-child(4) {
+    min-width: 150px;
+    width: 250px;
+}
+
+#RejectedReportTable th:nth-child(5), #RejectedReportTable td:nth-child(5) {
+    min-width: 100px;
+    max-width: 400px;
+}
+
+#RejectedReportTable {
+    padding: 0px 10px 10px 0px;
+    overflow-x: hidden;
+}
+
+#RejectedReportTable tr:nth-child(even) {
+    background: #adbdbc
+}
+
+#RejectedReportTable td {
+    padding: 1px;
+    cursor: default;
+}
+
+
+#LostFoundReportTable th:nth-child(1), #LostFoundReportTable td:nth-child(1) {
+    min-width: 75px;
+    max-width: 75px;
+}
+
+#LostFoundReportTable th:nth-child(2), #LostFoundReportTable td:nth-child(2) {
+    min-width: 105px;
+}
+
+#LostFoundReportTable th:nth-child(3), #LostFoundReportTable td:nth-child(3) {
+    min-width: 105px;
+}
+
+#LostFoundReportTable th:nth-child(4), #LostFoundReportTable td:nth-child(4) {
+    min-width: 100px;
+}
+
+#LostFoundReportTable th:nth-child(5), #LostFoundReportTable td:nth-child(5) {
+    max-width: 60px;
+}
+
+#LostFoundReportTable th:nth-child(6), #LostFoundReportTable td:nth-child(6) {
+    max-width: 60px;
+}
+
+#LostFoundReportTable th:nth-child(7), #LostFoundReportTable td:nth-child(7) {
+    max-width: 150px;
+}
+
+#LostFoundReportTable th:nth-child(8), #LostFoundReportTable td:nth-child(8) {
+    max-width: 150px;
+}
+
+#LostFoundReportTable th:nth-child(9), #LostFoundReportTable td:nth-child(9) {
+    min-width: 100px;
+    max-width: 400px;
+}
+
+#LostFoundReportTable {
+    padding: 0px 10px 10px 0px;
+    overflow-x: hidden;
+}
+
+#LostFoundReportTable tr:nth-child(even) {
+    background: #adbdbc
+}
+
+#LostFoundReportTable td {
+    padding: 1px;
+    cursor: default;
+}
+
+
+
+
+#SearchResults {
+    padding: 0px 10px 10px 10px;
+    overflow-y: auto;
+}
+
+.table-checkbox {
+    vertical-align: top !important;
+    min-height: 0 !important;
+    margin: 2px 0 0 0 !important;
+}
+
+.wrapWord {
+    word-wrap: break-word;
+}
+
+.export {
+    padding-right: 23px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.printAnchor {
+    padding-right: 15px;
+    font-weight: bold;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.imgbtn-sm {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+}
+
+#employee-list th:nth-child(1), #employee-list tr:nth-child(1) {
+    min-width: 165px;
+}
+
+#employee-list th:nth-child(2), #employee-list tr:nth-child(2) {
+    min-width: 165px;
+}
+
+#employee-list th:nth-child(3), #employee-list tr:nth-child(3) {
+    min-width: 240px;
+}
+
+#employee-list th:nth-child(4), #employee-list tr:nth-child(4) {
+    min-width: 260px;
+}
+
+#employee-list th:nth-child(5), #employee-list tr:nth-child(5) {
+    min-width: 100px;
+}
+
+
+.modal {top: 25%;}
+.modal-dialog.m-width {width: 960px;}
+
+#employee-list-container {
+    height: 600px;
+    overflow: hidden;
+}
+#employee-list-container .modal-dialog .modal-content .modal-body {
+    height: 400px;
+    padding: 20px 0 0px 20px;
+}
+
+#employee-list-container .modal-dialog .modal-content .modal-body .table-responsive
+{
+    height: 350px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+@media (min-width: 992px) {
+    .custom-md-label {
+        width: 13.33333333%;
+    }
+
+    .custom-md-control {
+        width: 20%;
+    }
+
+    .custom-md-textarea {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px ) and (max-width:1024px) {
+    .ms-ctn {
+        height: 28px;
+        font-size: 12px;
+        width: 280px;
+        margin-bottom: 4px;
+    }
+}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -ms-animation: spin .7s infinite linear;
+    -webkit-animation: spinw .7s infinite linear;
+    -moz-animation: spinm .7s infinite linear;
+}
+ 
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+  
+@-webkit-keyframes spinw {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+ 
+@-moz-keyframes spinm {
+    from { -moz-transform: rotate(0deg);}
+    to { -moz-transform: rotate(360deg);}
+}

@@ -1,0 +1,39 @@
+﻿.table > thead > tr > th, 
+.table > tbody > tr > th, 
+.table > tfoot > tr > th, 
+.table > thead > tr > td, 
+.table > tbody > tr > td, 
+.table > tfoot > tr > td {
+    border: 0;
+    padding: 0;
+}
+
+.table > tbody > tr > td a {
+    color: #000;
+}
+
+.table > tbody > tr > td a:visited {
+    color: #777;
+}
+
+.table > thead > tr {
+    background-color: #d4d5d3;
+    border-bottom: 1px solid #28363d;
+}
+
+
+.table > tbody > tr:nth-child(even) {
+    background: #adbdbc
+}
+
+.table > tbody > tr > td:last-child {
+    white-space: nowrap;
+}
+
+.fixed-table-container {
+    border: 0;
+}
+
+.fixed-table-container thead th .th-inner {
+    padding: 0;
+}

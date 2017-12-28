@@ -1,0 +1,185 @@
+﻿@using ACTransit.CusRel.Infrastructure
+@using ACTransit.CusRel.Models.Helpers
+@using ACTransit.Framework.Extensions
+@model ACTransit.CusRel.Models.AssignedToReportModel
+
+@{
+    ViewBag.Title = "Assigned Tickets";
+    ViewBag.Breadcrumb = "Reports > Assigned Tickets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    @Styles.Render("~/Content/Tables")
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+}
+
+<div class="row row-first">
+    <div class="col-md-3 col-md-offset-9 normaltext">
+        <div class="row form-group field-margin">
+            @Html.Label("Assigned To", new { @class = "col-md-3 col-sm-3 smalltext smalltext-bright" })
+            <div class="col-md-9 col-sm-9">
+                @Html.DropDownListFor(model => model.SelectedEmployee.Id, Model.Employees, "Select...", new { @class = "form-control field-height" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row ">
+    <div class="col-md-13 well normaltext">
+        <div class="panel panel-default">
+            <div class="panel-heading padding5">
+                <div class="row">
+                    <h1 class="panel-title text-center">
+                        <span style="padding-left: 4em">
+                            Tickets (<span id="TicketCount">@Model.Result.OpenTicketCount</span>)
+                            <a href="javascript:startPrint('AssignedToReportTable','Assigned Tickets',assignedTo)" data-tool="Print" class="printAnchor glyphicon glyphicon-print pull-right" data-title="print" rel="tooltip" style=""></a>
+                            <a href="#" class="export pull-right glyphicon glyphicon-download-alt" data-title="download csv" rel="tooltip"></a>
+                        </span>
+                    </h1>
+                </div>
+            </div>
+            <div class="panel-body " style="margin:0px 0px">
+                <div class="row form-group field-margin">
+                    <div id="SearchResults">
+                        <table class="table sortable" id="AssignedToReportTable">
+                            <thead>
+                                <tr>
+                                    <th>@Html.GetDisplayName(model => model.Header.Id)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.Status)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.IncidentAt)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.Reasons)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.IsAdaComplaint)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.IsTitle6)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.Priority)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.GroupContact)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.DaysOpen)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.ContactVia)</th>
+                                    <th>@Html.GetDisplayName(model => model.Header.OperatorName)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Result.Report.Items)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink(@item.Id.ToString(), "Update", "Ticket", new { id=item.Id },
+                                             new { id = "_" + @item.Id, target = "_self", data_toggle = "popover", data_content = @Html.GetCommentsString(item.Comments), data_title = "Ticket #" + @item.Id })
+                                        </td>
+                                        <td>@item.Status.PascalCaseToDescription()</td>
+                                        <td data-dateformat="M-D-YYYY">@(item.IncidentAt.HasValue ? item.IncidentAt.Value.ToString("M/d/yyyy") : "")</td>
+                                        <td>@item.Reasons.Replace(";", "; ")</td>
+                                        <td>@(item.IsAdaComplaint ? "Y" : "N")</td>
+                                        <td>@(item.IsTitle6 ? "Y" : "N")</td>
+                                        <td>@item.Priority</td>
+                                        <td>@item.GroupContact</td>
+                                        <td>@item.DaysOpen</td>
+                                        <td>@item.ContactVia</td>
+                                        <td>@item.OperatorName</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Tables")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/jquery.exportCSV.js")
+
+    <script type="text/javascript">
+        var ReportParams = @Html.Raw(Json.Encode(Model.ReportParams));
+        var PostReportParams = @Html.Raw(Json.Encode(Model.PostReportParams));
+        var assignedTo = ' - ' + 'All';
+
+        function pageTop(){
+            return $(".navbar-fixed-top").height();
+        }
+
+        function EnableThead() {
+            $.bootstrapSortable(true);
+            return;
+            $("#AssignedToReportTable").floatThead({
+                scrollingTop: pageTop,
+                useAbsolutePositioning: false
+            });
+            $(".table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td").css("padding", "1px 0px 5px 0px", "important");
+        }
+
+        EnableThead();
+        SetupHints();
+
+        function startPrint(tableName, titleName, assignValue) {
+            //$("#AssignedToReportTable").floatThead('destroy');
+            $("#AssignedToReportTable td").css("white-space", "normal");
+            print(tableName, titleName, assignValue);
+            EnableThead();
+            $("#AssignedToReportTable td").css("white-space", "nowrap");
+        }
+
+        $("#SelectedEmployee_Id").on('change', function() {
+            PostReportParams.AssignedTo.Id = this.value;
+            if (this.value == "") {
+                assignedTo = ' - ' + ' All';
+            } else {
+                assignedTo = ' - ' + $("#SelectedEmployee_Id > option:selected").html();
+            }
+            $.ajax({
+                type: "POST",
+                url: "AssignedTo",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(PostReportParams),
+                success: function(result) {
+                    var data = result.Report.Items;
+                    $(function() {
+                        var content = '';
+                        $("#TicketCount").text(data.length);
+                        for (var i = 0; i < data.length; i++) {
+                            content +=
+                                '<tr>'+
+                                    '<td>'+
+                                        '<a id="_' + data[i].Id + '" href="@Url.Action("Update", "Ticket")/' + data[i].Id + '" target="_self" ' + 
+                                        'data-toggle="popover" data-content="' + toCommentsString(data[i].Comments) + '" data-title="Ticket #' + data[i].Id + '">' + data[i].Id + '</a>' +
+                                    '</td>' +
+                                    '<td>' + data[i].Status.replace(/(\B[A-Z])/gm, " $1") + '</td>'+
+                                    '<td data-dateformat="M-D-YYYY">' + toDateString(data[i].IncidentAt) + '</td>'+
+                                    '<td>' + data[i].Reasons + '</td>'+
+                                    '<td>' + ((data[i].IsAdaComplaint) ? "Y" : "N") + '</td>'+
+                                    '<td>' + ((data[i].IsTitle6) ? "Y" : "N") + '</td>'+
+                                    '<td>' + data[i].Priority + '</td>'+
+                                    '<td>' + toNullString(data[i].GroupContact) + '</td>'+
+                                    '<td>' + data[i].DaysOpen + '</td>'+
+                                    '<td>' + toNullString(data[i].ContactVia) + '</td>'+
+                                    '<td>' + toNullString(data[i].OperatorName) + '</td>'+
+                                '</tr>';
+                        }
+                        $('#AssignedToReportTable tbody').html(content);
+                        //$("#AssignedToReportTable").floatThead('reflow');
+                        SetupHints();
+                        $.bootstrapSortable(true);
+                    });
+                },
+                fail: function(e, data) {
+                }
+            });
+        });
+
+        // CSV export
+        $(".export").on('click', function(event) {
+            exportTableToCSV.apply(this, [$('#SearchResults > table'), 'AssignedTo.csv']);
+        });
+
+        $(document).ready(function() {
+            $("#SelectedEmployee_Id").focus();
+        });
+
+    </script>
+}

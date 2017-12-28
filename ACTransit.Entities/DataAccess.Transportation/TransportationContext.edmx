@@ -1,0 +1,1317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TransportationContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="RouteAttribs">
+          <Key>
+            <PropertyRef Name="RouteAttribsId" />
+          </Key>
+          <Property Name="RouteAttribsId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="route_id" Type="int" Nullable="false" />
+          <Property Name="division_id" Type="int" Nullable="false" />
+          <Property Name="RouteTypeId" Type="bigint" Nullable="false" />
+          <Property Name="BegEffDate" Type="date" Nullable="false" />
+          <Property Name="EndEffDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="booking_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="booking_num" Type="smallint" Nullable="false" />
+          <Property Name="start_date" Type="datetime" Nullable="false" />
+          <Property Name="end_date" Type="datetime" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="creation_sequence" Type="int" Nullable="false" />
+          <Property Name="default_special_trip_option_id" Type="int" Nullable="false" />
+          <Property Name="BookingId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SignupPeriodNum" Type="char" MaxLength="4" />
+          <Property Name="SignupPeriodDesc" Type="varchar" MaxLength="50" />
+          <Property Name="StatusNameDesc" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Direction_codes">
+          <Key>
+            <PropertyRef Name="direction_code_id" />
+          </Key>
+          <Property Name="direction_code_id" Type="tinyint" Nullable="false" />
+          <Property Name="direction_description" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="division_id" />
+          </Key>
+          <Property Name="division_id" Type="tinyint" Nullable="false" />
+          <Property Name="division_description" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="division_sname" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeInterface">
+          <Key>
+            <PropertyRef Name="EmployeeInterfaceId" />
+          </Key>
+          <Property Name="EmployeeInterfaceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="JobTitle" Type="varchar" MaxLength="30" />
+          <Property Name="DeptName" Type="varchar" MaxLength="30" />
+          <Property Name="Location" Type="varchar" MaxLength="10" />
+          <Property Name="DefaultStatusCode" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="HolidayList">
+          <Key>
+            <PropertyRef Name="HolidayListId" />
+          </Key>
+          <Property Name="HolidayListId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="HolidayDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="incident_log">
+          <Key>
+            <PropertyRef Name="incident_log_id" />
+          </Key>
+          <Property Name="incident_log_id" Type="int" Nullable="false" />
+          <Property Name="trip_id" Type="int" Nullable="false" />
+          <Property Name="incident_date_time" Type="datetime" Nullable="false" />
+          <Property Name="transit_date_time" Type="datetime" Nullable="false" />
+          <Property Name="incident_code" Type="smallint" Nullable="false" />
+          <Property Name="incident_type" Type="smallint" Nullable="false" />
+          <Property Name="incident_status" Type="tinyint" Nullable="false" />
+          <Property Name="vehicle_id" Type="int" Nullable="false" />
+          <Property Name="driver_id" Type="int" Nullable="false" />
+          <Property Name="block_id" Type="int" Nullable="false" />
+          <Property Name="route_id" Type="int" Nullable="false" />
+          <Property Name="run_id" Type="int" Nullable="false" />
+          <Property Name="dispatcher_id" Type="int" Nullable="false" />
+          <Property Name="open_ir" Type="tinyint" Nullable="false" />
+          <Property Name="deviation" Type="smallint" Nullable="false" />
+          <Property Name="tp_id" Type="int" Nullable="false" />
+          <Property Name="next_tp_id" Type="int" Nullable="false" />
+          <Property Name="last_incident_date_time" Type="datetime" Nullable="false" />
+          <Property Name="sched_time" Type="datetime" Nullable="false" />
+          <Property Name="direction_code_id" Type="tinyint" Nullable="false" />
+          <Property Name="division_id" Type="tinyint" Nullable="false" />
+          <Property Name="sched_version" Type="tinyint" Nullable="false" />
+          <Property Name="user_handled" Type="int" Nullable="false" />
+          <Property Name="handled_datetime" Type="datetime" Nullable="false" />
+          <Property Name="incident_details" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="incident_owner" Type="int" Nullable="false" />
+          <Property Name="current_route_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="route_id" />
+          </Key>
+          <Property Name="route_id" Type="int" Nullable="false" />
+          <Property Name="route_desc" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="route_alpha" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VehicleRealTime">
+          <Key>
+            <PropertyRef Name="VehicleId" />
+          </Key>
+          <Property Name="VehicleId" Type="int" Nullable="false" />
+          <Property Name="VehiclePositionLogId" Type="int" Nullable="false" />
+          <Property Name="IncidentLogId" Type="int" Nullable="false" />
+          <Property Name="VehiclePositionDateTime" Type="datetime" />
+          <Property Name="VehicleLongitude" Type="float" />
+          <Property Name="VehicleLatitude" Type="float" />
+          <Property Name="VehicleHeading" Type="smallint" />
+          <Property Name="VehicleAverageSpeed" Type="tinyint" />
+          <Property Name="VehiclePredictedDeviation" Type="smallint" />
+          <Property Name="VehiclePlaybackDateTime" Type="datetime" />
+          <Property Name="VehicleLicenseNumber" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="VehicleIdentificationNumber" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="VehicleMakeId" Type="tinyint" Nullable="false" />
+          <Property Name="VehicleModelYear" Type="smallint" Nullable="false" />
+          <Property Name="VehicleType" Type="tinyint" Nullable="false" />
+          <Property Name="VehicleWheelchairAccessible" Type="bit" Nullable="false" />
+          <Property Name="VehiclePassengerCapacity" Type="smallint" Nullable="false" />
+          <Property Name="Division" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="IncidentDateTime" Type="datetime" Nullable="false" />
+          <Property Name="TransitDateTime" Type="datetime" Nullable="false" />
+          <Property Name="IncidentCode" Type="smallint" Nullable="false" />
+          <Property Name="IncidentCodeDesc" Type="varchar" MaxLength="80" />
+          <Property Name="IncidentType" Type="smallint" Nullable="false" />
+          <Property Name="IncidentTypeDesc" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="IncidentStatus" Type="tinyint" Nullable="false" />
+          <Property Name="IncidentSchedTime" Type="datetime" Nullable="false" />
+          <Property Name="RouteId" Type="int" Nullable="false" />
+          <Property Name="SchedVersion" Type="tinyint" Nullable="false" />
+          <Property Name="BookingNum" Type="varchar" MaxLength="1" />
+          <Property Name="booking_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DayTypeId" Type="varchar" MaxLength="1" />
+          <Property Name="CurrentRouteId" Type="int" Nullable="false" />
+          <Property Name="CurrentRouteAlpha" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="BlockId" Type="int" Nullable="false" />
+          <Property Name="BlockName" Type="varchar" MaxLength="35" />
+          <Property Name="RunId" Type="int" Nullable="false" />
+          <Property Name="TripId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TripDistance" Type="int" Nullable="false" />
+          <Property Name="TripStartTime" Type="datetime" Nullable="false" />
+          <Property Name="TripStartLayover" Type="int" Nullable="false" />
+          <Property Name="TripEndTime" Type="datetime" Nullable="false" />
+          <Property Name="TripEndLayover" Type="int" Nullable="false" />
+          <Property Name="TripVariation" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="TripTypeDesc" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="TimepointId" Type="int" Nullable="false" />
+          <Property Name="NextTimepointId" Type="int" Nullable="false" />
+          <Property Name="DriverId" Type="int" Nullable="false" />
+          <Property Name="DirectionCodeId" Type="tinyint" Nullable="false" />
+          <Property Name="Deviation" Type="smallint" Nullable="false" />
+          <Property Name="IncidentPlaybackTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bus_pull_out">
+          <Key>
+            <PropertyRef Name="BusPullOutId" />
+          </Key>
+          <Property Name="Date" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="Time_on" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Time_off" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Bus" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Route" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Block" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Run" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Badge" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Division" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Location_on" Type="varchar" MaxLength="2" />
+          <Property Name="Location_off" Type="varchar" MaxLength="2" />
+          <Property Name="Type" Type="varchar" MaxLength="20" />
+          <Property Name="DT_Time_On" Type="datetime" />
+          <Property Name="DT_Time_Off" Type="datetime" />
+          <Property Name="BusPullOutId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bus_pull_out_History">
+          <Key>
+            <PropertyRef Name="Bus_pull_out_History_Id" />
+          </Key>
+          <Property Name="Bus_pull_out_History_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="Time_on" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Time_off" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Bus" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Route" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Block" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Run" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Badge" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Division" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Location_on" Type="varchar" MaxLength="2" />
+          <Property Name="Location_off" Type="varchar" MaxLength="2" />
+          <Property Name="Type" Type="varchar" MaxLength="20" />
+          <Property Name="DT_Time_On" Type="datetime" />
+          <Property Name="DT_Time_Off" Type="datetime" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TransportationDW.CADAVL.VehicleInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VehicleInfo">
+          <Key>
+            <PropertyRef Name="vehicle_identification_nbr" />
+            <PropertyRef Name="license_nbr" />
+            <PropertyRef Name="model_year" />
+            <PropertyRef Name="passenger_capacity" />
+            <PropertyRef Name="wheel_chair_access" />
+            <PropertyRef Name="gps_equipped" />
+            <PropertyRef Name="camera_equipped" />
+            <PropertyRef Name="vehicle_make_id" />
+            <PropertyRef Name="garage_id" />
+            <PropertyRef Name="VehicleTypeDesc" />
+            <PropertyRef Name="VehicleTypeActive" />
+          </Key>
+          <Property Name="vehicle_id" Type="int" />
+          <Property Name="logon_state" Type="bit" />
+          <Property Name="ignition_state" Type="bit" />
+          <Property Name="primary_data_channel_id" Type="tinyint" />
+          <Property Name="secondary_data_channel_id" Type="tinyint" />
+          <Property Name="gps_failed_state" Type="bit" />
+          <Property Name="incident_log_id" Type="int" />
+          <Property Name="vehicle_identification_nbr" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="license_nbr" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="model_year" Type="smallint" Nullable="false" />
+          <Property Name="passenger_capacity" Type="smallint" Nullable="false" />
+          <Property Name="wheel_chair_access" Type="bit" Nullable="false" />
+          <Property Name="gps_equipped" Type="bit" Nullable="false" />
+          <Property Name="camera_equipped" Type="bit" Nullable="false" />
+          <Property Name="vehicle_make_id" Type="tinyint" Nullable="false" />
+          <Property Name="garage_id" Type="tinyint" Nullable="false" />
+          <Property Name="VehicleTypeDesc" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="VehicleTypeActive" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TransportationDW.HASTUS.StopDistrict' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="StopDistrict">
+          <Key>
+            <PropertyRef Name="identifier" />
+            <PropertyRef Name="id_511" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="is_public" />
+            <PropertyRef Name="longitude" />
+            <PropertyRef Name="latitude" />
+            <PropertyRef Name="allow_alighting" />
+            <PropertyRef Name="allow_boarding" />
+            <PropertyRef Name="is_bart" />
+            <PropertyRef Name="is_transit_center" />
+            <PropertyRef Name="is_in_service" />
+            <PropertyRef Name="UpdDateTime" />
+            <PropertyRef Name="UpdUserId" />
+            <PropertyRef Name="AddDateTime" />
+            <PropertyRef Name="AddUserId" />
+            <PropertyRef Name="flag_route" />
+            <PropertyRef Name="last_scheduler_update" />
+            <PropertyRef Name="comment" />
+            <PropertyRef Name="ava_status" />
+            <PropertyRef Name="is_GPS_validated" />
+          </Key>
+          <Property Name="identifier" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="id_511" Type="int" Nullable="false" />
+          <Property Name="district" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="place" Type="varchar" MaxLength="6" />
+          <Property Name="is_public" Type="bit" Nullable="false" />
+          <Property Name="longitude" Type="decimal" Precision="10" Scale="7" Nullable="false" />
+          <Property Name="latitude" Type="decimal" Precision="10" Scale="7" Nullable="false" />
+          <Property Name="allow_alighting" Type="bit" Nullable="false" />
+          <Property Name="allow_boarding" Type="bit" Nullable="false" />
+          <Property Name="corner" Type="char" MaxLength="2" />
+          <Property Name="is_bart" Type="bit" Nullable="false" />
+          <Property Name="is_transit_center" Type="bit" Nullable="false" />
+          <Property Name="is_in_service" Type="bit" Nullable="false" />
+          <Property Name="UpdDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="AddUserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="flag_route" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="last_scheduler_update" Type="date" Nullable="false" />
+          <Property Name="comment" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="ava_description" Type="varchar" MaxLength="40" />
+          <Property Name="ava_status" Type="bit" Nullable="false" />
+          <Property Name="site" Type="char" MaxLength="2" />
+          <Property Name="is_GPS_validated" Type="bit" Nullable="false" />
+        </EntityType>
+        <Function Name="GetCommonRouteLines" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CADAVL" />
+        <Function Name="GetRouteLines" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CADAVL">
+          <Parameter Name="RouteTypeIds" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetRouteTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CADAVL" />
+        <Function Name="GetTimeBetweenStops" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CADAVL">
+          <Parameter Name="RouteName" Type="varchar" Mode="In" />
+          <Parameter Name="FromStopId" Type="int" Mode="In" />
+          <Parameter Name="ToStopId" Type="int" Mode="In" />
+          <Parameter Name="ScheduleType" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetVehicleLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CADAVL">
+          <Parameter Name="IdList" Type="varchar" Mode="In" />
+          <Parameter Name="Context" Type="varchar" Mode="In" />
+          <Parameter Name="VehicleType" Type="varchar" Mode="In" />
+          <Parameter Name="AssignedTo" Type="varchar" Mode="In" />
+          <Parameter Name="RouteLines" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetVehicleRealTimeDataAPIv1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CADAVL">
+          <Parameter Name="RouteName" Type="varchar" Mode="In" />
+          <Parameter Name="StopId" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GetVehiclePositions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GTFS" />
+        <Function Name="GetVehicleRealTimeData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GTFS">
+          <Parameter Name="RouteName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetBusPullOuts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="OTS">
+          <Parameter Name="Division" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="TransportationContextStoreContainer">
+          <EntitySet Name="RouteAttribs" EntityType="Self.RouteAttribs" Schema="APC" store:Type="Tables" />
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="CADAVL" store:Type="Tables" />
+          <EntitySet Name="Direction_codes" EntityType="Self.Direction_codes" Schema="CADAVL" store:Type="Tables" />
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="CADAVL" store:Type="Tables" />
+          <EntitySet Name="EmployeeInterface" EntityType="Self.EmployeeInterface" Schema="CADAVL" store:Type="Tables" />
+          <EntitySet Name="HolidayList" EntityType="Self.HolidayList" Schema="CADAVL" store:Type="Tables" />
+          <EntitySet Name="incident_log" EntityType="Self.incident_log" Schema="CADAVL" store:Type="Tables" />
+          <EntitySet Name="Route" EntityType="Self.Route" Schema="CADAVL" store:Type="Tables" />
+          <EntitySet Name="VehicleRealTime" EntityType="Self.VehicleRealTime" Schema="CADAVL" store:Type="Tables" />
+          <EntitySet Name="Bus_pull_out" EntityType="Self.Bus_pull_out" Schema="OTS" store:Type="Tables" />
+          <EntitySet Name="Bus_pull_out_History" EntityType="Self.Bus_pull_out_History" Schema="OTS" store:Type="Tables" />
+          <EntitySet Name="VehicleInfo" EntityType="Self.VehicleInfo" store:Type="Views" store:Schema="CADAVL">
+            <DefiningQuery>SELECT 
+    [VehicleInfo].[vehicle_id] AS [vehicle_id], 
+    [VehicleInfo].[logon_state] AS [logon_state], 
+    [VehicleInfo].[ignition_state] AS [ignition_state], 
+    [VehicleInfo].[primary_data_channel_id] AS [primary_data_channel_id], 
+    [VehicleInfo].[secondary_data_channel_id] AS [secondary_data_channel_id], 
+    [VehicleInfo].[gps_failed_state] AS [gps_failed_state], 
+    [VehicleInfo].[incident_log_id] AS [incident_log_id], 
+    [VehicleInfo].[vehicle_identification_nbr] AS [vehicle_identification_nbr], 
+    [VehicleInfo].[license_nbr] AS [license_nbr], 
+    [VehicleInfo].[model_year] AS [model_year], 
+    [VehicleInfo].[passenger_capacity] AS [passenger_capacity], 
+    [VehicleInfo].[wheel_chair_access] AS [wheel_chair_access], 
+    [VehicleInfo].[gps_equipped] AS [gps_equipped], 
+    [VehicleInfo].[camera_equipped] AS [camera_equipped], 
+    [VehicleInfo].[vehicle_make_id] AS [vehicle_make_id], 
+    [VehicleInfo].[garage_id] AS [garage_id], 
+    [VehicleInfo].[VehicleTypeDesc] AS [VehicleTypeDesc], 
+    [VehicleInfo].[VehicleTypeActive] AS [VehicleTypeActive]
+    FROM [CADAVL].[VehicleInfo] AS [VehicleInfo]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="StopDistrict" EntityType="Self.StopDistrict" store:Type="Views" store:Schema="HASTUS">
+            <DefiningQuery>SELECT 
+    [StopDistrict].[identifier] AS [identifier], 
+    [StopDistrict].[id_511] AS [id_511], 
+    [StopDistrict].[district] AS [district], 
+    [StopDistrict].[description] AS [description], 
+    [StopDistrict].[place] AS [place], 
+    [StopDistrict].[is_public] AS [is_public], 
+    [StopDistrict].[longitude] AS [longitude], 
+    [StopDistrict].[latitude] AS [latitude], 
+    [StopDistrict].[allow_alighting] AS [allow_alighting], 
+    [StopDistrict].[allow_boarding] AS [allow_boarding], 
+    [StopDistrict].[corner] AS [corner], 
+    [StopDistrict].[is_bart] AS [is_bart], 
+    [StopDistrict].[is_transit_center] AS [is_transit_center], 
+    [StopDistrict].[is_in_service] AS [is_in_service], 
+    [StopDistrict].[UpdDateTime] AS [UpdDateTime], 
+    [StopDistrict].[UpdUserId] AS [UpdUserId], 
+    [StopDistrict].[AddDateTime] AS [AddDateTime], 
+    [StopDistrict].[AddUserId] AS [AddUserId], 
+    [StopDistrict].[flag_route] AS [flag_route], 
+    [StopDistrict].[last_scheduler_update] AS [last_scheduler_update], 
+    [StopDistrict].[comment] AS [comment], 
+    [StopDistrict].[ava_description] AS [ava_description], 
+    [StopDistrict].[ava_status] AS [ava_status], 
+    [StopDistrict].[site] AS [site], 
+    [StopDistrict].[is_GPS_validated] AS [is_GPS_validated]
+    FROM [HASTUS].[StopDistrict] AS [StopDistrict]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TransportationContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TransportationEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="GetTimeBetweenStops" ReturnType="Collection(TransportationContext.GetTimeBetweenStops_Result)">
+          <Parameter Name="RouteName" Mode="In" Type="String" />
+            <Parameter Name="FromStopId" Mode="In" Type="Int32" />
+            <Parameter Name="ToStopId" Mode="In" Type="Int32" />
+            <Parameter Name="ScheduleType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetVehicleRealTimeDataAPIv1" ReturnType="Collection(TransportationContext.GetVehicleRealTimeDataAPIv1_Result)">
+          <Parameter Name="RouteName" Mode="In" Type="String" />
+            <Parameter Name="StopId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetVehiclePositions" ReturnType="Collection(TransportationContext.GetVehiclePositions_Result)" />
+          <FunctionImport Name="GetVehicleRealTimeData" ReturnType="Collection(TransportationContext.GetVehicleRealTimeData_Result)">
+          <Parameter Name="RouteName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetBusPullOuts" ReturnType="Collection(TransportationContext.GetBusPullOuts_Result)">
+          <Parameter Name="Division" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetVehicleLocation" ReturnType="Collection(TransportationContext.GetVehicleLocation_Result)">
+          <Parameter Name="IdList" Mode="In" Type="String" />
+            <Parameter Name="Context" Mode="In" Type="String" />
+            <Parameter Name="VehicleType" Mode="In" Type="String" />
+            <Parameter Name="AssignedTo" Mode="In" Type="String" />
+            <Parameter Name="RouteLines" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCommonRouteLines" ReturnType="Collection(String)" />
+          <FunctionImport Name="GetRouteLines" ReturnType="Collection(String)">
+          <Parameter Name="RouteTypeIds" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetRouteTypes" ReturnType="Collection(TransportationContext.GetRouteTypes_Result)" />
+          <EntitySet Name="RouteAttribs" EntityType="TransportationContext.RouteAttrib" />
+          <EntitySet Name="Bookings" EntityType="TransportationContext.Booking" />
+          <EntitySet Name="Direction_codes" EntityType="TransportationContext.Direction_codes" />
+          <EntitySet Name="Divisions" EntityType="TransportationContext.Division" />
+          <EntitySet Name="EmployeeInterfaces" EntityType="TransportationContext.EmployeeInterface" />
+          <EntitySet Name="HolidayLists" EntityType="TransportationContext.HolidayList" />
+          <EntitySet Name="incident_log" EntityType="TransportationContext.incident_log" />
+          <EntitySet Name="Routes" EntityType="TransportationContext.Route" />
+          <EntitySet Name="VehicleRealTimes" EntityType="TransportationContext.VehicleRealTime" />
+          <EntitySet Name="Bus_pull_out" EntityType="TransportationContext.Bus_pull_out" />
+          <EntitySet Name="Bus_pull_out_History" EntityType="TransportationContext.Bus_pull_out_History" />
+          <EntitySet Name="VehicleInfoes" EntityType="TransportationContext.VehicleInfo" />
+          <EntitySet Name="StopDistricts" EntityType="TransportationContext.StopDistrict" />
+        </EntityContainer>
+        <ComplexType Name="GetTimeBetweenStops_Result">
+          <Property Type="String" Name="RouteAlpha" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="TripId" Nullable="true" />
+          <Property Type="String" Name="ScheduleType" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="Direction" Nullable="true" MaxLength="12" />
+          <Property Type="DateTime" Name="TimeStart" Nullable="true" />
+          <Property Type="DateTime" Name="TimeEnd" Nullable="true" />
+          <Property Type="Int32" Name="FromStopId" Nullable="true" />
+          <Property Type="Int16" Name="FromStopSequence" Nullable="true" />
+          <Property Type="DateTime" Name="FromStopPassingTime" Nullable="true" />
+          <Property Type="Int32" Name="ToStopId" Nullable="true" />
+          <Property Type="Int16" Name="ToStopSequence" Nullable="true" />
+          <Property Type="DateTime" Name="ToStopPassingTime" Nullable="true" />
+          <Property Type="Int32" Name="VehicleId" Nullable="true" />
+          <Property Type="Int16" Name="VehiclePassengerCapacity" Nullable="true" />
+          <Property Type="Boolean" Name="VehicleWheelchairAccessible" Nullable="true" />
+          <Property Type="DateTime" Name="FromStopExpectedDepartureTime" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetVehicleRealTimeDataAPIv1_Result">
+          <Property Type="Int32" Name="TripId" Nullable="false" />
+          <Property Type="Int32" Name="NextTripId" Nullable="true" />
+          <Property Type="String" Name="TripScheduleType" Nullable="false" MaxLength="12" />
+          <Property Type="DateTime" Name="TripStartTime" Nullable="false" />
+          <Property Type="DateTime" Name="TripEndTime" Nullable="false" />
+          <Property Type="String" Name="TripDirection" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="TripRouteName" Nullable="false" MaxLength="5" />
+          <Property Type="Int16" Name="TripPatternId" Nullable="false" />
+          <Property Type="Int32" Name="StopId" Nullable="false" />
+          <Property Type="Int16" Name="StopSequence" Nullable="false" />
+          <Property Type="String" Name="StopDescription" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="StopLatitude" Nullable="false" Precision="10" Scale="7" />
+          <Property Type="Decimal" Name="StopLongitude" Nullable="false" Precision="10" Scale="7" />
+          <Property Type="DateTime" Name="StopScheduledDepartureTime" Nullable="false" />
+          <Property Type="Int32" Name="ExpectedDelay" Nullable="true" />
+          <Property Type="DateTime" Name="ExpectedDepartureTime" Nullable="true" />
+          <Property Type="Int32" Name="VehicleId" Nullable="false" />
+          <Property Type="DateTime" Name="VehiclePositionDateTime" Nullable="true" Precision="23" />
+          <Property Type="Double" Name="VehicleCurrentLatitude" Nullable="true" />
+          <Property Type="Double" Name="VehicleCurrentLongitude" Nullable="true" />
+          <Property Type="Int16" Name="VehicleHeading" Nullable="true" />
+          <Property Type="String" Name="VehicleLicenseNumber" Nullable="false" MaxLength="15" />
+          <Property Type="Int16" Name="VehiclePassengerCapacity" Nullable="false" />
+          <Property Type="Boolean" Name="VehicleWheelchairAccessible" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetVehiclePositions_Result">
+          <Property Type="String" Name="TripId" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="RouteId" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DirectionId" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="TripStartTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="TripStartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="TripEndTime" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ScheduleRelationship" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="VehicleId" Nullable="false" />
+          <Property Type="String" Name="VehicleLabel" Nullable="false" MaxLength="35" />
+          <Property Type="String" Name="LicensePlate" Nullable="false" MaxLength="15" />
+          <Property Type="Double" Name="VehicleLatitude" Nullable="true" />
+          <Property Type="Double" Name="VehicleLongitude" Nullable="true" />
+          <Property Type="Int16" Name="VehicleHeading" Nullable="true" />
+          <Property Type="Byte" Name="VehicleAverageSpeed" Nullable="true" />
+          <Property Type="DateTime" Name="VehiclePositionDateTime" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CurrentStopSequence" Nullable="true" />
+          <Property Type="String" Name="CurrentStopId" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="VehicleStopStatus" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="GetVehicleRealTimeData_Result">
+          <Property Type="Int32" Name="TripId" Nullable="false" />
+          <Property Type="String" Name="GtfsTripId" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="RouteId" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="RouteName" Nullable="false" MaxLength="8" />
+          <Property Type="DateTime" Name="StartTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="Double" Name="VehicleLatitude" Nullable="true" />
+          <Property Type="Double" Name="VehicleLongitude" Nullable="true" />
+          <Property Type="DateTime" Name="VehiclePositionDateTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ScheduleRelationship" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="VehicleId" Nullable="false" />
+          <Property Type="Int16" Name="VehicleHeading" Nullable="true" />
+          <Property Type="Byte" Name="VehicleAverageSpeed" Nullable="true" />
+          <Property Type="String" Name="VehicleLabel" Nullable="false" MaxLength="35" />
+          <Property Type="String" Name="LicensePlate" Nullable="false" MaxLength="15" />
+          <Property Type="Boolean" Name="VehicleWheelchairAccessible" Nullable="false" />
+          <Property Type="Int16" Name="VehiclePassengerCapacity" Nullable="false" />
+          <Property Type="Int32" Name="StopSequence" Nullable="false" />
+          <Property Type="String" Name="StopId" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="StopName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ExpectedDelay" Nullable="true" />
+          <Property Type="DateTime" Name="ExpectedDepartureTime" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="ExpectedDepartureUncertainty" Nullable="true" />
+          <Property Type="String" Name="StopScheduleRelationship" Nullable="false" MaxLength="9" />
+        </ComplexType>
+        <ComplexType Name="GetBusPullOuts_Result">
+          <Property Type="DateTime" Name="DT_Time_On" Nullable="true" />
+          <Property Type="String" Name="Time_on" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="Badge" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="OperatorName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Run" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="Block" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="Relief" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="Bus" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="CollStyle" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="GetVehicleLocation_Result">
+          <Property Type="Int32" Name="VehicleId" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="Tag" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Block" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Route" Nullable="true" MaxLength="8" />
+          <Property Type="Double" Name="LocationX" Nullable="true" />
+          <Property Type="Double" Name="LocationY" Nullable="true" />
+          <Property Type="DateTime" Name="VehiclePositionDateTime" Nullable="true" />
+          <Property Type="Int16" Name="Heading" Nullable="true" />
+          <Property Type="Byte" Name="AverageSpeed" Nullable="true" />
+          <Property Type="Int16" Name="PredictedDeviation" Nullable="true" />
+          <Property Type="String" Name="VehicleStatusCode" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="VehicleLocationCode" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="GetRouteTypes_Result">
+          <Property Type="Int32" Name="RouteTypeId" Nullable="false" />
+          <Property Type="String" Name="RouteTypeName" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <EntityType Name="RouteAttrib">
+          <Key>
+            <PropertyRef Name="RouteAttribsId" />
+          </Key>
+          <Property Name="RouteAttribsId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="route_id" Type="Int32" Nullable="false" />
+          <Property Name="division_id" Type="Int32" Nullable="false" />
+          <Property Name="RouteTypeId" Type="Int64" Nullable="false" />
+          <Property Name="BegEffDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndEffDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="booking_id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="booking_num" Type="Int16" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="creation_sequence" Type="Int32" Nullable="false" />
+          <Property Name="default_special_trip_option_id" Type="Int32" Nullable="false" />
+          <Property Name="BookingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SignupPeriodNum" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="SignupPeriodDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StatusNameDesc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Direction_codes">
+          <Key>
+            <PropertyRef Name="direction_code_id" />
+          </Key>
+          <Property Name="direction_code_id" Type="Byte" Nullable="false" />
+          <Property Name="direction_description" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="division_id" />
+          </Key>
+          <Property Name="division_id" Type="Byte" Nullable="false" />
+          <Property Name="division_description" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="division_sname" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EmployeeInterface">
+          <Key>
+            <PropertyRef Name="EmployeeInterfaceId" />
+          </Key>
+          <Property Name="EmployeeInterfaceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="JobTitle" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DeptName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DefaultStatusCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="HolidayList">
+          <Key>
+            <PropertyRef Name="HolidayListId" />
+          </Key>
+          <Property Name="HolidayListId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="HolidayDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="incident_log">
+          <Key>
+            <PropertyRef Name="incident_log_id" />
+          </Key>
+          <Property Name="incident_log_id" Type="Int32" Nullable="false" />
+          <Property Name="trip_id" Type="Int32" Nullable="false" />
+          <Property Name="incident_date_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="transit_date_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="incident_code" Type="Int16" Nullable="false" />
+          <Property Name="incident_type" Type="Int16" Nullable="false" />
+          <Property Name="incident_status" Type="Byte" Nullable="false" />
+          <Property Name="vehicle_id" Type="Int32" Nullable="false" />
+          <Property Name="driver_id" Type="Int32" Nullable="false" />
+          <Property Name="block_id" Type="Int32" Nullable="false" />
+          <Property Name="route_id" Type="Int32" Nullable="false" />
+          <Property Name="run_id" Type="Int32" Nullable="false" />
+          <Property Name="dispatcher_id" Type="Int32" Nullable="false" />
+          <Property Name="open_ir" Type="Byte" Nullable="false" />
+          <Property Name="deviation" Type="Int16" Nullable="false" />
+          <Property Name="tp_id" Type="Int32" Nullable="false" />
+          <Property Name="next_tp_id" Type="Int32" Nullable="false" />
+          <Property Name="last_incident_date_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sched_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="direction_code_id" Type="Byte" Nullable="false" />
+          <Property Name="division_id" Type="Byte" Nullable="false" />
+          <Property Name="sched_version" Type="Byte" Nullable="false" />
+          <Property Name="user_handled" Type="Int32" Nullable="false" />
+          <Property Name="handled_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="incident_details" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="incident_owner" Type="Int32" Nullable="false" />
+          <Property Name="current_route_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="route_id" />
+          </Key>
+          <Property Name="route_id" Type="Int32" Nullable="false" />
+          <Property Name="route_desc" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="route_alpha" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VehicleRealTime">
+          <Key>
+            <PropertyRef Name="VehicleId" />
+          </Key>
+          <Property Name="VehicleId" Type="Int32" Nullable="false" />
+          <Property Name="VehiclePositionLogId" Type="Int32" Nullable="false" />
+          <Property Name="IncidentLogId" Type="Int32" Nullable="false" />
+          <Property Name="VehiclePositionDateTime" Type="DateTime" Precision="3" />
+          <Property Name="VehicleLongitude" Type="Double" />
+          <Property Name="VehicleLatitude" Type="Double" />
+          <Property Name="VehicleHeading" Type="Int16" />
+          <Property Name="VehicleAverageSpeed" Type="Byte" />
+          <Property Name="VehiclePredictedDeviation" Type="Int16" />
+          <Property Name="VehiclePlaybackDateTime" Type="DateTime" Precision="3" />
+          <Property Name="VehicleLicenseNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleIdentificationNumber" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleMakeId" Type="Byte" Nullable="false" />
+          <Property Name="VehicleModelYear" Type="Int16" Nullable="false" />
+          <Property Name="VehicleType" Type="Byte" Nullable="false" />
+          <Property Name="VehicleWheelchairAccessible" Type="Boolean" Nullable="false" />
+          <Property Name="VehiclePassengerCapacity" Type="Int16" Nullable="false" />
+          <Property Name="Division" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="IncidentDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TransitDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IncidentCode" Type="Int16" Nullable="false" />
+          <Property Name="IncidentCodeDesc" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="IncidentType" Type="Int16" Nullable="false" />
+          <Property Name="IncidentTypeDesc" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IncidentStatus" Type="Byte" Nullable="false" />
+          <Property Name="IncidentSchedTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RouteId" Type="Int32" Nullable="false" />
+          <Property Name="SchedVersion" Type="Byte" Nullable="false" />
+          <Property Name="BookingNum" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="booking_id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DayTypeId" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentRouteId" Type="Int32" Nullable="false" />
+          <Property Name="CurrentRouteAlpha" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="BlockId" Type="Int32" Nullable="false" />
+          <Property Name="BlockName" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="RunId" Type="Int32" Nullable="false" />
+          <Property Name="TripId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TripDistance" Type="Int32" Nullable="false" />
+          <Property Name="TripStartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TripStartLayover" Type="Int32" Nullable="false" />
+          <Property Name="TripEndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TripEndLayover" Type="Int32" Nullable="false" />
+          <Property Name="TripVariation" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="TripTypeDesc" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="TimepointId" Type="Int32" Nullable="false" />
+          <Property Name="NextTimepointId" Type="Int32" Nullable="false" />
+          <Property Name="DriverId" Type="Int32" Nullable="false" />
+          <Property Name="DirectionCodeId" Type="Byte" Nullable="false" />
+          <Property Name="Deviation" Type="Int16" Nullable="false" />
+          <Property Name="IncidentPlaybackTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Bus_pull_out">
+          <Key>
+            <PropertyRef Name="BusPullOutId" />
+          </Key>
+          <Property Name="Date" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="Time_on" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Time_off" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Bus" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Route" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Block" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Run" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Badge" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Division" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Location_on" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Location_off" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DT_Time_On" Type="DateTime" Precision="3" />
+          <Property Name="DT_Time_Off" Type="DateTime" Precision="3" />
+          <Property Name="BusPullOutId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Bus_pull_out_History">
+          <Key>
+            <PropertyRef Name="Bus_pull_out_History_Id" />
+          </Key>
+          <Property Name="Bus_pull_out_History_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="Time_on" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Time_off" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Bus" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Route" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Block" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Run" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Badge" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Division" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Location_on" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Location_off" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DT_Time_On" Type="DateTime" Precision="3" />
+          <Property Name="DT_Time_Off" Type="DateTime" Precision="3" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="VehicleInfo">
+          <Key>
+            <PropertyRef Name="vehicle_identification_nbr" />
+            <PropertyRef Name="license_nbr" />
+            <PropertyRef Name="model_year" />
+            <PropertyRef Name="passenger_capacity" />
+            <PropertyRef Name="wheel_chair_access" />
+            <PropertyRef Name="gps_equipped" />
+            <PropertyRef Name="camera_equipped" />
+            <PropertyRef Name="vehicle_make_id" />
+            <PropertyRef Name="garage_id" />
+            <PropertyRef Name="VehicleTypeDesc" />
+            <PropertyRef Name="VehicleTypeActive" />
+          </Key>
+          <Property Name="vehicle_id" Type="Int32" />
+          <Property Name="logon_state" Type="Boolean" />
+          <Property Name="ignition_state" Type="Boolean" />
+          <Property Name="primary_data_channel_id" Type="Byte" />
+          <Property Name="secondary_data_channel_id" Type="Byte" />
+          <Property Name="gps_failed_state" Type="Boolean" />
+          <Property Name="incident_log_id" Type="Int32" />
+          <Property Name="vehicle_identification_nbr" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="license_nbr" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="model_year" Type="Int16" Nullable="false" />
+          <Property Name="passenger_capacity" Type="Int16" Nullable="false" />
+          <Property Name="wheel_chair_access" Type="Boolean" Nullable="false" />
+          <Property Name="gps_equipped" Type="Boolean" Nullable="false" />
+          <Property Name="camera_equipped" Type="Boolean" Nullable="false" />
+          <Property Name="vehicle_make_id" Type="Byte" Nullable="false" />
+          <Property Name="garage_id" Type="Byte" Nullable="false" />
+          <Property Name="VehicleTypeDesc" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleTypeActive" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StopDistrict">
+          <Key>
+            <PropertyRef Name="identifier" />
+            <PropertyRef Name="id_511" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="is_public" />
+            <PropertyRef Name="longitude" />
+            <PropertyRef Name="latitude" />
+            <PropertyRef Name="allow_alighting" />
+            <PropertyRef Name="allow_boarding" />
+            <PropertyRef Name="is_bart" />
+            <PropertyRef Name="is_transit_center" />
+            <PropertyRef Name="is_in_service" />
+            <PropertyRef Name="UpdDateTime" />
+            <PropertyRef Name="UpdUserId" />
+            <PropertyRef Name="AddDateTime" />
+            <PropertyRef Name="AddUserId" />
+            <PropertyRef Name="flag_route" />
+            <PropertyRef Name="last_scheduler_update" />
+            <PropertyRef Name="comment" />
+            <PropertyRef Name="ava_status" />
+            <PropertyRef Name="is_GPS_validated" />
+          </Key>
+          <Property Name="identifier" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
+          <Property Name="id_511" Type="Int32" Nullable="false" />
+          <Property Name="district" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="place" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="is_public" Type="Boolean" Nullable="false" />
+          <Property Name="longitude" Type="Decimal" Nullable="false" Precision="10" Scale="7" />
+          <Property Name="latitude" Type="Decimal" Nullable="false" Precision="10" Scale="7" />
+          <Property Name="allow_alighting" Type="Boolean" Nullable="false" />
+          <Property Name="allow_boarding" Type="Boolean" Nullable="false" />
+          <Property Name="corner" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="is_bart" Type="Boolean" Nullable="false" />
+          <Property Name="is_transit_center" Type="Boolean" Nullable="false" />
+          <Property Name="is_in_service" Type="Boolean" Nullable="false" />
+          <Property Name="UpdDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="AddUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="flag_route" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="last_scheduler_update" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="comment" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="ava_description" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ava_status" Type="Boolean" Nullable="false" />
+          <Property Name="site" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="is_GPS_validated" Type="Boolean" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TransportationContextStoreContainer" CdmEntityContainer="TransportationEntities">
+          <FunctionImportMapping FunctionImportName="GetTimeBetweenStops" FunctionName="TransportationContext.Store.GetTimeBetweenStops">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TransportationContext.GetTimeBetweenStops_Result">
+                <ScalarProperty Name="RouteAlpha" ColumnName="RouteAlpha" />
+                <ScalarProperty Name="TripId" ColumnName="TripId" />
+                <ScalarProperty Name="ScheduleType" ColumnName="ScheduleType" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
+                <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+                <ScalarProperty Name="FromStopId" ColumnName="FromStopId" />
+                <ScalarProperty Name="FromStopSequence" ColumnName="FromStopSequence" />
+                <ScalarProperty Name="FromStopPassingTime" ColumnName="FromStopPassingTime" />
+                <ScalarProperty Name="ToStopId" ColumnName="ToStopId" />
+                <ScalarProperty Name="ToStopSequence" ColumnName="ToStopSequence" />
+                <ScalarProperty Name="ToStopPassingTime" ColumnName="ToStopPassingTime" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="VehiclePassengerCapacity" ColumnName="VehiclePassengerCapacity" />
+                <ScalarProperty Name="VehicleWheelchairAccessible" ColumnName="VehicleWheelchairAccessible" />
+                <ScalarProperty Name="FromStopExpectedDepartureTime" ColumnName="FromStopExpectedDepartureTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetVehicleRealTimeDataAPIv1" FunctionName="TransportationContext.Store.GetVehicleRealTimeDataAPIv1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TransportationContext.GetVehicleRealTimeDataAPIv1_Result">
+                <ScalarProperty Name="TripId" ColumnName="TripId" />
+                <ScalarProperty Name="NextTripId" ColumnName="NextTripId" />
+                <ScalarProperty Name="TripScheduleType" ColumnName="TripScheduleType" />
+                <ScalarProperty Name="TripStartTime" ColumnName="TripStartTime" />
+                <ScalarProperty Name="TripEndTime" ColumnName="TripEndTime" />
+                <ScalarProperty Name="TripDirection" ColumnName="TripDirection" />
+                <ScalarProperty Name="TripRouteName" ColumnName="TripRouteName" />
+                <ScalarProperty Name="TripPatternId" ColumnName="TripPatternId" />
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+                <ScalarProperty Name="StopSequence" ColumnName="StopSequence" />
+                <ScalarProperty Name="StopDescription" ColumnName="StopDescription" />
+                <ScalarProperty Name="StopLatitude" ColumnName="StopLatitude" />
+                <ScalarProperty Name="StopLongitude" ColumnName="StopLongitude" />
+                <ScalarProperty Name="StopScheduledDepartureTime" ColumnName="StopScheduledDepartureTime" />
+                <ScalarProperty Name="ExpectedDelay" ColumnName="ExpectedDelay" />
+                <ScalarProperty Name="ExpectedDepartureTime" ColumnName="ExpectedDepartureTime" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="VehiclePositionDateTime" ColumnName="VehiclePositionDateTime" />
+                <ScalarProperty Name="VehicleCurrentLatitude" ColumnName="VehicleCurrentLatitude" />
+                <ScalarProperty Name="VehicleCurrentLongitude" ColumnName="VehicleCurrentLongitude" />
+                <ScalarProperty Name="VehicleHeading" ColumnName="VehicleHeading" />
+                <ScalarProperty Name="VehicleLicenseNumber" ColumnName="VehicleLicenseNumber" />
+                <ScalarProperty Name="VehiclePassengerCapacity" ColumnName="VehiclePassengerCapacity" />
+                <ScalarProperty Name="VehicleWheelchairAccessible" ColumnName="VehicleWheelchairAccessible" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetVehiclePositions" FunctionName="TransportationContext.Store.GetVehiclePositions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TransportationContext.GetVehiclePositions_Result">
+                <ScalarProperty Name="TripId" ColumnName="TripId" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="DirectionId" ColumnName="DirectionId" />
+                <ScalarProperty Name="TripStartTime" ColumnName="TripStartTime" />
+                <ScalarProperty Name="TripStartDate" ColumnName="TripStartDate" />
+                <ScalarProperty Name="TripEndTime" ColumnName="TripEndTime" />
+                <ScalarProperty Name="ScheduleRelationship" ColumnName="ScheduleRelationship" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="VehicleLabel" ColumnName="VehicleLabel" />
+                <ScalarProperty Name="LicensePlate" ColumnName="LicensePlate" />
+                <ScalarProperty Name="VehicleLatitude" ColumnName="VehicleLatitude" />
+                <ScalarProperty Name="VehicleLongitude" ColumnName="VehicleLongitude" />
+                <ScalarProperty Name="VehicleHeading" ColumnName="VehicleHeading" />
+                <ScalarProperty Name="VehicleAverageSpeed" ColumnName="VehicleAverageSpeed" />
+                <ScalarProperty Name="VehiclePositionDateTime" ColumnName="VehiclePositionDateTime" />
+                <ScalarProperty Name="CurrentStopSequence" ColumnName="CurrentStopSequence" />
+                <ScalarProperty Name="CurrentStopId" ColumnName="CurrentStopId" />
+                <ScalarProperty Name="VehicleStopStatus" ColumnName="VehicleStopStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetVehicleRealTimeData" FunctionName="TransportationContext.Store.GetVehicleRealTimeData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TransportationContext.GetVehicleRealTimeData_Result">
+                <ScalarProperty Name="TripId" ColumnName="TripId" />
+                <ScalarProperty Name="GtfsTripId" ColumnName="GtfsTripId" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="RouteName" ColumnName="RouteName" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="VehicleLatitude" ColumnName="VehicleLatitude" />
+                <ScalarProperty Name="VehicleLongitude" ColumnName="VehicleLongitude" />
+                <ScalarProperty Name="VehiclePositionDateTime" ColumnName="VehiclePositionDateTime" />
+                <ScalarProperty Name="ScheduleRelationship" ColumnName="ScheduleRelationship" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="VehicleHeading" ColumnName="VehicleHeading" />
+                <ScalarProperty Name="VehicleAverageSpeed" ColumnName="VehicleAverageSpeed" />
+                <ScalarProperty Name="VehicleLabel" ColumnName="VehicleLabel" />
+                <ScalarProperty Name="LicensePlate" ColumnName="LicensePlate" />
+                <ScalarProperty Name="VehicleWheelchairAccessible" ColumnName="VehicleWheelchairAccessible" />
+                <ScalarProperty Name="VehiclePassengerCapacity" ColumnName="VehiclePassengerCapacity" />
+                <ScalarProperty Name="StopSequence" ColumnName="StopSequence" />
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+                <ScalarProperty Name="StopName" ColumnName="StopName" />
+                <ScalarProperty Name="ExpectedDelay" ColumnName="ExpectedDelay" />
+                <ScalarProperty Name="ExpectedDepartureTime" ColumnName="ExpectedDepartureTime" />
+                <ScalarProperty Name="ExpectedDepartureUncertainty" ColumnName="ExpectedDepartureUncertainty" />
+                <ScalarProperty Name="StopScheduleRelationship" ColumnName="StopScheduleRelationship" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBusPullOuts" FunctionName="TransportationContext.Store.GetBusPullOuts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TransportationContext.GetBusPullOuts_Result">
+                <ScalarProperty Name="DT_Time_On" ColumnName="DT_Time_On" />
+                <ScalarProperty Name="Time_on" ColumnName="Time_on" />
+                <ScalarProperty Name="Badge" ColumnName="Badge" />
+                <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />
+                <ScalarProperty Name="Run" ColumnName="Run" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="Relief" ColumnName="Relief" />
+                <ScalarProperty Name="Bus" ColumnName="Bus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="CollStyle" ColumnName="CollStyle" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetVehicleLocation" FunctionName="TransportationContext.Store.GetVehicleLocation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TransportationContext.GetVehicleLocation_Result">
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="Route" ColumnName="Route" />
+                <ScalarProperty Name="LocationX" ColumnName="LocationX" />
+                <ScalarProperty Name="LocationY" ColumnName="LocationY" />
+                <ScalarProperty Name="VehiclePositionDateTime" ColumnName="VehiclePositionDateTime" />
+                <ScalarProperty Name="Heading" ColumnName="Heading" />
+                <ScalarProperty Name="AverageSpeed" ColumnName="AverageSpeed" />
+                <ScalarProperty Name="PredictedDeviation" ColumnName="PredictedDeviation" />
+                <ScalarProperty Name="VehicleStatusCode" ColumnName="VehicleStatusCode" />
+                <ScalarProperty Name="VehicleLocationCode" ColumnName="VehicleLocationCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCommonRouteLines" FunctionName="TransportationContext.Store.GetCommonRouteLines" />
+          <FunctionImportMapping FunctionImportName="GetRouteLines" FunctionName="TransportationContext.Store.GetRouteLines" />
+          <FunctionImportMapping FunctionImportName="GetRouteTypes" FunctionName="TransportationContext.Store.GetRouteTypes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TransportationContext.GetRouteTypes_Result">
+                <ScalarProperty Name="RouteTypeId" ColumnName="RouteTypeId" />
+                <ScalarProperty Name="RouteTypeName" ColumnName="RouteTypeName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="RouteAttribs">
+            <EntityTypeMapping TypeName="TransportationContext.RouteAttrib">
+              <MappingFragment StoreEntitySet="RouteAttribs">
+                <ScalarProperty Name="EndEffDate" ColumnName="EndEffDate" />
+                <ScalarProperty Name="BegEffDate" ColumnName="BegEffDate" />
+                <ScalarProperty Name="RouteTypeId" ColumnName="RouteTypeId" />
+                <ScalarProperty Name="division_id" ColumnName="division_id" />
+                <ScalarProperty Name="route_id" ColumnName="route_id" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="RouteAttribsId" ColumnName="RouteAttribsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="TransportationContext.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="StatusNameDesc" ColumnName="StatusNameDesc" />
+                <ScalarProperty Name="SignupPeriodDesc" ColumnName="SignupPeriodDesc" />
+                <ScalarProperty Name="SignupPeriodNum" ColumnName="SignupPeriodNum" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="default_special_trip_option_id" ColumnName="default_special_trip_option_id" />
+                <ScalarProperty Name="creation_sequence" ColumnName="creation_sequence" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="booking_num" ColumnName="booking_num" />
+                <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Direction_codes">
+            <EntityTypeMapping TypeName="TransportationContext.Direction_codes">
+              <MappingFragment StoreEntitySet="Direction_codes">
+                <ScalarProperty Name="direction_description" ColumnName="direction_description" />
+                <ScalarProperty Name="direction_code_id" ColumnName="direction_code_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Divisions">
+            <EntityTypeMapping TypeName="TransportationContext.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="division_sname" ColumnName="division_sname" />
+                <ScalarProperty Name="division_description" ColumnName="division_description" />
+                <ScalarProperty Name="division_id" ColumnName="division_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeInterfaces">
+            <EntityTypeMapping TypeName="TransportationContext.EmployeeInterface">
+              <MappingFragment StoreEntitySet="EmployeeInterface">
+                <ScalarProperty Name="DefaultStatusCode" ColumnName="DefaultStatusCode" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="EmployeeInterfaceId" ColumnName="EmployeeInterfaceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HolidayLists">
+            <EntityTypeMapping TypeName="TransportationContext.HolidayList">
+              <MappingFragment StoreEntitySet="HolidayList">
+                <ScalarProperty Name="HolidayDate" ColumnName="HolidayDate" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="HolidayListId" ColumnName="HolidayListId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="incident_log">
+            <EntityTypeMapping TypeName="TransportationContext.incident_log">
+              <MappingFragment StoreEntitySet="incident_log">
+                <ScalarProperty Name="current_route_id" ColumnName="current_route_id" />
+                <ScalarProperty Name="incident_owner" ColumnName="incident_owner" />
+                <ScalarProperty Name="incident_details" ColumnName="incident_details" />
+                <ScalarProperty Name="handled_datetime" ColumnName="handled_datetime" />
+                <ScalarProperty Name="user_handled" ColumnName="user_handled" />
+                <ScalarProperty Name="sched_version" ColumnName="sched_version" />
+                <ScalarProperty Name="division_id" ColumnName="division_id" />
+                <ScalarProperty Name="direction_code_id" ColumnName="direction_code_id" />
+                <ScalarProperty Name="sched_time" ColumnName="sched_time" />
+                <ScalarProperty Name="last_incident_date_time" ColumnName="last_incident_date_time" />
+                <ScalarProperty Name="next_tp_id" ColumnName="next_tp_id" />
+                <ScalarProperty Name="tp_id" ColumnName="tp_id" />
+                <ScalarProperty Name="deviation" ColumnName="deviation" />
+                <ScalarProperty Name="open_ir" ColumnName="open_ir" />
+                <ScalarProperty Name="dispatcher_id" ColumnName="dispatcher_id" />
+                <ScalarProperty Name="run_id" ColumnName="run_id" />
+                <ScalarProperty Name="route_id" ColumnName="route_id" />
+                <ScalarProperty Name="block_id" ColumnName="block_id" />
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+                <ScalarProperty Name="vehicle_id" ColumnName="vehicle_id" />
+                <ScalarProperty Name="incident_status" ColumnName="incident_status" />
+                <ScalarProperty Name="incident_type" ColumnName="incident_type" />
+                <ScalarProperty Name="incident_code" ColumnName="incident_code" />
+                <ScalarProperty Name="transit_date_time" ColumnName="transit_date_time" />
+                <ScalarProperty Name="incident_date_time" ColumnName="incident_date_time" />
+                <ScalarProperty Name="trip_id" ColumnName="trip_id" />
+                <ScalarProperty Name="incident_log_id" ColumnName="incident_log_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Routes">
+            <EntityTypeMapping TypeName="TransportationContext.Route">
+              <MappingFragment StoreEntitySet="Route">
+                <ScalarProperty Name="route_alpha" ColumnName="route_alpha" />
+                <ScalarProperty Name="route_desc" ColumnName="route_desc" />
+                <ScalarProperty Name="route_id" ColumnName="route_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehicleRealTimes">
+            <EntityTypeMapping TypeName="TransportationContext.VehicleRealTime">
+              <MappingFragment StoreEntitySet="VehicleRealTime">
+                <ScalarProperty Name="IncidentPlaybackTime" ColumnName="IncidentPlaybackTime" />
+                <ScalarProperty Name="Deviation" ColumnName="Deviation" />
+                <ScalarProperty Name="DirectionCodeId" ColumnName="DirectionCodeId" />
+                <ScalarProperty Name="DriverId" ColumnName="DriverId" />
+                <ScalarProperty Name="NextTimepointId" ColumnName="NextTimepointId" />
+                <ScalarProperty Name="TimepointId" ColumnName="TimepointId" />
+                <ScalarProperty Name="TripTypeDesc" ColumnName="TripTypeDesc" />
+                <ScalarProperty Name="TripVariation" ColumnName="TripVariation" />
+                <ScalarProperty Name="TripEndLayover" ColumnName="TripEndLayover" />
+                <ScalarProperty Name="TripEndTime" ColumnName="TripEndTime" />
+                <ScalarProperty Name="TripStartLayover" ColumnName="TripStartLayover" />
+                <ScalarProperty Name="TripStartTime" ColumnName="TripStartTime" />
+                <ScalarProperty Name="TripDistance" ColumnName="TripDistance" />
+                <ScalarProperty Name="TripId" ColumnName="TripId" />
+                <ScalarProperty Name="RunId" ColumnName="RunId" />
+                <ScalarProperty Name="BlockName" ColumnName="BlockName" />
+                <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+                <ScalarProperty Name="CurrentRouteAlpha" ColumnName="CurrentRouteAlpha" />
+                <ScalarProperty Name="CurrentRouteId" ColumnName="CurrentRouteId" />
+                <ScalarProperty Name="DayTypeId" ColumnName="DayTypeId" />
+                <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+                <ScalarProperty Name="BookingNum" ColumnName="BookingNum" />
+                <ScalarProperty Name="SchedVersion" ColumnName="SchedVersion" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="IncidentSchedTime" ColumnName="IncidentSchedTime" />
+                <ScalarProperty Name="IncidentStatus" ColumnName="IncidentStatus" />
+                <ScalarProperty Name="IncidentTypeDesc" ColumnName="IncidentTypeDesc" />
+                <ScalarProperty Name="IncidentType" ColumnName="IncidentType" />
+                <ScalarProperty Name="IncidentCodeDesc" ColumnName="IncidentCodeDesc" />
+                <ScalarProperty Name="IncidentCode" ColumnName="IncidentCode" />
+                <ScalarProperty Name="TransitDateTime" ColumnName="TransitDateTime" />
+                <ScalarProperty Name="IncidentDateTime" ColumnName="IncidentDateTime" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="VehiclePassengerCapacity" ColumnName="VehiclePassengerCapacity" />
+                <ScalarProperty Name="VehicleWheelchairAccessible" ColumnName="VehicleWheelchairAccessible" />
+                <ScalarProperty Name="VehicleType" ColumnName="VehicleType" />
+                <ScalarProperty Name="VehicleModelYear" ColumnName="VehicleModelYear" />
+                <ScalarProperty Name="VehicleMakeId" ColumnName="VehicleMakeId" />
+                <ScalarProperty Name="VehicleIdentificationNumber" ColumnName="VehicleIdentificationNumber" />
+                <ScalarProperty Name="VehicleLicenseNumber" ColumnName="VehicleLicenseNumber" />
+                <ScalarProperty Name="VehiclePlaybackDateTime" ColumnName="VehiclePlaybackDateTime" />
+                <ScalarProperty Name="VehiclePredictedDeviation" ColumnName="VehiclePredictedDeviation" />
+                <ScalarProperty Name="VehicleAverageSpeed" ColumnName="VehicleAverageSpeed" />
+                <ScalarProperty Name="VehicleHeading" ColumnName="VehicleHeading" />
+                <ScalarProperty Name="VehicleLatitude" ColumnName="VehicleLatitude" />
+                <ScalarProperty Name="VehicleLongitude" ColumnName="VehicleLongitude" />
+                <ScalarProperty Name="VehiclePositionDateTime" ColumnName="VehiclePositionDateTime" />
+                <ScalarProperty Name="IncidentLogId" ColumnName="IncidentLogId" />
+                <ScalarProperty Name="VehiclePositionLogId" ColumnName="VehiclePositionLogId" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bus_pull_out">
+            <EntityTypeMapping TypeName="TransportationContext.Bus_pull_out">
+              <MappingFragment StoreEntitySet="Bus_pull_out">
+                <ScalarProperty Name="BusPullOutId" ColumnName="BusPullOutId" />
+                <ScalarProperty Name="DT_Time_Off" ColumnName="DT_Time_Off" />
+                <ScalarProperty Name="DT_Time_On" ColumnName="DT_Time_On" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Location_off" ColumnName="Location_off" />
+                <ScalarProperty Name="Location_on" ColumnName="Location_on" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Badge" ColumnName="Badge" />
+                <ScalarProperty Name="Run" ColumnName="Run" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="Route" ColumnName="Route" />
+                <ScalarProperty Name="Bus" ColumnName="Bus" />
+                <ScalarProperty Name="Time_off" ColumnName="Time_off" />
+                <ScalarProperty Name="Time_on" ColumnName="Time_on" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bus_pull_out_History">
+            <EntityTypeMapping TypeName="TransportationContext.Bus_pull_out_History">
+              <MappingFragment StoreEntitySet="Bus_pull_out_History">
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="DT_Time_Off" ColumnName="DT_Time_Off" />
+                <ScalarProperty Name="DT_Time_On" ColumnName="DT_Time_On" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Location_off" ColumnName="Location_off" />
+                <ScalarProperty Name="Location_on" ColumnName="Location_on" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Badge" ColumnName="Badge" />
+                <ScalarProperty Name="Run" ColumnName="Run" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="Route" ColumnName="Route" />
+                <ScalarProperty Name="Bus" ColumnName="Bus" />
+                <ScalarProperty Name="Time_off" ColumnName="Time_off" />
+                <ScalarProperty Name="Time_on" ColumnName="Time_on" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Bus_pull_out_History_Id" ColumnName="Bus_pull_out_History_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehicleInfoes">
+            <EntityTypeMapping TypeName="TransportationContext.VehicleInfo">
+              <MappingFragment StoreEntitySet="VehicleInfo">
+                <ScalarProperty Name="VehicleTypeActive" ColumnName="VehicleTypeActive" />
+                <ScalarProperty Name="VehicleTypeDesc" ColumnName="VehicleTypeDesc" />
+                <ScalarProperty Name="garage_id" ColumnName="garage_id" />
+                <ScalarProperty Name="vehicle_make_id" ColumnName="vehicle_make_id" />
+                <ScalarProperty Name="camera_equipped" ColumnName="camera_equipped" />
+                <ScalarProperty Name="gps_equipped" ColumnName="gps_equipped" />
+                <ScalarProperty Name="wheel_chair_access" ColumnName="wheel_chair_access" />
+                <ScalarProperty Name="passenger_capacity" ColumnName="passenger_capacity" />
+                <ScalarProperty Name="model_year" ColumnName="model_year" />
+                <ScalarProperty Name="license_nbr" ColumnName="license_nbr" />
+                <ScalarProperty Name="vehicle_identification_nbr" ColumnName="vehicle_identification_nbr" />
+                <ScalarProperty Name="incident_log_id" ColumnName="incident_log_id" />
+                <ScalarProperty Name="gps_failed_state" ColumnName="gps_failed_state" />
+                <ScalarProperty Name="secondary_data_channel_id" ColumnName="secondary_data_channel_id" />
+                <ScalarProperty Name="primary_data_channel_id" ColumnName="primary_data_channel_id" />
+                <ScalarProperty Name="ignition_state" ColumnName="ignition_state" />
+                <ScalarProperty Name="logon_state" ColumnName="logon_state" />
+                <ScalarProperty Name="vehicle_id" ColumnName="vehicle_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StopDistricts">
+            <EntityTypeMapping TypeName="TransportationContext.StopDistrict">
+              <MappingFragment StoreEntitySet="StopDistrict">
+                <ScalarProperty Name="is_GPS_validated" ColumnName="is_GPS_validated" />
+                <ScalarProperty Name="site" ColumnName="site" />
+                <ScalarProperty Name="ava_status" ColumnName="ava_status" />
+                <ScalarProperty Name="ava_description" ColumnName="ava_description" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="last_scheduler_update" ColumnName="last_scheduler_update" />
+                <ScalarProperty Name="flag_route" ColumnName="flag_route" />
+                <ScalarProperty Name="AddUserId" ColumnName="AddUserId" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+                <ScalarProperty Name="UpdUserId" ColumnName="UpdUserId" />
+                <ScalarProperty Name="UpdDateTime" ColumnName="UpdDateTime" />
+                <ScalarProperty Name="is_in_service" ColumnName="is_in_service" />
+                <ScalarProperty Name="is_transit_center" ColumnName="is_transit_center" />
+                <ScalarProperty Name="is_bart" ColumnName="is_bart" />
+                <ScalarProperty Name="corner" ColumnName="corner" />
+                <ScalarProperty Name="allow_boarding" ColumnName="allow_boarding" />
+                <ScalarProperty Name="allow_alighting" ColumnName="allow_alighting" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="is_public" ColumnName="is_public" />
+                <ScalarProperty Name="place" ColumnName="place" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="district" ColumnName="district" />
+                <ScalarProperty Name="id_511" ColumnName="id_511" />
+                <ScalarProperty Name="identifier" ColumnName="identifier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,102 @@
+﻿@model ACTransit.CusRel.Models.SettingsModel
+
+@{
+    ViewBag.Title = "Site Configuration";
+    ViewBag.Breadcrumb = "Admin > Site Configuration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    <style>
+        th {
+            color: white
+        }
+    </style>
+}
+
+<br />
+<div class="content">
+    @using (@Html.BeginForm("SiteConfiguration", "Admin", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1 class="panel-title text-center">Edit Settings</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="width: 200px; max-width: 200px">
+                            <div>
+                                <input type="hidden" id="Settings[0]_SettingId" name="Settings[0].SettingId" value="@Model.HomePageSetting.SettingId" />
+                                <input type="text" id="Settings[0]_Name" name="Settings[0].Name" value="@Model.HomePageSetting.Name" class="form-control" />
+                            </div>
+                        </td>
+                        <td>
+                            <textarea id="Settings[0]_Value" name="Settings[0].Value" placeholder="Enter text ..." class="form-control editor" 
+                                      style="height: 100px; min-width: 100%; white-space: normal">@Model.HomePageSetting.Value</textarea>
+                        </td>
+                    </tr>
+
+                    @for (var idx = 0; idx <= Model.MainSettings.Count - 1; idx++)
+                    {
+                        var index = idx + 1;
+                        <tr>
+                            <td style="width: 200px; max-width: 200px">
+                                <div>
+                                    <input type="hidden" id="Settings[@index]_SettingId" name="Settings[@index].SettingId" value="@Model.Settings[index].SettingId" />
+                                    <input type="text" id="Settings[@index]_Name" name="Settings[@index].Name" value="@Model.Settings[index].Name" class="form-control" />
+                                </div>
+                            </td>
+                            <td>
+                                <textarea id="Settings[@index]_Value" name="Settings[@index].Value" placeholder="Enter text ..." class="form-control" 
+                                          style="height: 100px; min-width: 100%; white-space: normal">@Model.Settings[index].Value</textarea>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn btn-primary">Save</button>
+
+        @Html.ActionLink("Cancel", "Index", "Home", new {}, new {@class = "btn btn-warning"})
+
+    }
+
+</div>
+
+@Scripts.Render("~/bundles/TinyMce")
+<script type="text/javascript">
+    tinymce.init({
+        selector: ".editor",
+        browser_spellcheck: true,
+        toolbar: ["bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect forecolor backcolor visualblocks | cut copy paste | bullist numlist outdent indent blockquote | undo redo removeformat subscript superscript | nonbreaking hr link image anchor table media | print preview code"],
+        menubar: false,
+        statusbar: true,
+        paste_data_images: true,
+        height: "400px",
+        plugins: ["autolink textcolor preview nonbreaking paste hr link image anchor table media visualblocks code"],
+        extended_valid_elements: 'a[href|target=_blank]',
+        toolbar_items_size: "small",
+        //content_css : '@Url.Content("~/Content/tinymce.css")?' + new Date().getTime(),
+        setup: function (ed) {
+            ed.on('init', function () {
+                this.getDoc().body.style.fontSize = '10pt';
+            });
+        }
+    });
+</script>

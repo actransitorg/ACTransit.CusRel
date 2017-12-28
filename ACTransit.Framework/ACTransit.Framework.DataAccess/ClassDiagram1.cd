@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ACTransit.Framework.DataAccess.Extensions.DbContextExtensions" Collapsed="true">
+    <Position X="1" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extensions\DbContextExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ACTransit.Framework.DataAccess.ReadOnlyRepositoryBase&lt;T, TContext&gt;" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAiAABABAAAAAAAAAAAAAAAAACAAAAAACAIA=</HashCode>
+      <FileName>ReadOnlyRepositoryBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ACTransit.Framework.DataAccess.ReadOnlyUnitOfWorkBase&lt;TContext&gt;" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAiAABABAAAAAAAAAAAAAAAAACAAAAAACAIA=</HashCode>
+      <FileName>ReadOnlyUnitOfWorkBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ACTransit.Framework.DataAccess.RepositoryBase&lt;T, TContext&gt;" Collapsed="true">
+    <Position X="4" Y="1.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAAAAAAAAAAAAAAAIAAAEAAEAAAEAgAAAAAAA=</HashCode>
+      <FileName>RepositoryBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ACTransit.Framework.DataAccess.RepositoryException" Collapsed="true">
+    <Position X="4.5" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RepositoryException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ACTransit.Framework.DataAccess.UnitOfWorkBase&lt;TContext&gt;" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAAAAAAAAAAAAAAAIAAAEAAEAAAEAgAAAAAAA=</HashCode>
+      <FileName>UnitOfWorkBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="ACTransit.Framework.DataAccess.Interface.IReadOnlyRepository&lt;T&gt;" Collapsed="true">
+    <Position X="3.5" Y="3.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAACAAAAAAAAIA=</HashCode>
+      <FileName>Interface\IReadOnlyRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ACTransit.Framework.DataAccess.Interface.IReadOnlyUnitOfWork" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAACAAAAAAAAIA=</HashCode>
+      <FileName>Interface\IReadOnlyUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ACTransit.Framework.DataAccess.Interface.IRepository&lt;T&gt;" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAAAAAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ACTransit.Framework.DataAccess.Interface.IUnitOfWork" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAAAAAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

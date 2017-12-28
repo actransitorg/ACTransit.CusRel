@@ -1,0 +1,1828 @@
+﻿@using ACTransit.CusRel.Models.Helpers
+@using ACTransit.Contracts.Data.CusRel.TicketContract
+@using ACTransit.Framework.Extensions
+@model ACTransit.CusRel.Models.TicketModel
+
+<div class="row row-rightside">
+    <div class="col-md-4" id="panel-ticket-main">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading padding5">
+                    <div class="panel-title">
+                        <div class="row">
+                            <div class="col-md-1 col-sm-1">
+                                <input type="button" class="btn btn-sm" onclick='GetPrevTicket()' value='◄' title="Previous Ticket" />
+                            </div>
+                            <div class="col-md-10 col-sm-10">
+                                <h1 class="panel-title text-center" style="margin-top: 4px;font-weight: bold;font-size:15px">
+                                    @Model.DetailsTitle (<span style="color: @(Model.Ticket.IsOpen ? "green" : "red")">@(Model.Ticket.IsOpen ? "OPEN" : "CLOSED")</span>)
+                                </h1>
+                            </div>
+                            <div class="col-md-1 col-sm-1 right" style="padding-left: 2%">
+                                <input type="button" class="btn btn-sm" onclick='GetNextTicket()' value='►' title="Next Ticket" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row form-group field-margin required">
+                        @Html.LabelFor(model => model.Ticket.ReasonCode1, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @*@Html.DropDownListFor(model => model.Ticket.ReasonCode1, Model.Reasons, "Select...", new { @class = "form-control field-height" })*@
+                            @Html.TextBoxFor(model => model.Ticket.ReasonCode1, new { @class = "form-control field-height", @maxlength = 30, autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Ticket.ReasonCode1, null, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.ReasonCode2, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @*@Html.DropDownListFor(model => model.Ticket.ReasonCode2, Model.Reasons, "Select...", new { @class = "form-control field-height" })*@
+                            @Html.TextBoxFor(model => model.Ticket.ReasonCode2, new { @class = "form-control field-height", @maxlength = 30, autocomplete = "off" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin hide" id="Ticket_ReasonCode3_Container">
+                        @Html.LabelFor(model => model.Ticket.ReasonCode3, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @*@Html.DropDownListFor(model => model.Ticket.ReasonCode3, Model.Reasons, "Select...", new { @class = "form-control field-height" })*@
+                            @Html.TextBoxFor(model => model.Ticket.ReasonCode3, new { @class = "form-control field-height", @maxlength = 30, autocomplete = "off" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin form-inline" id="incient-date-time">
+                        @Html.LabelFor(model => model.Ticket.Incident.IncidentAt, "Incident Date/Time", new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBox("IncidentAtDate", Model.IncidentDate, new { @class = "form-control field-height field-margin", maxlength = 10, size = 10, placeholder = "MM/DD/YYYY" })
+                            @Html.TextBox("IncidentAtTime", Model.IncidentTime, new { @class = "form-control field-height field-margin", maxlength = 5, size = 5, placeholder = "HH:MM" })
+                            <span style="white-space: nowrap">
+                                AM @Html.RadioButton("IncidentAtTimeTT", "AM", Model.IsIncidentTimeAm, new { @class = "radio-incident-at" }) / PM @Html.RadioButton("IncidentAtTimeTT", "PM", Model.IsIncidentTimePm, new { @class = "radio-incident-at" })
+                            </span>
+                            @Html.HiddenFor(model => model.Ticket.Incident.IncidentAt)
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.IncidentAt, null, new { @class = "errorMessagetext" })
+                            @*@Html.TextBoxFor(model => model.Ticket.Incident.IncidentAt, string.Empty, new { @class = "form-control field-height" })*@
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.Location, "Boarding Location", new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.Location, new { @class = " form-control field-height", @maxlength = 100 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.Location, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.City, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.City, new { @class = "form-control field-height", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.City, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.Route, "Route", new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.Route, new { @class = "form-control field-height", @maxlength = 4, autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.Route, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.Division, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.Division, new { @class = "form-control field-height", @maxlength = 4, autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.Division, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.Destination, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.Destination, new { @class = "form-control field-height", @maxlength = 20, autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.Destination, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.VehicleNumber, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.VehicleNumber, new { @class = "form-control field-height", @maxlength = 4, size = 4 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.VehicleNumber, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Operator.Badge, "Operator Badge", new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Operator.Badge, new { @class = "form-control field-height", @maxlength = 6, size = 6 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Operator.Badge, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Operator.Name, "Operator Name", new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Operator.Name, new { @class = "form-control field-height", @readonly = "readonly", @tabindex = -1 })
+                        </div>
+                    </div>
+                    
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Operator.Info, "Operator Title/Dept/Gender", new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Operator.Info, string.Empty, new { @class = "form-control field-height", @readonly = "readonly", @tabindex = -1 })
+                        </div>
+                    </div>
+
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Operator.Description, "Operator Description", new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextAreaFor(model => model.Ticket.Operator.Description, new { style = "height: 50px", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Ticket.Operator.Description, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="padding: 0">
+                <div class="panel panel-default" id="panel-customer-comments">
+                    <div class="panel-heading padding5">
+                        <h1 class="panel-title text-center">
+                            Customer Comments <span style="color:red">*</span>
+                        </h1>
+                    </div>
+                    <div class="panel-body">
+                        @Html.TextAreaFor(model => model.Ticket.Comments, new { placeholder = "Enter text ...", @class = "form-control textarea" })
+                        @Html.ValidationMessageFor(model => model.Ticket.Comments, string.Empty, new { @class = " errorMessagetext" })
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+
+    <div class="col-md-8">
+        <div class="row hidden-print">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#MoreInfo" role="tab" data-toggle="tab">More</a></li>
+                @if (Model.IsEditMode)
+                {
+                    <li>
+                        <a href="#ChangeHistoryTab" role="tab" data-toggle="tab">
+                            Change History  (@{if (@Model.Ticket.ChangeHistory != null)
+                            { @Model.Ticket.ChangeHistory.Count }
+                            else
+                            { @Html.Label("0") }})
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#LinkedTicketsTab" role="tab" data-toggle="tab">
+                            Linked Tickets (@{if (@Model.Ticket.LinkedTickets != null)
+                            { @Model.Ticket.LinkedTickets.Count }
+                            else
+                            { @Html.Label("0", new { @style = "text-decoration:none" })} })
+                        </a>
+                    </li>
+                }
+                <li class="@Model.TicketCommentsVisibility">
+                    <a href="#Attachments" role="tab" data-toggle="tab">
+                        Attachments (@{if (@Model.Ticket.Attachments != null)
+                        { @Model.Ticket.Attachments.Count }
+                        else
+                        { @Html.Label("0") }})
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="MoreInfo">
+                    <div class="row hidden-print-noname">
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading padding5">
+                                        <h1 class="panel-title text-center">Customer</h1>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row form-group field-margin required">
+                                            @Html.LabelFor(model => model.Ticket.Contact.Name.First, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.Ticket.Contact.Name.First, new { @class = "form-control field-height" })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Contact.Name.First, string.Empty, new { @class = "errorMessagetext", @maxlength = 30 })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin required">
+                                            @Html.LabelFor(model => model.Ticket.Contact.Name.Last, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.Ticket.Contact.Name.Last, new { @class = "form-control field-height", @maxlength = 30 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Contact.Name.Last, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Contact.Address.Addr1, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.Ticket.Contact.Address.Addr1, new { @class = "form-control field-height", maxlength = 30 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Contact.Address.Addr1, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Contact.Address.Addr2, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.Ticket.Contact.Address.Addr2, new { @class = "form-control field-height", maxlength = 30 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Contact.Address.Addr2, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Contact.Address.City, new { @class = "col-md-5 col-sm-5 smalltext" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.Ticket.Contact.Address.City, new { @class = "form-control field-height", @maxlength = 50 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Contact.Address.City, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Contact.Address.State, new { @class = "col-md-5 col-sm-5 smalltext" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.Ticket.Contact.Address.State, new { @class = "form-control field-height", @maxlength = 2 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Contact.Address.State, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Contact.Address.ZipCode, new { @class = "col-md-5 col-sm-5 smalltext" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.Ticket.Contact.Address.ZipCode, new { @class = "form-control field-height", @maxlength = 10 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Contact.Address.ZipCode, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Contact.Email, new { @class = "col-md-5 col-sm-5 smalltext" })
+                                            <div class="col-md-5 col-sm-5">
+                                                @Html.TextBoxFor(model => model.Ticket.Contact.Email, new { @class = "form-control field-height", maxlength = 50 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Contact.Email, string.Empty, new { @class = "errorMessagetext" })
+                                                @Html.Hidden("Ticket_Contact_Email_Original", Model.Ticket.Contact.Email)
+                                            </div>
+                                            @if (Model.Ticket.Id > 0)
+                                            {
+                                            <div class="col-md-2 col-sm-2">
+                                                <input type="button" class="btn btn-primary" id='sendEmail' onclick='SendEmail()' value='Send' />
+                                            </div>
+                                            }
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Contact.Phone.Number, "Phone", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.Ticket.Contact.Phone.Number, new { @class = "form-control field-height", maxlength = 16 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Contact.Phone.Number, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin required">
+                                            @Html.HiddenFor(model => model.Ticket.ResponseCriteria.HasRequestedResponse, Model.Ticket.ResponseCriteria.HasRequestedResponse.GetValueOrDefault())
+                                            @Html.LabelFor(model => model.Ticket.ResponseCriteria.Via, "Respond Via", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.EnumDropDownListFor(model => model.Ticket.ResponseCriteria.Via, "Select...", new { @class = "form-control field-height" })
+                                                @Html.ValidationMessageFor(model => model.Ticket.ResponseCriteria.Via, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        @Html.HiddenFor(model => model.Ticket.Contact.Status)
+                                        @*<div class="row form-group field-margin">
+                                                @Html.LabelFor(model => model.Ticket.Contact.Status, "Customer Status", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                                <div class="col-md-7 col-sm-7">
+                                                    @Html.EnumDropDownListFor(model => model.Ticket.Contact.Status, "Select...", new { @class = "form-control field-height" })
+                                                    @Html.ValidationMessageFor(model => model.Ticket.Contact.Status, string.Empty, new { @class = "errorMessagetext" })
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="panel panel-default" id="panel-ticket-status">
+                                    <div class="panel-heading padding5">
+                                        <h1 class="panel-title text-center">Ticket Status</h1>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Status, "Ticket Status", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.Ticket.Status, new { @class = "form-control field-height", @maxlength = 30 })
+                                                @*@(Model.CanCloseTicket
+                                                    ? Html.EnumDropDownListFor(model => model.Ticket.Status, "Select...", new {@class = "form-control field-height"})
+                                                    : Html.DropDownListFor(model => model.Ticket.Status, Model.TicketStatuses, "Select...", new {@class = "form-control field-height"}))*@
+                                                @Html.ValidationMessageFor(model => model.Ticket.Status, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Assignment.GroupContact.Code, "Department", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.DropDownListFor(m => m.Ticket.Assignment.GroupContact.Value, Model.GroupContacts, "Select...", new { @class = "form-control field-height" }.DisabledIf(!Model.IsTicketAssignmentVisible))
+                                                @Html.ValidationMessageFor(model => model.Ticket.Assignment.GroupContact.Value, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Assignment.Employee.Username, "Assigned To", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @*@Html.DropDownListFor(model => model.Ticket.Assignment.Employee.Id, Model.Users, "Select...", new { @class = "form-control field-height" }.DisabledIf(!Model.IsTicketAssignmentVisible))*@
+                                                @Html.TextBoxFor(model => model.Ticket.Assignment.Employee.Id, new { @class = "form-control field-height", @maxlength = 30 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Assignment.Employee.Id, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.TicketAddedAt, "Created", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.TicketAddedAt, new { @class = "form-control field-height", Readonly = "Readonly", @tabindex = -1 })
+                                            </div>
+                                        </div>
+                                        @*<div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Source.ReceivedAt, "Created", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBoxFor(model => model.Ticket.Source.ReceivedAt, new { @class = "form-control field-height", Readonly = "Readonly", @tabindex = -1 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Source.ReceivedAt, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>*@
+                                        @Html.HiddenFor(model => model.Ticket.Source.ReceivedAt)
+                                        <div class="row form-group field-margin form-inline">
+                                            <div class="col-md-4 col-sm-4">
+                                                @Html.LabelFor(model => model.Ticket.IsAdaComplaint, new { @class = "smalltext pull-left" })
+                                                <span style="padding-left: 10px">
+                                                    @Html.CheckBox("Ticket.IsAdaComplaint", Model.Ticket.IsAdaComplaint.HasValue ? Model.Ticket.IsAdaComplaint : false)
+                                                </span>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4">
+                                                @Html.LabelFor(model => model.Ticket.IsTitle6, new { @class = "smalltext pull-left" })
+                                                <span style="padding-left: 10px">
+                                                    @Html.CheckBox("Ticket.IsTitle6", Model.Ticket.IsTitle6.HasValue ? Model.Ticket.IsTitle6 : false)
+                                                </span>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4">
+                                                @Html.LabelFor(model => model.Ticket.Priority, new { @class = "smalltext pull-left" })
+                                                <span style="padding-left: 10px">
+                                                    @Html.CheckBox("Ticket.PriorityValue", Model.Ticket.Priority.GetValueOrDefault() == TicketPriority.High)
+                                                    @Html.HiddenFor(model => model.Ticket.Priority)
+                                                </span>
+                                            </div>
+                                            @*<div class="row form-group field-margin">
+                                                @Html.LabelFor(model => model.Ticket.Priority, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                                <div class="col-md-7 col-sm-7">
+                                                    @Html.EnumDropDownListFor(model => model.Ticket.Priority, "Select...", new { @class = "form-control field-height" })
+                                                    @Html.ValidationMessageFor(model => model.Ticket.Priority, string.Empty, new { @class = "errorMessagetext" })
+                                                </div>
+                                            </div>*@
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Source.Via, "Source", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.EnumDropDownListFor(model => model.Ticket.Source.Via, "Select...", new { @class = "form-control field-height" })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Source.Via, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Source.ReceivedBy.Username, "Received By", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @*@Html.DropDownListFor(model => model.Ticket.Source.ReceivedBy.Id, Model.ReceiveUsers, "Select...", new { @class = "form-control field-height", maxlength = 16 })*@
+                                                @Html.TextBoxFor(model => model.Ticket.Source.ReceivedBy.Username, new { @class = "form-control field-height", @maxlength = 30, Readonly = "Readonly" })
+                                                @Html.HiddenFor(model => model.Ticket.Source.ReceivedBy.Id)
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.Resolution.ResolvedAt, "Closed", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.TextBox("Ticket_Resolution_ResolvedAt", Model.Ticket.Resolution != null ? Model.Ticket.Resolution.ResolvedAt : null, new { @class = "form-control field-height", Readonly = "Readonly", @tabindex = -1 })
+                                            </div>
+                                        </div>
+                                        @*<div class="row form-group field-margin">
+                                                @Html.LabelFor(model => model.Ticket.DaysOpen, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                                <div class="col-md-7 col-sm-7">
+                                                    @Html.TextBoxFor(model => model.Ticket.DaysOpen, new { @class = "form-control field-height", Readonly = "Readonly", @tabindex = -1 })
+                                                    @Html.ValidationMessageFor(model => model.Ticket.DaysOpen, string.Empty, new { @class = "errorMessagetext" })
+                                                </div>
+                                            </div>*@
+                                        @Html.HiddenFor(model => model.Ticket.DaysOpen)
+                                        @*<div class="row form-group field-margin" style="padding-bottom: 12px">
+                                            @Html.LabelFor(model => model.Ticket.LinkedTickets, "Linked To Ticket", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                <input id='linkedTicketId' type='text' placeholder='Ticket #' class='form-control field-height pull-left' size="6" maxlength="6" style="width: 50px" />
+                                                <input class="btn btn-info field-height AddLinkedTicket" type="button" value="ADD" data-id="linkedTicketId" style="margin-left: 5px; width: 40px" />
+                                            </div>
+                                        </div>*@
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="panel panel-default panel-height-assignments hide" id="lost-item-panel">
+                                    <div class="panel-heading padding5">
+                                        <h1 class="panel-title text-center">Lost Item</h1>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.LostItem.Category, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.DropDownListFor(model => model.Ticket.LostItem.Category, Model.EmptySelectList, "Select...", new { @class = "form-control field-height" })
+                                                @Html.ValidationMessageFor(model => model.Ticket.LostItem.Category, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                        <div class="row form-group field-margin">
+                                            @Html.LabelFor(model => model.Ticket.LostItem.Type, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                                            <div class="col-md-7 col-sm-7">
+                                                @Html.DropDownListFor(model => model.Ticket.LostItem.Type, Model.EmptySelectList, "Select...", new { @class = "form-control field-height" })
+                                                @Html.ValidationMessageFor(model => model.Ticket.LostItem.Type, string.Empty, new { @class = "errorMessagetext" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (Model.IsEditMode)
+                        {
+                            <div class="col-md-7 hidden-print">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default panel-default-height-bottom">
+                                            <div class="panel-heading padding5">
+                                                <h3 class="panel-title text-center">Contact History</h3>
+                                            </div>
+                                            <div class="panel-body panel-default-height-comment">
+                                                <div class="row @Model.TicketCommentsVisibility" style="margin-top:5px;">
+                                                    <div class="col-md-12">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading padding5">
+                                                                <h1 class="panel-title text-center">Comments</h1>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <div class="row form-inline form-inline-align">
+                                                                    <div class="col-md-3">
+                                                                        @Html.DropDownListFor(model => model.ViaResponseHistory, Model.Via, new { @class = "form-control field-height" })
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <textarea name='commentHistory' id="commentResponseHistory" type='text' placeholder='Enter text ...' class='form-control field-height' style="width: 100%;" rows="4" autocomplete="off"></textarea>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                        <input class="btn btn-info field-height field-margin pull-right button-add" type="button" name="AddResponseHistory" id="AddResponseHistory" value="ADD" />
+                                                                    </div>
+                                                                </div>
+                                                                @*<table class="table table-bordered table-hover" id="tab_logic1">
+        <thead>
+            <tr>
+                <th class="col-sm-2" style="vertical-align: middle">Via</th>
+                <th class="col-sm-6">
+                    <span class="pull-left" style="padding-top: 8px">Comment</span>
+                    <input class="btn btn-info field-height field-margin pull-right button-add" type="button" name="AddResponseHistory" id="AddResponseHistory" value="ADD" />
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DropDownListFor(model => model.ViaResponseHistory, Model.Via, new { @class = "form-control field-height" })
+                    <p id="sendAsEmailError" style="color: red; padding: 5px; visibility: hidden">Customer email is empty.</p>
+                    <div id="sendAsEmailOKContainer" style="padding: 5px; visibility: hidden">
+                        <label for="sendAsEmail">Send Customer Email?</label>
+                        @Html.CheckBox("sendAsEmail")
+                    </div>
+                </td>
+                <td>
+                    <input name='commentHistory' id="commentResponseHistory" type='text' placeholder='Enter text ...' class='form-control field-height redimTextArea' style="width: 100%; min-height: 105px;" autocomplete="off" />
+                    <div id="emailFields" style="visibility: hidden">
+                        <input name='email-cc' id='email-cc' type="text" placeholder="Enter Email Cc" class='form-control field-height' style="width: 40%; display: inline-block" autocomplete="off" />
+                        <a id="btn-email-cc" class="btn" href="#employee-list-container" data-toggle="modal">
+                            <img src="~/Content/Image/search4doc.ico" class="imgbtn-sm" style="margin-left:-10px;" title="Search employee" />
+                        </a>
+                        <input name='email-bcc' id='email-bcc' type="text" placeholder="Enter Email Bcc" class='form-control field-height' style="width: 40%; display: inline-block" autocomplete="off" />
+                        <a id="btn-email-bcc" class="btn" href="#employee-list-container" data-toggle="modal">
+                            <img src="~/Content/Image/search4doc.ico" class="imgbtn-sm" style="margin-left:-10px;" title="Search employee" />
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" style="margin-top:5px;">
+                                                    <div class="col-md-12">
+                                                        <div class="panel panel-default panel-body-scrollable">
+                                                            <div class="panel-body panel-default-height-history">
+                                                                <table class="table normaltext">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            @*<th>Dept</th>*@
+                                                                            <th>Employee</th>
+                                                                            <th>Via</th>
+                                                                            <th>Comment</th>
+                                                                            <th>Date & Time</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    @if (Model.Ticket.ResponseHistory != null && Model.Ticket.ResponseHistory.Count > 0)
+                                                                    {
+                                                                        foreach (var item in Model.Ticket.ResponseHistory)
+                                                                        {
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            @*<td>@(item.ResponseBy.GroupContact != null ? item.ResponseBy.GroupContact.Description : null)</td>*@
+                                                                            <td>@item.ResponseBy.Id</td>
+                                                                            <td>@(item.Via != ResponseHistoryVia.Unknown ? item.Via.ToString().PascalCaseToDescription() : item.ViaAsString)</td>
+                                                                            <td>@item.Comment.AsHtmlString()</td>
+                                                                            <td style="width:170px">@item.ResponseAt</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                    <tbody><tr><td colspan="5" class="text-center">(no data)</td></tr></tbody>
+                                                                    }
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default panel-default-height-bottom">
+                                            <div class="panel-heading padding5">
+                                                <h3 class="panel-title text-center">Research History</h3>
+                                            </div>
+                                            <div class="panel-body panel-default-height-comment">
+                                                <div class="row @Model.TicketCommentsVisibility">
+                                                    <div class="col-md-12">
+                                                        <div class="panel panel-default panel-default-height-comment">
+                                                            <div class="panel-heading padding5">
+                                                                <h1 class="panel-title text-center">Comments</h1>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <div class="col-md-11">
+                                                                    <textarea id="commentResearchHistory" type='text' placeholder='Enter text ...' class='form-control field-height' style="width: 100%;" rows="4" autocomplete="off"></textarea>
+                                                                </div>
+                                                                <div class="col-md-1">
+                                                                    <input class="btn btn-info field-height pull-right button-add" type="button" name="addResearchHistory" id="AddResearchHistory" value="ADD" />
+                                                                </div>
+                                                                @*<table class="table table-bordered table-hover" id="tab_logic">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th class="col-sm-5">
+                                                                                    <span class="pull-left" style="padding-top: 8px">Comment</span>
+                                                                                    <input class="btn btn-info field-height pull-right button-add" type="button" name="addResearchHistory" id="AddResearchHistory" value="ADD" />
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <input id='commentResearchHistory' type='text' placeholder='Enter text ...' class='form-control field-height textarea form-control' style="width: 90%; min-height: 105px;" autocomplete="off" />
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" style="margin-top:5px;">
+                                                    <div class="col-md-12">
+                                                        <div class="panel panel-default panel-body-scrollable">
+                                                            <div class="panel-body panel-default-height-history">
+                                                                <div id="table-research-history-wrapper">
+                                                                    <table class="table normaltext" id="table-research-history">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                @*<th>Dept</th>*@
+                                                                                <th>Employee</th>
+                                                                                <th>Comment</th>
+                                                                                <th>Date & Time</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        @if (Model.Ticket.ResearchHistory != null && Model.Ticket.ResearchHistory.Count > 0)
+                                                                        {
+                                                                            foreach (var item in Model.Ticket.ResearchHistory)
+                                                                            {
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                @*<td>@(item.ResearchedBy.GroupContact != null ? item.ResearchedBy.GroupContact.Description : null)</td>*@
+                                                                                <td>@item.ResearchedBy.Id</td>
+                                                                                <td>@item.Comment.AsHtmlString()</td>
+                                                                                <td style="width:170px">@item.ResearchedAt</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                        <tbody><tr><td colspan="3" class="text-center">(no data)</td></tr></tbody>
+                                                                        }
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade in hidden-print" id="ChangeHistoryTab">
+                    <div class="col-md-12">
+                        <div class="panel panel-default panel-default-height-tab panel-default-height-tab-height">
+                            <div class="panel-heading padding5">
+                                <h3 class="panel-title text-center">Change History</h3>
+                            </div>
+                            <div class="panel-body panel-body-scrollable">
+                                <table class="table normaltext" id="ChangeHistoryTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Action</th>
+                                            <th>Source</th>
+                                            <th>Field</th>
+                                            <th>Old Value</th>
+                                            <th>New Value</th>
+                                            <th>Changed At</th>
+                                            <th>Change By</th>
+                                        </tr>
+                                    </thead>
+                                    @if (Model.Ticket.ChangeHistory != null && Model.Ticket.ChangeHistory.Count > 0)
+                                    {
+                                        foreach (var item in Model.Ticket.ChangeHistory)
+                                        {
+                                    <tbody>
+                                        <tr>
+                                            <td>@item.Action</td>
+                                            <td>@Model.FixTableName(item.TableName)</td>
+                                            <td>@item.ColumnName.PascalCaseToDescription()</td>
+                                            <td>@Html.GetCommentsString(item.OldValue)</td>
+                                            <td>@Html.GetCommentsString(item.NewValue)</td>
+                                            <td style="min-width: 170px">@item.ChangeAt.GetValueOrDefault().ToString("M/d/yyyy h:mm:ss tt")</td>
+                                            <td>@item.ChangeBy.Id</td>
+                                        </tr>
+                                    </tbody>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <tbody><tr><td colspan="7" class="text-center">(no data)</td></tr></tbody>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade in hidden-print" id="LinkedTicketsTab">
+                    <div class="col-md-12">
+                        <div class="panel panel-default panel-default-height-tab">
+                            <div class="panel-heading padding5">
+                                <h3 class="panel-title text-center">Linked Tickets</h3>
+                            </div>
+                            <div class="panel-body panel-body-scrollable">
+                                <table class="table normaltext">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Ticket #</th>
+                                            <th>Incident Date & Time</th>
+                                            <th>Ticket Status</th>
+                                            <th>Reason</th>
+                                            <th style="width: 350px">Contacted Via</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    @if (Model.Ticket.LinkedTickets != null && Model.Ticket.Reasons != null && Model.Ticket.LinkedTickets.Count > 0)
+                                    {
+                                        foreach (var item in Model.Ticket.LinkedTickets)
+                                        {
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <form><input class="btn btn-danger field-height pull-left" type="button" id="deleteLinkedTicket" onclick='return DeleteLinkedTicket(@item.Id)' value="Remove" /></form>
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink(@item.Id.ToString(), "Update", "Ticket", new { id = item.Id },
+                                                 new { id = "_" + @item.Id, target = "_blank", data_toggle = "popover", data_content = @Html.GetCommentsString(item.Comments), data_title = "Ticket #" + @item.Id })
+                                            </td>
+                                            <td style="min-width: 170px">@item.Incident.IncidentAt</td>
+                                            <td>@item.Status</td>
+                                            <td>@Html.GetReasonsString(string.Join(";", item.Reasons))</td>
+                                            <td>@Model.LastResponse(item)</td>
+                                            <td>@item.Status</td>
+                                        </tr>
+                                    </tbody>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <tbody><tr><td colspan="7" class="text-center">(no data)</td></tr></tbody>
+                                    }
+                                </table>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading padding5">
+                                        <h1 class="panel-title text-center">Add Linked Ticket</h1>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row field-margin col-md-12 col-sm-7">
+                                            <div class="col-md-2">
+                                                <input id='ticketIdLinkedTab' type='text' placeholder='Ticket #' class='col-md-1 col-sm-11 form-control field-height pull-left ' />
+                                            </div>
+                                            <div class="col-md-3 col-sm-7">
+                                                <input class="btn btn-info field-height pull-left AddLinkedTicket button-add" value="ADD" data-id="ticketIdLinkedTab" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade in hidden-print" id="Attachments">
+                    <div class="col-md-12">
+                        <div class="panel panel-default panel-default-height-tab">
+                            <div class="panel-heading padding5">
+                                <h3 class="panel-title text-center">Ticket Attachments</h3>
+                            </div>
+                            <div class="panel-body panel-body-scrollable" id="table-ticket-attachments-panel">
+                                <table class="table normaltext" id="table-ticket-attachments">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Filename</th>
+                                            <th>Description</th>
+                                            <th>Uploaded Date</th>
+                                        </tr>
+                                    </thead>
+
+                                    @if (Model.Ticket.Attachments != null && Model.Ticket.Attachments.Count > 0)
+                                    {
+                                        foreach (var item in Model.Ticket.Attachments)
+                                        {
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="button" class="btn btn-danger @Model.TicketCommentsVisibility" id="deleteLinkedTicket" onclick='return DeleteAttachmentTicket(@item.Id)' value="Delete" />
+                                                <input type="button" class="btn btn-success" id="downloadLinkedTicket" onclick='return DownloadAttachmentTicket(@item.Id)' value="Download" />
+                                            </td>
+                                            <td>@Html.DisplayFor(model => item.Filename)</td>
+                                            <td>@Html.DisplayFor(model => item.Description)</td>
+                                            <td style="min-width: 170px">@Html.DisplayFor(model => item.UploadedAt)</td>
+                                        </tr>
+                                    </tbody>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <tbody><tr><td colspan="4" class="text-center">(no data)</td></tr></tbody>
+                                    }
+                                </table>
+                                <span id="files-names"></span>
+                                <div class="col-2-wrapper @Model.TicketCommentsVisibility">
+                                    <div class="col-2-content">
+                                        <div class="col-2-left">
+                                            <div class="btn btn-file btn-success">
+                                                <i class="glyphicon glyphicon-plus"></i>
+                                                <span>Add files...</span>
+                                                <input id="fileselect" type="file" multiple="multiple">
+                                            </div>
+                                        </div>
+                                        <div class="col-2-right">
+                                            <div id="filedrag">Drop Files Here</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="files-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.HiddenFor(model => model.Ticket.Id)
+
+<div id="confirm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="min-height: 200px;">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <br />
+            </div>
+            <div class="modal-body text-center">
+                Sending email. Are you sure?  Please verify CC and BCC fields.
+            </div>
+            <div class="modal-footer bottom">
+                <button type="button" data-dismiss="modal" class="btn btn-primary" id="sendEmail">Send</button>
+                <button type="button" data-dismiss="modal" class="btn" id="cancelEmail">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="modal fade" id="employee-list-container" tabindex="-1" role="dialog" aria-labelledby="employee-list-label" aria-hidden="true">
+        <div class="modal-dialog m-width">
+            <div class="modal-content" style="min-height: 200px;">
+                <div class="modal-header">
+                    <a class="close" data-dismiss="modal">&times;</a>
+                    <br />
+                </div>
+                <div class="modal-body">
+                    <div class="form-inline" style="margin-bottom: 10px;">
+                        <label class="control-label">Search by</label>
+                        <select id="employee-search-by" class="form-control">
+                            <option value="badge">Badge</option>
+                            <option value="firstName">First Name</option>
+                            <option value="lastName" selected="selected">Last Name</option>
+                        </select>
+                        <input type="text" id="employee-search-textbox" class="form-control" /><span id="employee-search-button" class="glyphicon glyphicon-search" style="cursor: pointer;margin-left: 10px"></span>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="employee-list" class="list gray mousesensitive" style="padding-right: 100px;">
+                            <thead>
+                                <tr>
+                                    <th>Last Name</th>
+                                    <th>First Name</th>
+                                    <th>Department</th>
+                                    <th>Email</th>
+                                    <th>Badge</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer bottom">
+                    <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/TicketDetails")
+@Scripts.Render("~/bundles/datetimepicker")
+@Scripts.Render("~/bundles/TinyMce")
+
+<script type="text/javascript">
+
+    IsMSIE = function() {
+        return (navigator.userAgent.indexOf('MSIE ') > -1 || navigator.userAgent.indexOf('Trident/') > -1);
+    }
+
+    if (IsMSIE) {
+        //$("body").css("padding-right", "10px");
+        $('#Ticket_Contact_Address_City .ms-sel-ctn').css('padding-top', '1px');
+    }
+
+    SetupHints();
+
+    var employeeControl;
+    $("#btn-email-cc, #btn-email-bcc").click(function() {
+        employeeControl = $(this)[0].id.replace("btn-", "");
+    });
+
+    //Initial employee search engine (is added from _layout).
+    EmployeeSearch.url = '@Url.Action("GetEmployees", "User")';
+    EmployeeSearch.onClose = function(value) {
+        if (value == "") return;
+        var newValue = $("#" + employeeControl).val();
+        newValue += (newValue.length > 0 ? ";" : "") + value;
+        $("#" + employeeControl).val(newValue);
+    }
+
+    var editorHeight;
+    ExpandTicketComments = function(minHeight, maxHeight) {
+        //expand if necessary .panel-customer-comments and .mce-edit-area
+        editorHeight = $(".mce-edit-area").height();
+        var trueEditorHeight = $('iframe').contents().height();
+        var editorHeightMax = Math.max(editorHeight, trueEditorHeight);
+        minHeight = minHeight || 0;
+        maxHeight = maxHeight || editorHeightMax;
+        editorHeightMax = Math.min(editorHeightMax, maxHeight);
+        editorHeightMax = Math.max(editorHeightMax, minHeight);
+
+        $(".mce-edit-area").height(editorHeightMax + "px");
+        $("#panel-customer-comments").height((editorHeightMax + 80) + "px");
+    }
+
+    PrintTicketCommentsNormal = function() {
+        $(".mce-edit-area").height(editorHeight + "px");
+        $("#panel-customer-comments").height((editorHeight + 80) + "px");
+    }
+
+    PrintTicketNormal = function() {
+        $(".hidden-print-normal").css("display","none");
+        $(".hidden-print-noname").css("display","block");
+        ExpandTicketComments();
+        window.print();
+        PrintTicketCommentsNormal();
+        $(".hidden-print-normal").css("display","block");
+    }
+
+    PrintTicketNoName = function() {
+        $(".hidden-print-normal").css("display","block");
+        $(".hidden-print-noname").css("display","none");
+        ExpandTicketComments();
+        window.print();
+        PrintTicketCommentsNormal();
+        $(".hidden-print-noname").css("display","block");
+    }
+
+    SendEmail = function() {
+        var email = $("#Ticket_Contact_Email").val();
+        var id = $("#Ticket_Id").val();
+        var name = $("#Ticket_Contact_Name_First").val() + " " + $("#Ticket_Contact_Name_Last").val();
+        window.location.href = 'mailto:' + email + '?bcc=your.email@your.company.dns&subject=' + encodeURIComponent('Response to your AC Transit Feedback - ' + id) + "&body=" + encodeURIComponent("");
+    }
+
+    var ticketId = parseInt($('#Ticket_Id').val());
+    var isNewTicket = ticketId == 0;
+
+    $(function() {
+        @*$('#Ticket_Incident_IncidentAt').datetimepicker({
+            format: 'm/d/Y h:i A',
+            formatTime: 'A h:i',
+            value: '@Html.Raw(Model.Ticket.Incident.IncidentAt)'
+        });*@
+
+        @*$("#Ticket_Source_ReceivedAt").datetimepicker({
+            format: 'm/d/Y h:i A',
+            formatTime: 'A h:i',
+            value: '@Html.Raw(Model.Ticket.Source.ReceivedAt)'
+        });*@
+
+        //$('#dateResearchHistory, #dateResponseHistory').datetimepicker({
+        //    format: 'm/d/Y h:i A',
+        //    formatTime: 'A h:i',
+        //});
+
+        if (ticketId == 0) {
+            $("#incient-date-time").addClass("required");
+        }
+
+        IsIncidentDateTimeRequired = function() { return $("#incient-date-time.required").length == 1; }
+
+        SetIncidentDateTime = function(value, validate) {
+            if ($("#IncidentAtDate").val() == "" && $("#IncidentAtTime").val() == "")
+                $('#Ticket_Incident_IncidentAt').val(null).valid();
+            else if (validate == true)
+                $('#Ticket_Incident_IncidentAt').val(value).valid();
+            else {
+                $('#Ticket_Incident_IncidentAt').val(value);
+            }
+        }
+
+        GetIncidentDate = function() {
+            if (!isNaN(Date.parse($("#IncidentAtDate").val())))
+                return new Date($("#IncidentAtDate").val());
+            else
+                return new Date();
+        }
+
+        $("#IncidentAtDate").change(function(e) {
+            SetIncidentDateTime($(this).val() + ' ' + $("#IncidentAtTime").val() + ':00 ' + $("input[name=IncidentAtTimeTT]:checked").val(), true);
+            UpdateRoutes(null, "#IncidentAtTime");
+        });
+
+        $("#IncidentAtTime").change(function(e) {
+            SetIncidentDateTime($("#IncidentAtDate").val() + ' ' + $(this).val() + ':00 ' + $("input[name=IncidentAtTimeTT]:checked").val(), true);
+        });
+
+        $(".radio-incident-at").change(function(e) {
+            SetIncidentDateTime($("#IncidentAtDate").val() + ' ' + $("#IncidentAtTime").val() + ':00 ' + $(this).val(), true);
+        });
+
+        setTimeout(function() {
+            SetIncidentDateTime($("#IncidentAtDate").val() + ' ' + $("#IncidentAtTime").val() + ':00 ' + $("input[name=IncidentAtTimeTT]:checked").val());
+        }, 100);
+
+
+    });
+
+    SubmitTicketForm = function(e) {
+
+        if ($("#Ticket_PriorityValue:checked").val() === "true")
+            $("#Ticket_Priority").val('2');
+        else
+            $("#Ticket_Priority").val('0');
+
+        if (msTicketStatus.getValue().length === 0 && (originalStatus !== "New" || originalStatus !== ""))
+            SetTicketStatus(originalStatus);
+
+        //Re-enable disabled elements so they are included as part of the submit request
+        if ($("#Ticket_Assignment_GroupContact_Value").prop('disabled'))
+            $("#Ticket_Assignment_GroupContact_Value").prop('disabled', false);
+
+        $("body").focus(); // fix for magicSuggest focus on submit issue
+
+        setTimeout(function() {
+            TicketForm.submit();
+        }, 10);
+    }
+
+    GetCombobox = function(id) {
+        return $(id).magicSuggest();
+    }
+
+    UpdateRoutes = function (route, idToFocus) {
+        if (!idToFocus)
+            idToFocus = "#Ticket_Incident_Destination div[class='ms-trigger']";
+        if (!route)
+            route = GetCombobox("#Ticket_Incident_Route").getValue()[0];
+        $.ajax({
+            url: '@Url.Action("GetRouteInfo", "Ticket")',
+            contentType: "application/json; charset=utf-8",
+            data: {id: route, incidentDateTime: GetIncidentDate().toISOString()},
+            dataType: "json"
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+        }).done(function(data) {
+            var cb = GetCombobox("#Ticket_Incident_Division");
+            cb.setData(data.Divisions);
+            cb.clear();
+            cb.setValue(data.Divisions);
+            cb = GetCombobox("#Ticket_Incident_Destination");
+            cb.setData(data.Directions);
+            cb.clear();
+            $(idToFocus).click();
+        });
+    }
+
+    UpdateOperator = function(badge) {
+        //if (badge.length == 5 && badge[0] == '0') return;
+        if (badge.length < 3 || badge.length > 6) return;
+        $.ajax({
+            url: '@Url.Action("GetOperator", "User")/' + badge,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+        }).done(function(data) {
+            if (data.Operator == null) return;
+            $("#Ticket_Operator_Name").val(data.Operator.Name);
+            $("#Ticket_Operator_Info").val(data.Operator.Info);
+        });
+    }
+
+    jQuery.fn.visible = function(show) {
+        if (show)
+            return this.css('visibility', 'visible');
+        return this.css('visibility', 'hidden');
+    };
+
+    UpdateIncidentLocation = function(stopid) {
+        if (stopid.length != 5 || isNaN(stopid)) return;
+        $.ajax({
+            url: '@Url.Action("StopStreetIntersection", "Ticket")/' + stopid,
+            contentType: "text/plain; charset=utf-8"
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+        }).done(function(data) {
+            if (typeof data === "string" && data.length > 1)
+                $("#Ticket_Incident_Location").val(data + " (" + stopid + ")");
+        });
+    }
+
+    UpdateIncidentCity = function(stopid) {
+        if (stopid.length != 5 || isNaN(stopid)) return;
+        $.ajax({
+            url: '@Url.Action("StopCity", "Ticket")/' + stopid,
+            contentType: "text/plain; charset=utf-8"
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+        }).done(function(data) {
+            if (typeof data === "string" && data.length > 1)
+                $("#Ticket_Incident_City").magicSuggest().setValue([data]);
+        });
+    }
+
+    $("#Ticket_Incident_Location").change(function() {
+        UpdateIncidentLocation($(this).val());
+        UpdateIncidentCity($(this).val());
+    });
+
+    var reasons = @Html.Raw(Json.Encode(Model.Reasons));
+
+    CheckReasons = function(reasonChanged) {
+        var anyEnabled = false, anyAda = false, anyTitle6 = false;
+        $("#Ticket_ReasonCode1, #Ticket_ReasonCode2, #Ticket_ReasonCode3").each(function() {
+            var _value = $(this).magicSuggest().getValue()[0] || "";
+            anyEnabled = anyEnabled || _value.toLowerCase().indexOf("lost property") > -1;
+            anyAda = anyAda || _value.toLowerCase().indexOf("ada-") > -1;
+            anyTitle6 = anyTitle6 || _value.toLowerCase().indexOf("title vi") > -1;
+        });
+
+        if (!anyEnabled)
+            $("#lost-item-panel").addClass("hide");
+        else
+            $("#lost-item-panel").removeClass("hide");
+
+        if (anyTitle6)
+            $("#Ticket_IsTitle6").prop("checked", anyTitle6);
+
+        if (reasonChanged)
+            $("#Ticket_IsAdaComplaint").prop("checked", anyAda);
+    }
+    setTimeout(function() {
+        CheckReasons();
+    }, 10);
+
+    ReasonChanged = function(e, that, list) {
+        if (typeof e === "undefined") return;
+
+        if (typeof that !== "undefined") {
+            var value = that.getValue()[0];
+            if (typeof value === "undefined" || value == null)
+                return;
+            var isHiddenReason = value.match(/\d+\..+/gi);
+            var found = reasons.filter(function(el) {
+                return el.Value == value;
+            });
+            if (!isHiddenReason && found.length == 0) {
+                that.clear(true);
+                setTimeout(function(ele) {
+                    return function() {
+                        ele.focus();
+                    };
+                }(e.currentTarget.input), 10);
+                return;
+            }
+        }
+
+        CheckReasons(true);
+    }
+    ReasonChanged();
+
+    SetReasonCodes = function() {
+        var showRC3 = $("#Ticket_ReasonCode3").val() != "";
+        if (showRC3)
+            $("#Ticket_ReasonCode3_Container").removeClass("hide");
+        else
+            $("#Ticket_ReasonCode3_Container").addClass("hide");
+    }
+    SetReasonCodes();
+
+    SetHasRequestedResponse = function() {
+        var val = $("#Ticket_ResponseCriteria_Via option:selected").text();
+        $("#Ticket_ResponseCriteria_HasRequestedResponse").val(val != "None");
+    }
+
+    if (isNewTicket)
+        $("#Ticket_ResponseCriteria_Via").val("");
+
+    $("#Ticket_ResponseCriteria_Via").change(SetHasRequestedResponse);
+    SetHasRequestedResponse();
+
+    var ms = $("#Ticket_ReasonCode1").magicSuggest({
+        data: reasons,
+        displayField: "Value",
+        valueField: "Key",
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    });
+    ms.setValue([@Html.GetMsString(Model.Ticket.ReasonCode1)]);
+    $(ms).on('selectionchange', function(e, that, list) {
+        ReasonChanged(e, that, list);
+    });
+
+    ms = $("#Ticket_ReasonCode2").magicSuggest({
+        data: reasons,
+        displayField: "Value",
+        valueField: "Key",
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    });
+    ms.setValue([@Html.GetMsString(Model.Ticket.ReasonCode2)]);
+    $(ms).on('selectionchange', function(e, that, list) {
+        ReasonChanged(e, that, list);
+    });
+
+    ms = $("#Ticket_ReasonCode3").magicSuggest({
+        data: reasons,
+        displayField: "Value",
+        valueField: "Key",
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    });
+    ms.setValue([@Html.GetMsString(Model.Ticket.ReasonCode3)]);
+    $(ms).on('selectionchange', function(e, that, list) {
+        ReasonChanged(e, that, list);
+        SetReasonCodes();
+    });
+
+    var cities = @Html.Raw(Json.Encode(Model.Cities));
+
+    $("#Ticket_Incident_City").magicSuggest({
+        data: cities,
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    }).setValue([@Html.GetMsString(Model.Ticket.Incident.City)]);
+
+    $("#Ticket_Contact_Address_State").magicSuggest({
+        data: @Html.Raw(Json.Encode(Model.States)),
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    }).setValue([@Html.GetMsString(Model.Ticket.Contact.Address.State)]);
+
+    $("#Ticket_Contact_Address_City").magicSuggest({
+        data: cities,
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    }).setValue([@Html.GetMsString(Model.Ticket.Contact.Address.City)]);
+
+    var msRoute = $("#Ticket_Incident_Route").magicSuggest({
+        data: @Html.Raw(Json.Encode(Model.RouteInfo?.Routes)),
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    });
+    msRoute.setValue([@Html.GetMsString(Model.Ticket.Incident.Route)]);
+    setTimeout(function() {
+        $(msRoute).on('selectionchange', function() {
+            var value = this.getValue();
+            if (value.length < 1 || value.length > 6) return;
+            UpdateRoutes(value.value, null);
+        });
+    }, 100);
+
+    $("#Ticket_Incident_Division").magicSuggest({
+        data: @Html.Raw(Json.Encode(Model.RouteInfo?.Divisions)),
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    }).setValue([@Html.GetMsString(Model.Ticket.Incident.Division)]);
+
+    $("#Ticket_Incident_Destination").magicSuggest({
+        data: @Html.Raw(Json.Encode(Model.RouteInfo?.Directions)),
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    }).setValue([@Html.GetMsString(Model.Ticket.Incident.Destination)]);
+
+    $("#Ticket_Operator_Badge").bind('input propertychange', function(ele) {
+        if (ele.target.value.length < 3 || ele.target.value.length > 6) return;
+        if (ele.target.value == "000000") {
+            $("#Ticket_Operator_Name").val("");
+            $("#Ticket_Operator_Info").val("");
+            return;
+        }
+        UpdateOperator(ele.target.value);
+    });
+
+    var ticketStatuses = @Html.Raw(Json.Encode(Model.TicketStatuses));
+
+    var originalStatus = $("#Ticket_Status").val();
+    var originalResolvedAt = $("#Ticket_Resolution_ResolvedAt").val();
+
+    //if ($("#Ticket_Priority option:selected").val() != "")
+    //    $("#Ticket_Priority option[value='']").remove();
+
+    if ($("#Ticket_Source_Via option:selected").val() != "")
+        $("#Ticket_Source_Via option[value='']").remove();
+
+    var users = @Html.Raw(Json.Encode(Model.Users));
+
+    var msEmp = $("#Ticket_Assignment_Employee_Id").magicSuggest({
+        data: users,
+        displayField: "Value",
+        valueField: "Key",
+        resultField: "Key",
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    });
+    msEmp.setValue([@Html.GetMsString(Model.Ticket.Assignment.Employee != null ? Model.Ticket.Assignment.Employee.Id : null)]);
+    $(msEmp).on('selectionchange', function(e, that, list) {
+
+        var value = that.getValue()[0];
+        if (typeof value === "undefined" || value == null) return;
+
+        var found = users.filter(function(el) {
+            return el.Key == value || el.Value == value;
+        });
+
+        if (found.length == 0) {
+            that.clear(true);
+            setTimeout(function(ele) {
+                return function() {
+                    ele.focus();
+                };
+            }(e.currentTarget.input), 10);
+            return;
+        } else {
+            var count = that.getValue().length;
+            SetTicketStatus(count > 0 ? "Assigned" : "Redirected");
+        }
+    });
+
+    var statusInitialized = false;
+    StatusChanged = function(e, that, list) {
+        if (typeof e === "undefined" || typeof that === "undefined" || that == null) return;
+
+        var key = that.getValue()[0];
+        if (typeof key === "undefined" || key == null)
+            return;
+        if (statusInitialized == false) {
+            statusInitialized = true;
+            return;
+        }
+        var found = ticketStatuses.filter(function(el) {
+            return el.Key == key;
+        });
+
+        if (found.length == 0 && (key == "Closed" || key == "Closed Too Late" || key == "Closed Duplicate")) {
+            that.clear(true);
+            that.setValue([originalStatus]);
+            found = [originalStatus];
+        }
+
+        if (found.length == 0) {
+            that.clear(true);
+            setTimeout(function(ele) {
+                return function() {
+                    ele.focus();
+                };
+            }(e.currentTarget.input), 10);
+            return;
+        }
+
+        if (key == "Rejected")
+            msEmp.clear();
+
+        if (key.toLowerCase().indexOf("closed") == 0)
+            $("#Ticket_Resolution_ResolvedAt").val(originalResolvedAt);
+        else
+            $("#Ticket_Resolution_ResolvedAt").val("");
+    }
+
+    var msTicketStatus = $("#Ticket_Status").magicSuggest({
+        data: ticketStatuses,
+        displayField: "Value",
+        valueField: "Key",
+        resultAsString: true,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    });
+    $(msTicketStatus).on('selectionchange', function(e, that, list) {
+        StatusChanged(e, that, list);
+    });
+
+    GetGroupContactIndex = function(value) {
+        var options = $("#Ticket_Assignment_GroupContact_Value option").clone();
+        var status = options.filter(function(idx, el) {
+            return value === '' || $(el).text().indexOf(value) >= 0;
+        });
+        return status.length == 1 ? status[0].value : null;
+    }
+
+    SetDefaultGroup = function() {
+        if (isNewTicket)
+            $("#Ticket_Assignment_GroupContact_Value").val(GetGroupContactIndex("Unassigned"));
+
+        if ($("#Ticket_Assignment_GroupContact_Value option:selected").val() != "")
+            $("#Ticket_Assignment_GroupContact_Value option[value='']").remove();
+    }
+    SetDefaultGroup();
+
+    SetTicketStatus = function(key) {
+        if (typeof key !== "undefined") {
+            msTicketStatus.clear();
+            msTicketStatus.setValue([key]);
+            return;
+        }
+    }
+    SetTicketStatus(@Html.GetMsString(Model.Ticket.Status.ToString()));
+
+    var prevGroupContactValue = $("#Ticket_Assignment_GroupContact_Value option:selected").val();
+    $("#Ticket_Assignment_GroupContact_Value").change(function() {
+        msEmp.clear();
+        var currentGroupContactValue = $("#Ticket_Assignment_GroupContact_Value option:selected").val();
+        if (prevGroupContactValue != GetGroupContactIndex("Unassigned"))
+            SetTicketStatus("Redirected");
+        prevGroupContactValue = currentGroupContactValue;
+    });
+
+    @*$("#Ticket_Source_ReceivedBy_Id").magicSuggest({
+        data: users,
+        displayField: "Value",
+        valueField: "Key",
+        resultField: "Key",
+        resultAsString: true,
+        editable: false,
+        placeholder: "Select...",
+        maxSelection: 1,
+        maxSelectionRenderer: function(v) { return null; }
+    }).setValue([@Html.GetMsString(Model.Ticket.Source.ReceivedBy.Id)]);*@
+
+    $(document).ready(function() {
+        UpdateOperator($("#Ticket_Operator_Badge").val());
+    });
+
+    IsAnyReasonCodeTitle6 = function(reasonKey) {
+        var anyTitle6 = false;
+        $("#Ticket_ReasonCode1, #Ticket_ReasonCode2, #Ticket_ReasonCode3").each(function() {
+            var _value = $(this).magicSuggest().getValue()[0] || "";
+            anyTitle6 = anyTitle6 || _value == reasonKey;
+        });
+        return anyTitle6;
+    }
+
+    SetReasonCodeValue = function(elemId, reasonKey) {
+        var cb = GetCombobox(elemId);
+        var value = cb.getValue();
+        var result = value.length === 0;
+        if (result) {
+            cb.clear();
+            cb.setValue([reasonKey]);
+        }
+        return result;
+    }
+
+    $("#Ticket_IsTitle6").click(function() {
+        var reason = reasons.filter(function(el) {
+            return el.Value == "Title VI";
+        });
+
+        if (IsAnyReasonCodeTitle6(reason[0].Key))
+            return;
+
+        var checked = $(this).prop("checked");
+        if (checked) {
+            if (SetReasonCodeValue("#Ticket_ReasonCode1", reason[0].Key))
+                return;
+            SetReasonCodeValue("#Ticket_ReasonCode2", reason[0].Key);
+        }
+    });
+
+    var LostItemNodes = @Html.Raw(Json.Encode(Model.LostItemNodes));
+    var lostItem;
+
+    SetLostItemCategory = function(category) {
+        var nodes = Object.keys(LostItemNodes), options = "<option value='' " + (category == '' ? "selected" : "") + ">Select...</option>";
+        if (!nodes) return;
+        for (var i = 0; i < nodes.length; i++) {
+            options += "<option value='" + nodes[i] + "' " + (category == nodes[i] ? "selected" : "") + ">" + nodes[i] + "</option>";
+        }
+        $("#Ticket_LostItem_Category").html("").append(options);
+    }
+
+    SetLostItemTypes = function(category, type) {
+        if (category == null)
+            category = $("#Ticket_LostItem_Category:selected").val();
+        var nodes = LostItemNodes[category], options = "<option value='' " + (type == '' ? "selected" : "") + ">Select...</option>";
+        if (!nodes) {
+            $("#Ticket_LostItem_Type").html("").append(options);
+            return;
+        }
+        for (var i = 0; i < nodes.length; i++) {
+            options += "<option value='" + nodes[i] + "' " + (type == nodes[i] ? "selected" : "") + ">" + nodes[i] + "</option>";
+        }
+        $("#Ticket_LostItem_Type").html("").append(options);
+    }
+
+    SetLostItemCategory(@Html.Raw(Json.Encode(Model.Ticket.LostItem.Category)));
+    SetLostItemTypes(@Html.Raw(Json.Encode(Model.Ticket.LostItem.Category)), @Html.Raw(Json.Encode(Model.Ticket.LostItem.Type)));
+
+    $("#Ticket_LostItem_Category").on('change', function() {
+        SetLostItemTypes(this.value);
+    });
+
+    LoadStoredFields = function() {
+        $("#email-cc").val(localStorage["email-cc"]);
+        $("#email-bcc").val(localStorage["email-bcc"]);
+    }
+
+    SaveEmailToStorage = function() {
+        localStorage["email-cc"] = $("#email-cc").val();
+        localStorage["email-bcc"] = $("#email-bcc").val();
+    }
+
+
+    //Customer History...
+    $("#AddResponseHistory").click(function(e) {
+        e.preventDefault();
+        //var sendingEmail = GetViaResponseHistoryText() == "Sent Email";
+        //if (sendingEmail) {
+        //    $("#confirm").modal().removeClass("hide").on('shown.bs.modal', function() {
+        //        $("#sendEmail").focus();
+        //    });
+        //} else {
+        AddResponseHistory();
+        //}
+    });
+
+    AddResponseHistory = function() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddResponseHistory", "Ticket")",
+            data: {
+                id: ticketId,
+                dateResponseHistory: $('#dateResponseHistory').val(),
+                commentResponseHistory: $('#commentResponseHistory').val(),
+                ViaResponseHistory: $('#ViaResponseHistory').val(),
+                sendAsEmail: $("#sendAsEmail").prop("checked"),
+                emailCc: $("#email-cc").val(),
+                emailBcc: $("#email-bcc").val()
+            },
+            success: function(result) {
+                SaveEmailToStorage();
+                location.href = '@Url.Action("Update", "Ticket")';
+            },
+            fail: function(e, data) {}
+        });
+    }
+
+    //$('#sendEmail').click(function() {
+    //    AddResponseHistory();
+    //});
+
+    //Research History ...
+    $("#AddResearchHistory").click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddResearchHistory", "Ticket")",
+            data: {
+                id: ticketId,
+                dateResearchHistory: $('#dateResearchHistory').val(),
+                commentResearchHistory: $('#commentResearchHistory').val()
+            },
+            success: function(result) {
+                location.href = '@Url.Action("Update", "Ticket")';
+            },
+            fail: function(e, data) {}
+        });
+    });
+
+    //Linked Tickets for Tab Button...
+    $(".AddLinkedTicket").click(function(e) {
+        var linkedId = parseInt($("#" + $(this).data("id")).val());
+        e.preventDefault();
+        if (isNaN(linkedId)) return;;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("LinkTicket", "Ticket")",
+            data: { id: ticketId, linkedId: linkedId },
+            success: function(result) {
+                location.href = '@Url.Action("Update", "Ticket")';
+            },
+            fail: function(e, data) {}
+        });
+    });
+
+    function DeleteLinkedTicket(linkedTicketId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("UnlinkTicket", "Ticket")",
+            data: { id: ticketId, linkedId: linkedTicketId },
+            success: function(data) {
+                alert("Linked ticket deleted successfully.");
+                location.href = '@Url.Action("Update", "Ticket")';
+            },
+            fail: function(e, data) {
+            }
+        });
+    }
+
+    function DeleteAttachmentTicket(AttachmentId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("DeleteAttachment", "Ticket")",
+            data: { id: ticketId, AttachmentId: AttachmentId },
+            success: function(result) {
+                alert("Attachment deleted successfully.");
+                location.href = '@Url.Action("Update", "Ticket")';
+            },
+            fail: function(e, data) {
+            }
+        });
+    }
+
+    function DownloadAttachmentTicket(AttachmentId) {
+        location.href = '@Url.Action("DownloadAttachment", "Ticket")?id=@Model.Ticket.Id&AttachmentId=' + AttachmentId;
+    }
+
+    var fileIdx = 0;
+
+    AddFile = function(file, result) {
+        if (typeof file === "undefined" || typeof file.name === "undefined" || typeof result === "undefined") return;
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddAttachment", "Ticket")",
+            data: {
+                id: ticketId,
+                Attachment: {
+                    Filename: file.name,
+                    Base64Data: result
+                }
+            },
+            success: function(result) {
+                alert(result.OK ? "Attachment added successfully." : "Attachment Error: " + result.Errors[0]);
+                location.href = '@Url.Action("Update", "Ticket")';
+            },
+            fail: function(e, data) {
+            }
+        });
+    };
+
+    AddFileToDom = function(file, result) {
+        if (typeof file === "undefined" || typeof file.name === "undefined" || typeof result === "undefined") return;
+        $("#files-names").prepend("<span class='glyphicon glyphicon-file'>&nbsp;" + file.name + "&nbsp;</span>");
+        $("#files-container")
+            .append("<input type='hidden' name='Ticket.Attachments[" + fileIdx + "].Filename' value='" + file.name + "' />")
+            .append("<input type='hidden' name='Ticket.Attachments[" + fileIdx + "].Base64Data' value='" + result + "' />");
+        fileIdx++;
+    };
+
+
+    ParseFile = function(file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            @if (Model.IsEditMode)
+            {
+                <text> AddFile(file, e.target.result); </text>
+            }
+            else
+            {
+                <text> AddFileToDom(file, e.target.result); </text>
+            }
+        }
+        reader.readAsDataURL(file);
+    }
+
+    FileDragHover = function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        e.target.className = (e.type == "dragover" ? "hover" : "");
+    }
+
+    FileSelectHandler = function(e) {
+        FileDragHover(e);
+        var files = e.target.files || e.dataTransfer.files;
+        for (var i = 0, f; f = files[i]; i++) {
+            ParseFile(f);
+        }
+    }
+
+    LoadFileSelect = function() {
+        if (window.File && window.FileList && window.FileReader && window.Blob) {
+            var fileselect = document.getElementById("fileselect"),
+                filedrag = document.getElementById("filedrag");
+            fileselect.addEventListener("change", FileSelectHandler, false);
+            if (new XMLHttpRequest().upload) {
+                filedrag.addEventListener("dragover", FileDragHover, false);
+                filedrag.addEventListener("dragleave", FileDragHover, false);
+                filedrag.addEventListener("drop", FileSelectHandler, false);
+                // not supported by IE (as of current v11)
+                //if (!IsMSIE)
+                filedrag.style.visibility = "visible";
+            }
+        }
+    }
+
+    GetViaResponseHistoryText = function() {
+        return $('#ViaResponseHistory option[value="' + $('#ViaResponseHistory').val() + '"]').text();
+    }
+
+    $("#sendAsEmail").click(function() {
+        var checked = $(this).prop("checked");
+        $("#emailFields").css('visibility', checked ? "visible" : "hidden");
+    });
+
+    GetPrevTicket = function() {
+        $.ajax({
+            url: '@Url.Action("GetPrevious", "Ticket", new { id = Model.Ticket.Id })',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+        }).done(function(data) {
+            if (data.Ticket == null) return;
+            location.href="@Url.Action("Update", "Ticket", new { id = "" })" + "/" + data.Ticket.Id;
+        });
+    }
+
+    GetNextTicket = function() {
+        $.ajax({
+            url: '@Url.Action("GetNext", "Ticket", new { id = Model.Ticket.Id })',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+        }).done(function(data) {
+            if (data.Ticket == null) return;
+            location.href="@Url.Action("Update", "Ticket", new { id = "" })" + "/" + data.Ticket.Id;
+        });
+    }
+
+    $(document).ready(function() {
+        setSendEmailVisibility();
+        $("#ViaResponseHistory, #Ticket_Contact_Email").change(function() {
+            setSendEmailVisibility();
+        });
+
+        function setSendEmailVisibility() {
+            var emailError = $("#Ticket_Contact_Email-error").text() || "";
+            var isValidEmail = emailError.length == 0;
+            var emailAddr = $("#Ticket_Contact_Email").val();
+            var emailAddrOriginal = $("#Ticket_Contact_Email_Original").val();
+            var showViaOptions = GetViaResponseHistoryText() == "Sent Email";
+            var errorMsg = emailAddr.length == 0
+                ? "Customer email is empty."
+                : (!isValidEmail
+                    ? emailError
+                    : (emailAddr != emailAddrOriginal
+                        ? "Customer email is changed but not saved."
+                        : ""));
+            $("#sendAsEmailError").text(errorMsg).css('visibility', showViaOptions && errorMsg.length > 0 ? "visible" : "hidden");
+            $("#sendAsEmailOKContainer").css('visibility', showViaOptions && errorMsg.length == 0 ? "visible" : "hidden");
+        }
+
+        LoadFileSelect();
+        LoadStoredFields();
+    });
+
+    tinymce.init({
+        selector: "#Ticket_Comments",
+        browser_spellcheck: true,
+        toolbar: ["bold italic underline strikethrough | fontsizeselect | preview print"],
+        menubar: false,
+        statusbar: false,
+        height: "100%",
+        plugins: ["autolink preview print"],
+        extended_valid_elements: 'a[href|target=_blank]',
+        toolbar_items_size: "small",
+        //content_css : '@Url.Content("~/Content/tinymce.css")?' + new Date().getTime(),
+        setup : function(ed)
+        {
+            ed.on('init', function()
+            {
+                this.getDoc().body.style.fontSize = '10pt';
+                ExpandTicketComments(175, 175);
+                $('div[aria-label="Preview"] button').click(function() {
+                    setTimeout(function() {
+                        $(".mce-floatpanel .mce-reset .mce-container-body iframe").contents().find("body").css("font-size", "10pt");
+                    }, 10);
+                });
+            });
+        }
+    });
+
+    //$('.textarea').each(function() {
+    //    var ctrl = $(this).wysihtml5({
+    //        toolbar: {
+    //            //"font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
+    //            //"emphasis": true, //Italics, bold, etc. Default true
+    //            //"lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+    //            //"html": true, //Button which allows you to edit the generated HTML. Default false
+    //            //"link": true, //Button to insert a link. Default true
+    //            //"image": true, //Button to insert an image. Default true,
+    //            //"color": true, //Button to change color of font
+    //            "blockquote": false //Blockquote
+    //        },
+    //        size: 'xs' //default: none, other options are xs, sm, lg
+    //    });
+    //    ctrl.css("font-size", "12px").css('height', '100%');
+    //});
+
+    setTimeout(function(ele) {
+        return function() {
+            $(this).find('#Ticket_Comments').first().focus();
+        };
+    }(), 100);
+
+    //ResetTextAreaSize = function() {
+    //    if (IsMSIE)
+    //        $(".wysihtml5-sandbox").css('margin-right', 'auto', 'important').css('margin-left', 'auto', 'important').css('width', '100%', 'important').css('height', '80%', 'important');
+    //}
+
+    //setTimeout(function() {
+    //    $(".wysihtml5-sandbox").contents().find("html body").on("focus", function() {
+    //        ResetTextAreaSize();
+    //    });
+    //    $(".wysihtml5-sandbox").contents().find("html body").on("blur", function() {
+    //        ResetTextAreaSize();
+    //    });
+    //}, 100);
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        $("#panel-ticket-main").show();
+    });
+
+</script>
+
+
+

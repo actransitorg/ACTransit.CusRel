@@ -1,0 +1,46 @@
+﻿@using ACTransit.CusRel.Public.API.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <meta name="description" content="AC Transit CusRel API" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - AC Transit. All Rights Reserved. <a href="http://@Config.MainSiteUrl/help/terms-conditions/" title="Terms and Conditions">Terms and conditions.</a></p>
+        </footer>
+    </div>
+    
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="../../Scripts/jquery-1.11.0.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

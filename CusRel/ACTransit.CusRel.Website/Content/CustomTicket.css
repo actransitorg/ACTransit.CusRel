@@ -1,0 +1,244 @@
+﻿body {
+    overflow: auto;
+}
+
+form {
+    padding-top: 5px;
+}
+
+.row-rightside {
+    padding-right: 10px;
+}
+
+.row {
+    margin-left: 0px !important;
+}
+
+.panel {
+    margin-bottom: 5px !important;
+}
+
+.panel-body {
+    padding: 8px;
+}
+
+.tab-content {
+    padding-top: 5px;
+}
+
+.form-inline-align, .form-inline-pad-top {
+    padding-top: 4px;
+}
+
+.form-inline-align label {
+    vertical-align: top;
+}
+
+.panel-body-scrollable {
+    margin-bottom: 3px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.panel-default-height {
+    min-height: 380px;
+}
+
+.panel-default-height-bottom {
+    height: 342px;
+    max-height: 368px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.panel-default-height-comment {
+    max-height: 320px;
+}
+
+.panel-default-height-history {
+    max-height: 190px;
+}
+
+.panel-default-height-tab {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.panel-default-height-tab-height {
+    max-height: 750px;   
+}
+
+.panel-height-assignments {
+    height: 120px;
+}
+
+#Ticket_Comments {
+    height: 100%;
+}
+
+#panel-customer-comments {
+    height: 245px;
+}
+
+.wysihtml5-sandbox {
+    margin-right: auto !important;
+    margin-left: auto !important;
+    width: 98.5% !important;
+}
+
+#IncidentAtDate {
+    width: 88px;
+    min-width: 88px;
+}
+
+#IncidentAtTime {
+    width: 54px;
+    width: 54px;
+}
+
+label[id="Name"] {
+    width: 40px;
+    margin-left: 5px;
+}
+
+#Ticket_Incident_Route {
+    width: 100%;
+}
+
+#Ticket_Incident_Division {
+    width: 100%;
+}
+
+#Ticket_Incident_Destination {
+    width: 100%;
+}
+
+#Ticket_Incident_City {
+    width: 100%;
+}
+
+
+label[for="Ticket_Customer_Address_Addr1"] {
+    width: 100px;
+}
+
+
+label[for="Ticket_Customer_Address_Addr2"] {
+    width: 100px;
+}
+
+#Ticket_Contact_Address_City {
+    width: 100%;
+}
+
+#Ticket_Contact_Address_State {
+    width: 100%;
+}
+
+label[for="Ticket_ResponseCriteria_HasRequestedResponse"] {
+    margin-top: 3px;
+}
+
+/*label[for="Ticket_IsAdaComplaint"] {
+    width: 10%;
+    margin-left: 5px;
+    margin-top: 3px;
+}
+
+#Ticket_IsAdaComplaint {
+    width: 20px;
+}
+
+label[for="Ticket_IsTitle6"] {
+    width: 15%;
+    margin-left: 25%;
+    margin-top: 3px;
+}
+
+#Ticket_IsTitle6 {
+    width: 20px;
+}*/
+
+
+#Ticket_DaysOpen {
+    width: 50px;
+}
+
+#filedrag {
+    border: 2px dashed #ccc;
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    visibility: hidden;
+}
+
+.col-2-wrapper {
+    display: table;
+    padding: 18px;
+}
+
+.col-2-content {
+    display: table-row;
+}
+
+.col-2-content > div {
+    display: table-cell;
+}
+
+.col-2-left {
+}
+
+.col-2-right {
+}
+
+
+#Ticket_Comments {
+    width: 100%;
+}
+
+#table-ticket-attachments-panel {
+    overflow: hidden;
+}
+    
+#ChangeHistoryTable th:nth-child(1), #ChangeHistoryTable td:nth-child(1) {
+    width: 150px;
+    max-width: 150px;
+}
+
+#ChangeHistoryTable th:nth-child(2), #ChangeHistoryTable td:nth-child(2) {
+    width: 100px;
+    max-width: 100px;
+}
+
+#ChangeHistoryTable th:nth-child(3), #ChangeHistoryTable td:nth-child(3) {
+    width: 100px;
+    max-width: 100px;
+}
+
+#ChangeHistoryTable th:nth-child(4), #ChangeHistoryTable td:nth-child(4) {
+    min-width: 175px;
+    max-width: 175px;
+}
+
+#ChangeHistoryTable th:nth-child(5), #ChangeHistoryTable td:nth-child(5) {
+    min-width: 175px;
+    max-width: 175px;
+}
+
+#ChangeHistoryTable th:nth-child(6), #ChangeHistoryTable td:nth-child(6) {
+    min-width: 100px;
+    width: 100px;
+    max-width: 100px;
+}
+
+#ChangeHistoryTable th:nth-child(7), #ChangeHistoryTable td:nth-child(7) {
+    min-width: 135px;
+    max-width: 135px;
+}
+
+#ChangeHistoryTable {
+    padding: 0px 10px 10px 0px;
+    overflow-x: hidden;
+}
+

@@ -1,0 +1,176 @@
+﻿@using ACTransit.Framework.Extensions
+@using Microsoft.AspNet.Identity
+
+@{
+    if (ViewBag.Breadcrumb == null)
+    {
+        return;
+    }
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>@ViewBag.Title - Customer Relations</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+        @RenderSection("Headers", required: false)
+        
+        <!--[if lt IE 9]>
+        @Scripts.Render("~/bundles/jquery-old")
+        <![endif]-->
+        <!--[if gte IE 9]><!-->
+        @Scripts.Render("~/bundles/jquery")
+        <!--<![endif]-->
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/Scripts/Custom.js")
+        <!--[if lte IE 9]>
+        @Scripts.Render("~/Scripts/placeholders.min.js")
+        <![endif]-->
+
+    </head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            @Html.Partial("_LoginPartial")
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed navbar-left" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div>
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="@Url.Content("~/Content/Image/logo-small.png")" style="background-color: #fff; margin-left: -5px" />
+                    </a>                    
+                    <span style="font-size: 20px; color: black; padding-left: 10px; vertical-align: middle">Customer Relations ▶ @ViewBag.Breadcrumb.ToString().Replace(">", "▶")</span>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-wrapper">
+                <ul class="nav navbar-nav text-justify">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Lost & Found Report", "LostFound", "Report")</li>
+                            <li>@Html.ActionLink("Open Age Report", "OpenTickets", "Report")</li>
+                            <li>@Html.ActionLink("Status Report", "OpenTicketsStatus", "Report")</li>
+                            <li>@Html.ActionLink("Productivity Report", "Productivity", "Report")</li>
+                            @if (ViewBag.RequestState.UserDetails != null && ViewBag.RequestState.UserDetails.CanAccessAdmin)
+                            {
+                                <li><a href="http://your.SSRS.server/Reports/Pages/Report.aspx?ItemPath=%2fCustomer+Relations%2fAd-Hoc+Report" target="_blank">Ad-Hoc</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="ResourcesMenu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a tabindex="-1" href="https://actrans.sharepoint.com/Marketing/CusServ/Resources/Forms/AllItems.aspx" target="_blank">MyACT Documents</a></li>
+                            <li><a tabindex="-1" href="https://actrans.sharepoint.com/Marketing/CusServ/Lists/Quicklinks/AllItems.aspx" target="_blank">MyACT Links</a></li>
+                            <li><a tabindex="-1" href="http://acreports/Reports/Pages/Folder.aspx?ItemPath=%2fTransportation%2fDaily+Operations" target="_blank">Daily Operations (OTS)</a></li>
+                        </ul>
+                    </li>
+                    @if (ViewBag.RequestState.UserDetails != null && ViewBag.RequestState.UserDetails.CanAccessAdmin)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("User Access", "UserAccess", "Admin")</li>
+                                <li>@Html.ActionLink("Dept Contacts", "GroupContacts", "Admin")</li>
+                                <li>@Html.ActionLink("Site Configuration", "SiteConfiguration", "Admin")</li>
+                            </ul>
+                        </li>
+                    }
+                    <li><a tabindex="-1" href="https://actrans.sharepoint.com/Marketing/CusServ/Resources/CusRel%20User%20Guide.pdf" target="_blank">Help</a></li>
+                    @*<li class="dropdown">
+                            @if (Request.IsAuthenticated)
+                            {
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@User.Identity.GetUserName().Replace(@"ACTRANSIT\", "")</a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>@Html.ActionLink("Log off", "Logout", "Account", routeValues: null, htmlAttributes: new { title = "Home" })</li>
+                                </ul>
+                            }
+                        </li>*@
+                </ul>
+                <ul class="nav pull-right"></ul>
+            </div>
+        </div>
+        <div class="container-fluid container-breadcrumb navbar-after">
+            <div class="container-breadcrumb-right">
+                @RenderSection("Actions", required: false)
+            </div>
+            <div class="container-breadcrumb-left" style="padding-top: 5px">
+                <input id="search-ticket-text" type="text" placeholder="Ticket #" maxlength="7" size="7" class="col-sm-1 form-control" />
+            </div>
+            <div class="container-breadcrumb-left" style="padding-top: 5px">
+                <input id="search-ticket-button" class="btn btn-info btn-breadcrumb" type="submit" value="GO" data-id="search-ticket" onclick="location.href=location.protocol + '//' + location.host + '@Url.Action("Update", "Ticket", new { id = "" })/' + $('#search-ticket-text').val()" />
+            </div>
+            @*<div class="container-breadcrumb-left">
+                <ol class="breadcrumb breadcrumb-style">
+                    @if (ViewBag.Breadcrumb != null)
+                    {
+                        foreach (var item in ViewBag.Breadcrumb.ToString().Split('>'))
+                        {
+                            if (!string.IsNullOrWhiteSpace(item))
+                            {
+                                <li>@item.ToString().Trim()</li>
+                            }
+                        }
+                    }
+                </ol>
+            </div>*@
+            <div class="container-breadcrumb-left" style="padding-top: 8px; padding-left: 20px; ">
+                <a href="#" onclick="location.href=location.protocol + '//' + location.host + '@Url.Action("Create", "Ticket")'">New</a>
+            </div>
+            <div class="container-breadcrumb-left" style="padding-top: 8px; padding-left: 10px">
+                <a href="#" onclick="location.href=location.protocol + '//' + location.host + '@Url.Action("ForAction", "Report")'">Dept Tickets</a>
+            </div>
+            <div class="container-breadcrumb-left" style="padding-top: 8px; padding-left: 10px; ">
+                <a href="#" onclick="location.href=location.protocol + '//' + location.host + '@Url.Action("AssignedTo", "Report")'">Assigned Tickets</a>
+            </div>
+            @if (ViewBag.RequestState.UserDetails != null && ViewBag.RequestState.UserDetails.CanCloseTicket)
+            {
+                <div class="container-breadcrumb-left" style="padding-top: 8px; padding-left: 10px">
+                    <a href="#" onclick="location.href = location.protocol + '//' + location.host + '@Url.Action("ReadyToClose", "Report")'">Ready To Close</a>
+                </div>
+            }
+            <div class="container-breadcrumb-left" style="padding-top: 8px; padding-left: 10px">
+                <a href="#" onclick="location.href=location.protocol + '//' + location.host + '@Url.Action("Rejected", "Report")'">Rejected</a>
+            </div>
+            <div class="container-breadcrumb-left" style="padding-top: 8px; padding-left: 10px">
+                <a href="#" onclick="location.href=location.protocol + '//' + location.host + '@Url.Action("Search", "Ticket")'">Search</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Alameda-Contra Costa Transit District</p>
+        </footer>
+    </div>
+
+    @RenderSection("scripts", required: false)
+
+
+    <script>
+        $("#search-ticket-text").change(function () {
+            if ($.isNumeric($("#search-ticket-text").val()))
+                $("#search-ticket-button").click();
+        });
+        $("#search-ticket-text").keydown(function (e) {
+            var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+            if (key != 13) return;
+            e.preventDefault();
+            if ($.isNumeric($("#search-ticket-text").val() + key.toString()))
+                $("#search-ticket-button").click();
+        });
+    </script>
+
+</body>
+
+</html>
+

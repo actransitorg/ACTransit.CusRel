@@ -1,0 +1,536 @@
+﻿@using ACTransit.CusRel.Models.Helpers
+@model ACTransit.CusRel.Models.TicketModel
+
+@{
+    ViewBag.Title = "Create";
+    ViewBag.Breadcrumb = "Tickets > Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    <link href="@Url.Content("~/Content/Custom.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/jquery.datetimepicker-2.4.0.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/bootstrap3-wysihtml5.min.css")" rel="stylesheet">
+    <link href="@Url.Content("~/Content/jquery.fileupload.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/jquery.combobox/style.css")" rel="stylesheet" />
+}
+
+@section Actions{
+    <input type="submit" value="Create" class="btn btn-primary btn-panel-title" onclick="CreateTicketForm.submit()" />
+}
+<br/>
+@using (Html.BeginForm("Create", "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form", name = "CreateTicketForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <!--begin panel 1 -->
+            <div class="panel panel-default">
+                <div class="panel-heading padding5">
+                    <h1 class="panel-title text-center">Ticket</h1>
+                </div>
+
+                <div class="panel-body ">
+                    <div class="row form-group required field-margin">
+                        @Html.LabelFor(model => model.Ticket.ReasonCode1, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.DropDownListFor(model => model.Ticket.ReasonCode1, Model.Reasons, "Select...", new { @class = "form-control field-height" })
+                            @Html.ValidationMessageFor(model => model.Ticket.ReasonCode1, null, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.ReasonCode2, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.DropDownListFor(model => model.Ticket.ReasonCode2, Model.Reasons, "Select...", new { @class = "form-control field-height" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.IncidentAt, "Incident Date & Time", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @*pull-right*@
+                            @Html.TextBoxFor(model => model.Ticket.Incident.IncidentAt, new { @class = "date-picker form-control field-height", @Value = System.DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.IncidentAt, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.Location, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.Location, new { @class = " form-control field-height", @maxlength = 60 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.Location, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.Route, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.Route, new { @class = "form-control field-height", @maxlength = 4 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.Route, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.Division, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.Division, new { @class = "form-control field-height", @maxlength = 4 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.Division, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.Destination, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.Destination, new { @class = "form-control field-height", @maxlength = 20 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.Destination, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Incident.City, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Incident.City, new { @class = "form-control ", @maxlength = 30 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Incident.City, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Operator.Badge, "Operator Badge", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Operator.Badge, new { @class = "form-control field-height", @maxlength = 6, size = 6 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Operator.Badge, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Operator.Name, "Operator Name", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Operator.Name, new { @class = "form-control field-height", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Ticket.Operator.Name, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Operator.Description, "Operator Description", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(model => model.Ticket.Operator.Description, new { @class = "form-control field-height", @maxlength = 1024 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Operator.Description, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.LostItem.Category, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.DropDownListFor(model => model.Ticket.LostItem.Category, Model.LostItemCategories, "Select...", new { @class = "form-control field-height" }.DisabledIf(!Model.IsTicketLostItemVisible))
+                            @Html.ValidationMessageFor(model => model.Ticket.LostItem.Category, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.LostItem.Type, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.DropDownListFor(model => model.Ticket.LostItem.Type, Model.LostItemTypes, "Select...", new { @class = "form-control field-height" }.DisabledIf(!Model.IsTicketLostItemVisible))
+                            @Html.ValidationMessageFor(model => model.Ticket.LostItem.Type, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--begin panel 6 -->
+            <div class="panel panel-default">
+                <div class="panel-heading padding5">
+                    <h1 class="panel-title text-center">File Attachments</h1>
+                </div>
+                <div style="padding: 0 10px;">
+                    <span class="btn btn-file btn-success fileinput-button" style="margin:20px 0;">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>Add files...</span>
+                        <input type="file" class="attachments" multiple>
+                    </span>
+                    <span id="files-names"></span>
+                </div>
+                <div id="files-container"></div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!--begin panel 2 -->
+            <div class="panel panel-default">
+                <div class="panel-heading padding5">
+                    <h1 class="panel-title text-center">Customer</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="row form-group required field-margin">
+                        @Html.LabelFor(model => model.Ticket.Contact.Name.First, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.TextBoxFor(model => model.Ticket.Contact.Name.First, new { @class = "form-control field-height", @maxlength = 30 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Contact.Name.First, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group required field-margin">
+                        @Html.LabelFor(model => model.Ticket.Contact.Name.Last, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.TextBoxFor(model => model.Ticket.Contact.Name.Last, new { @class = "form-control field-height", @maxlength = 30 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Contact.Name.Last, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Contact.Address.Addr1, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.TextBoxFor(model => model.Ticket.Contact.Address.Addr1, new { @class = "form-control field-height", @maxlength = 30 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Contact.Address.Addr1, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Contact.Address.Addr2, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.TextBoxFor(model => model.Ticket.Contact.Address.Addr2, new { @class = "form-control field-height", @maxlength = 30 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Contact.Address.Addr2, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Contact.Address.City, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.TextBoxFor(model => model.Ticket.Contact.Address.City, new { @class = "form-control field-height", @maxlength = 50 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Contact.Address.City, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Contact.Address.State, new { @class = "col-md-5 col-sm-5 smalltext" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.TextBoxFor(model => model.Ticket.Contact.Address.State, new { @class = "form-control field-height", @maxlength = 2 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Contact.Address.State, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Contact.Address.ZipCode, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.TextBoxFor(model => model.Ticket.Contact.Address.ZipCode, new { @class = "form-control field-height", @maxlength = 10 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Contact.Address.ZipCode, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Contact.Email, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.TextBoxFor(model => model.Ticket.Contact.Email, new { @class = "form-control field-height", @maxlength = 50 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Contact.Email, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Contact.Phone.Number, "Phone", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.TextBoxFor(model => model.Ticket.Contact.Phone.Number, new { @class = "form-control field-height", @maxlength = 16 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Contact.Phone.Number, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.ResponseCriteria.Via, "Respond Via", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.EnumDropDownListFor(model => model.Ticket.ResponseCriteria.Via, "Select...", new { @class = "form-control field-height" })
+                            @Html.ValidationMessageFor(model => model.Ticket.ResponseCriteria.Via, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    @*<div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Contact.Status, "Customer Status", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.EnumDropDownListFor(model => model.Ticket.Contact.Status, "Select...", new { @class = "form-control field-height" })
+                            @Html.ValidationMessageFor(model => model.Ticket.Contact.Status, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!--begin panel 3 -->
+            <div class="panel panel-default">
+                <div class="panel-heading padding5">
+                    <h1 class="panel-title text-center">Ticket Status</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Status, "Ticket Status", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.EnumDropDownListFor(model => model.Ticket.Status, "Select...", new { @class = "form-control field-height" })
+                            @Html.ValidationMessageFor(model => model.Ticket.Status, string.Empty, new { @class = "field-validation-valid errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.IsAdaComplaint, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.CheckBox("Ticket.IsAdaComplaint", Model.Ticket.IsAdaComplaint.HasValue ? Model.Ticket.IsAdaComplaint : false)
+                            @Html.ValidationMessageFor(model => model.Ticket.IsAdaComplaint)
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.IsTitle6, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.CheckBox("Ticket.IsTitle6", Model.Ticket.IsTitle6.HasValue ? Model.Ticket.IsTitle6 : false)
+                            @Html.ValidationMessageFor(model => model.Ticket.IsTitle6, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Priority, new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.EditorFor(model => model.Ticket.Priority)
+                            @Html.ValidationMessageFor(model => model.Ticket.Priority, string.Empty, new { @class = "field-validation-valid errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Source.ReceivedAt, "Received Date & Time", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.TextBoxFor(model => model.Ticket.Source.ReceivedAt, new { @class = "date-picker form-control field-height", @Value = System.DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") })
+                            @Html.ValidationMessageFor(model => model.Ticket.Source.ReceivedAt, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Source.Via, "Source", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.EnumDropDownListFor(model => model.Ticket.Source.Via, "Select...", new { @class = "form-control field-height" })
+                            @Html.ValidationMessageFor(model => model.Ticket.Source.Via, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Source.ReceivedBy.Username, "Received By", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7 ">
+                            @Html.DropDownListFor(model => model.Ticket.Source.ReceivedBy.Id, Model.Users, "Select...", new { @class = "form-control field-height", maxlength = 16 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Source.ReceivedBy.Id, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        @Html.LabelFor(model => model.Ticket.LinkedTickets, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Ticket.LinkedTickets)
+                                @Html.ValidationMessageFor(model => model.Ticket.LinkedTickets)
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!--begin panel 4 -->
+            <div class="panel panel-default">
+                <div class="panel-heading padding5">
+                    <h1 class="panel-title text-center">Assignments</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Assignment.GroupContact.Code, "Dept Contact", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.DropDownListFor(model => model.Ticket.Assignment.GroupContact.Value, Model.GroupContacts, "Select...", new { @class = "form-control field-height" })
+                            @Html.ValidationMessageFor(model => model.Ticket.Assignment.GroupContact.Value, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                    <div class="row form-group field-margin">
+                        @Html.LabelFor(model => model.Ticket.Assignment.Employee.Username, "Assigned To", new { @class = "col-md-5 col-sm-5 smalltext pull-left" })
+                        <div class="col-md-7 col-sm-7">
+                            @Html.DropDownListFor(model => model.Ticket.Assignment.Employee.Id, Model.Users, "Select...", new { @class = "form-control field-height", maxlength = 16 })
+                            @Html.ValidationMessageFor(model => model.Ticket.Assignment.Employee.Id, string.Empty, new { @class = "errorMessagetext" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!--begin panel 5 -->
+            <div class="panel panel-default padding5">
+                <div class="row form-group required field-margin">
+                    @Html.LabelFor(model => model.Ticket.Comments, "Customer Comments", new { @class = "col-md-12 col-sm-12 smalltext pull-left" })
+                </div>
+                <div class="row form-group field-margin">
+                    <div class="col-md-12 col-sm-12">
+                        @Html.TextAreaFor(model => model.Ticket.Comments, new { placeholder = "Enter text ...", style = "width: 100%; height: 200px", @class = "form-control redimTextArea textarea" })
+                        @Html.ValidationMessageFor(model => model.Ticket.Comments, string.Empty, new { @class = " errorMessagetext" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/bundles/wysihtml5")
+    @Scripts.Render("~/bundles/magicsuggest")
+
+    <script type="text/javascript">
+
+        $(function() {
+            $('.date-picker').datetimepicker({
+                format: 'm/d/Y h:i A',
+                formatTime: 'A h:i',
+            });
+        });
+        //Comment textarea....
+        $('.textarea').wysihtml5({
+            toolbar: {
+                //"font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
+                //"emphasis": true, //Italics, bold, etc. Default true
+                //"lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+                //"html": true, //Button which allows you to edit the generated HTML. Default false
+                //"link": true, //Button to insert a link. Default true
+                //"image": true, //Button to insert an image. Default true,
+                //"color": true, //Button to change color of font
+                "blockquote": false //Blockquote
+            },
+            size: 'xs' //default: none, other options are xs, sm, lg
+        });
+
+        setTimeout(function() {
+            $(".wysihtml5-sandbox").contents().find("html body").on("focus", function() {
+                ResetTextAreaSize();
+            });
+            $(".wysihtml5-sandbox").contents().find("html body").on("blur", function() {
+                ResetTextAreaSize();
+            });
+        }, 400);
+
+        ResetTextAreaSize = function() {
+            if (navigator.appVersion.indexOf("MSIE") != -1 || navigator.appVersion.indexOf("Trident") != -1)
+                $(".wysihtml5-sandbox").css('margin-right', 'auto', 'important').css('margin-left', 'auto', 'important').css('width', '96%', 'important');
+        }
+
+        GetCombobox = function(id) {
+            return $(id).magicSuggest();
+        }
+
+        UpdateRoutes = function(route) {
+            if (!route)
+                route = GetCombobox("#Ticket_Incident_Route").getValue()[0];
+            $.ajax({
+                url: '@Url.Action("GetRouteInfo", "Ticket")/' + route,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+            }).done(function(data) {
+                var cb = GetCombobox("#Ticket_Incident_Division");
+                cb.setData(data.Divisions);
+                cb.clear();
+                cb.setValue(data.Divisions);
+                cb = GetCombobox("#Ticket_Incident_Destination");
+                cb.setData(data.Directions);
+                cb.clear();
+                $("#Ticket_Incident_Destination div[class='ms-trigger']").click();
+            });
+        }
+
+        UpdateOperator = function(badge) {
+            if (badge.length == 5 && badge[0] == '0') return;
+            $.ajax({
+                url: '@Url.Action("GetOperator", "User")/' + badge,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+            }).done(function(data) {
+                if (data.Operator == null) return;
+                $("#Ticket_Operator_Name").val(data.Operator.Name);
+                var desc = $("#Ticket_Operator_Description").val();
+                var hasDescription = ((desc) && desc.trim().length > 0);
+                if ((data.Operator.Description) && (!hasDescription))
+                    $("#Ticket_Operator_Description").val(data.Operator.Description);
+            });
+        }
+
+        $("#Ticket_Incident_City").magicSuggest({
+            data: @Html.Raw(Json.Encode(Model.Cities)),
+            resultAsString: true,
+            placeholder: "Select...",
+            maxSelection: 1,
+            maxSelectionRenderer: function(v) { return null; }
+        }).setValue(['@Html.Raw(Model.Ticket.Incident.City)']);
+
+        $("#Ticket_Contact_Address_State").magicSuggest({
+            data: @Html.Raw(Json.Encode(Model.States)),
+            resultAsString: true,
+            placeholder: "Select...",
+            maxSelection: 1,
+            maxSelectionRenderer: function(v) { return null; }
+        }).setValue(['@Html.Raw(Model.Ticket.Contact.Address.State)']);
+
+        $("#Ticket_Contact_Address_City").magicSuggest({
+            data: @Html.Raw(Json.Encode(Model.Cities)),
+            resultAsString: true,
+            placeholder: "Select...",
+            maxSelection: 1,
+            maxSelectionRenderer: function(v) { return null; }
+        }).setValue(['@Html.Raw(Model.Ticket.Contact.Address.City)']);
+
+        var ms = $("#Ticket_Incident_Route").magicSuggest({
+            data: @Html.Raw(Json.Encode(Model.RouteInfo.Routes)),
+            resultAsString: true,
+            placeholder: "Select...",
+            maxSelection: 1,
+            maxSelectionRenderer: function(v) { return null; }
+        });
+        ms.setValue(["@Html.Raw(Model.Ticket.Incident.Route)"]);
+
+        $("#Ticket_Incident_Division").magicSuggest({
+            data: @Html.Raw(Json.Encode(Model.RouteInfo.Divisions)),
+            resultAsString: true,
+            placeholder: "Select...",
+            maxSelection: 1,
+            maxSelectionRenderer: function(v) { return null; }
+        }).setValue(['@Html.Raw(Model.Ticket.Incident.Division)']);
+
+        setTimeout(function() {
+            $(ms).on('selectionchange', function() {
+                var value = this.getValue();
+                if (value.length < 1 || value.length > 6) return;
+                UpdateRoutes(value.value);
+            });
+        }, 100);
+
+
+        $("#Ticket_Incident_Destination").magicSuggest({
+            data: @Html.Raw(Json.Encode(Model.RouteInfo.Directions)),
+            resultAsString: true,
+            placeholder: "Select...",
+            maxSelection: 1,
+            maxSelectionRenderer: function(v) { return null; }
+        }).setValue(['@Html.Raw(Model.Ticket.Incident.Destination)']);
+
+        $("#Ticket_Operator_Badge").bind('input propertychange', function(ele) {
+            if (ele.target.value.length < 5 || ele.target.value.length > 6) return;
+            UpdateOperator(ele.target.value);
+        });
+
+        $(document).ready(function() {
+            var operatorBadge = $("#Ticket_Operator_Badge").val();
+            if ((operatorBadge) && ((!$("#Ticket_Operator_Name").val()) || (!$("#Ticket_Operator_Description").val())))
+                UpdateOperator(operatorBadge);
+        });
+
+        var fileIdx = 0;
+
+        AddFile = function(file, result) {
+            if (typeof file === "undefined" || typeof file.name === "undefined" || typeof result === "undefined") return;
+            $("#files-names").prepend("<span class='glyphicon glyphicon-file'>&nbsp;" + file.name + "&nbsp;</span>");
+            $("#files-container")
+                .append("<input type='hidden' name='Ticket.Attachments[" + fileIdx + "].Filename' value='" + file.name + "' />")
+                .append("<input type='hidden' name='Ticket.Attachments[" + fileIdx + "].Base64Data' value='" + result + "' />");
+            fileIdx++;
+        };
+
+        $("#Ticket_ReasonCode1, #Ticket_ReasonCode2, #Ticket_ReasonCode3").change(function() {
+            $("#Ticket_LostItem_Category").prop("disabled", $(this).val().toLowerCase() != "37. request lost property");
+            $("#Ticket_LostItem_Type").prop("disabled", $(this).val().toLowerCase() != "37. request lost property");
+        });
+
+        $(document).ready(function() {
+            $("body").on("change", ".btn-file :file", function() {
+                var fileInput = $(this)[0];
+                var files = fileInput.files;
+                $.each(files, function(index) {
+                    var file = fileInput.files[index];
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        AddFile(file, this.result);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+        });
+    </script>
+}
+<style>
+    .field-validation-valid {
+        display: none;
+    }
+</style>

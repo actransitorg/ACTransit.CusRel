@@ -1,0 +1,21 @@
+﻿@{
+    string action = Model.Action;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headers {
+    @Styles.Render("~/Content/TicketDetails")
+    <link rel="stylesheet" href="@Url.Content("~/Content/print.css")" media="print" />
+}
+
+@section Actions {
+    <input type="button" value="Print Normal" class="btn btn-primary btn-panel-title" onclick="PrintTicketNormal()" />
+    <input type="button" value="Print No Name" class="btn btn-primary btn-panel-title" onclick="PrintTicketNoName()" />
+    <input type="button" value="Save" class="btn btn-primary btn-panel-title" style="margin-left: 20px !important" onclick="SubmitTicketForm()" />
+}
+
+@using (Html.BeginForm(action, "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form", name = "TicketForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("_TicketPartial")
+}

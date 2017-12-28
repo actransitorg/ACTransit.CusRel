@@ -1,0 +1,156 @@
+﻿@model IEnumerable<ACTransit.Contracts.Data.CusRel.TicketContract.Ticket>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>Search Ticket</h2>*@
+@*<ol class="breadcrumb breadcrumb-style">
+    @*<li class="glyphicon glyphicon-home">@Html.ActionLink(" Home", "Index", "Home")</li>*@
+    @*<li>@Html.ActionLink("Tickets", "Index", "Ticket")</li>
+    <li class="active">Search</li>
+</ol>*@
+
+<div class="well normaltext">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.LabelFor(model => model.FirstOrDefault().Id, "File#")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DaysOpen)
+            </th>
+            <th>
+                @Html.LabelFor(model => model.FirstOrDefault().Source.ReceivedAt, "Date Received")
+            </th>
+            <th>
+                @Html.LabelFor(model => model.FirstOrDefault().Incident.IncidentAt, "Date Incident")
+            </th>
+            <th>
+                @Html.LabelFor(model => model.FirstOrDefault().Status, "Ticket Status")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Incident.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reasons)
+            </th>
+            <th>
+                @Html.LabelFor(model => model.FirstOrDefault().Assignment.Employee.Name, "Assigned to")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            String TicketId = Convert.ToString(item.Id, 10);
+            <tr>
+                <td>
+                    @Html.ActionLink(TicketId, "Update", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DaysOpen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Source.ReceivedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Incident.IncidentAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Incident.Location)
+                </td>
+                <td>
+                    @if (item.ReasonCode1 != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.ReasonCode1)
+                    }
+                    @if (item.ReasonCode2 != null)
+                    {
+                        <br />
+                        @Html.DisplayFor(modelItem => item.ReasonCode2)
+                    }
+
+                    @if (item.ReasonCode3 != null)
+                    {
+                        <br />
+                        @Html.DisplayFor(modelItem => item.ReasonCode3)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assignment.Employee.Name)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAdaComplaint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsTitle6)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReasonsLength)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShouldUnlink)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DaysOpen)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAdaComplaint)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsTitle6)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReasonsLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShouldUnlink)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysOpen)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>*@

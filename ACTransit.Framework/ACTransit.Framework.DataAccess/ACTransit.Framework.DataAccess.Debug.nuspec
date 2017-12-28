@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- For more information on using transformations 
+     see the web.config examples at http://go.microsoft.com/fwlink/?LinkId=214134. -->
+<package xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+
+  <xdt:Import path="C:\Projects\ACTransit.Projects\trunk\Resources.External\XDT.AttributeRegexReplace\CustomTransformType\bin\Release\CustomTransformType.dll" namespace="CustomTransformType" />
+  <metadata>
+    <dependencies>
+      <dependency id="ACTransit.Framework" version="value-replaced" 
+                  xdt:Transform="AttributeRegexReplace(Attribute='version', Pattern='(\d+\.\d+\.\d+\.\d+)',Replacement='$1-beta')" 
+                  xdt:Locator="Match(id)" />
+    </dependencies>
+  </metadata>
+
+</package>
